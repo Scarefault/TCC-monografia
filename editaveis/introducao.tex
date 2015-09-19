@@ -1,7 +1,69 @@
 \chapter[Introdução]{Introdução}
 
-Este documento apresenta considerações gerais e preliminares relacionadas 
-à redação de relatórios de Projeto de Graduação da Faculdade UnB Gama 
-(FGA). São abordados os diferentes aspectos sobre a estrutura do trabalho, 
-uso de programas de auxilio a edição, tiragem de cópias, encadernação, etc.
+Neste capítulo será descrito o contexto no qual se insere o trabalho, bem como a hipótese que deverá ser explorada.
 
+ \section{Contextualização}
+  \indent A produção de software é uma atividade que, devido à sua natureza abstrata, vem acompanhada da eventual inserção de defeitos no código \cite{trodo_2009}. A partir da década de 1990 os usuários de software passaram a exigir maior atenção por parte das empresas desenvolvedoras em relação à redução de falhas de seus produtos e serviços \cite{sommerville_2007} e, além disso, a demanda por software no mercado está crescendo \cite{philipson_2004} e, por conseguinte, a exigência de maior qualidade no resultado final do processo de desenvolvimento aumenta \cite{barbosa_et_al_2009}.
+  \par
+  \indent Nesse contexto, a identificação de defeitos que casualmente estejam presentes no código é uma preocupação incessante no processo de produção de software. Para essa finalidade, surge a prática de testes do produto. Em essência, essa etapa visa a execução do software alvo com dados de teste, de forma a verificar se os resultados observados correspondem à expectativa. Isso permite ao desenvolvedor demonstrar aos seus clientes que o software está de acordo com as suas especificações, além de viabilizar ao programador a busca e descoberta de defeitos no software \cite{sommerville_2007}.
+  \par
+  \indent A prática de testes de software tornou-se parte importante do processo de desenvolvimento \cite{barbosa_et_al_2009}. Diversas categorias de testes, com diferentes intenções de análise sobre o produto, foram surgindo, a saber: testes de unidade, testes de integração e testes de aceitação. Testes de integração são aqueles que permitem a observação de que os componentes que formam o software funcionam corretamente em conjunto. Testes de aceitação garantem que as interfaces do sistema estão de acordo com o especificado, bem como o comportamento esperado por elas. Os testes de unidade tem como proposta a garantia  de que uma determinada parte (unidade) do código esteja respondendo como o esperado \cite{sommerville_2007}.
+  \par
+  \indent Outra questão que surge na produção de software, e que é um fator importante a ser considerado, é o custo que \textit{bugs} geram no desenvolvimento e na fase de manutenção. Estimativas apontam que os gastos com a correção de \textit{bugs} chegam a mais de 59,5 bilhões de dólares anuais nos Estados Unidos \cite{jantti_2008}. No Brasil gasta-se 70\% do tempo de desenvolvimento corringindo-se erros \cite{janones_2010}. Esse cenário aumenta o preço do produto final.
+  \par
+  \indent A produção de testes afeta positivamente o desenvolvimento de software não apenas no nível estratégico. Segundo Burke e Coyner \cite{burke_coyner_2003} há diversas razões para que se escreva testes unitários, dentre elas:
+  \begin{itemize}
+    \item Testes reduzem defeitos em funcionalidades novas e já existentes.
+    \item Testes auxiliam na documentação do código.
+    \item Testes permitem refatoração com maior qualidade.
+    \item Testes reduzem o receio de alterar o código.
+    \item Testes defendem o código contra alterações indesejáveis de outros programadores.
+  \end{itemize}
+
+ \section{Questão de Pesquisa}
+O intuito deste TCC é auxiliar os desenvolvedores de software em relação à seguinte questão: há como propiciar ao desenvolvedor um suporte que forneça a geração de testes unitários, de forma semi automatizada, sobre o seu código?
+
+ \section{Justificativa}
+  Testes são cruciais no desenvolvimento de software, como evidenciado na seção anterior. Contudo, de maneira geral, desenvolvedores não escrevem testes para os seus programas \cite{burke_coyner_2003}. As razões são variadas, argumentando que não sabem escrever testes ou que não têm tempo para fazê-los \cite{burke_coyner_2003}. Tendo em vista este cenário, onde o mercado de software torna-se cada vez mais exigente com relação à qualidade dos produtos e serviços, bem como os altos custos relacionados à falta de empenho e previdência sobre a qualidade dos sistemas produzidos, é contraditório observar que a prática de fazer testes não seja comum, ou mesmo prioritária por parte dos programadores.
+  \par
+  \indent No artigo de \citeonline{burke_coyner_2003}, entitulado \textit{Top 12 Reasons to Write Unit Tests}, os autores revelam que algumas das desculpas mais frequentes que já ouviram em suas carreiras para os programadores não fazerem testes de unidade são:
+  \begin{itemize}
+    \item \textit{"Eu não sei escrever testes."}
+    \item \textit{"Escrever testes é muito difícil."}
+    \item \textit{"Não tenho tempo suficiente para fazer testes."}
+    \item \textit{"Testes não são o meu trabalho."}
+  \end{itemize}
+  \par
+  \indent Essa lista evidência um fato já conhecido no desenvolvimento de software: a produção de testes é uma atividade onerosa \cite{barbosa_et_al_2009}. Esse cenário é intricado, pois há evidências dos benefícios da produção de testes e, no entanto, há um distanciamento dos desenvolvedores em relação aos testes unitários. Considerando esse panorama a elaboração de um suporte capaz de apoiar o programador na tarefa de gerar os testes unitários, reduzindo o esforço e os custos associados, será de uma valia considerável, tanto no âmbito técnico quanto estratégico no processo de desenvolvimento de software.
+ 
+  \section{Objetivos}
+  Com esse trabalho busca-se alcançar os objetivos:
+    \subsection{Objetivo Geral}
+    Desenvolver um \textit{framework} capaz de tornar a geração de testes unitários uma atividade semi automatizada.
+    
+    \subsection{Objetivos Específicos}
+    Os seguintes itens são considerados importantes, devido à sua relevância para o entendimento de Teste de software e aplicação dos conhecimentos sobre Engenharia de Software e, portanto, fazem parte dos objetivos específicos desse TCC. São eles:
+
+    \begin{enumerate}
+      \item Aprofundar o conhecimento na área de Testes de Software.
+      
+      \item Investigar abordagens associadas ao tema foco desse TCC, via revisão bibliográfica e provas de conceito, no intuito de compilar soluções candidatas ao desenvolvimento do \textit{framework} de geração de testes de unidade.
+      
+      \item Aplicar métodos, técnicas e boas práticas de Engenharia de Software no processo de desenvolvimento do \textit{framework}.
+      
+      \item Gerar testes unitários por meio do \textit{framework} que cubram métodos simples, como criar, editar, excluir e buscar objetos.
+
+      \item Coletar primeiras impressões dos testes gerados pelo \textit{framework} e documentá-las, afim de facilitar a evolução no futuro.
+
+    \end{enumerate}
+    
+\section{Organização do Documento}
+	Este documento está dividido da seguinte forma:
+	
+	\begin{itemize}
+		\item \textbf{Capítulo 1 - Introdução: } descreve uma visão geral do conteúdo do trabalho de conclusão de curso contendo contextualização, questão de pesquisa, justificativa e objetivos.
+		\item \textbf{Capítulo 2 - Referencial Teórico: } reuni embasemento teórico que fundamenta o desenvolvimento do \textit{framework}  proposto neste trabalho.
+		\item \textbf{Capítulo 3 - Suporte Tecnológico: } caracteriza as recursos tecnólogicos utilizados durante a elaboração do objeto de estudo.
+		\item \textbf{Capítulo 4 - Proposta: } detalha o \textit{framework} para geração de testes unitários em requisitos, arquitetura e outros aspectos. 
+		\item \textbf{Capítulo 5 - Metodologia: } especifica a metodologia utilizada para pesquisa e desenvolvimento deste trabalho.
+	\end{itemize}
