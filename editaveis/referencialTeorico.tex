@@ -21,22 +21,29 @@ Software é uma atividade que requer um processo com o envolvimento de diversas 
 \section{Testes de Software}
 Testes de software é uma atividade que compõe o processo de verificação e validação de software. É uma das técnicas mais utilizadas no âmbito de garantia de confiabilidade de software. Em linhas gerais, é um trabalho de abordagem dinâmica sobre o código-fonte. Isso significa que há a exigência do funcionamento do software para que possa ser realizada essa atividade \cite{barbosa_et_al_2009}. Essa análise dinâmica abre a possiblidade de identificação de defeitos no código-fonte, bem como a prevenção de inserções de novos defeitos. A produção de testes de software fornece, ainda, impulso para atividades de refatoração, manutenção e medição do software \cite{barbosa_et_al_2009}.
 \par
-\indent Os testes podem ser classificados como: testes baseados em especificações e testes baseado em programa \cite{barbosa_et_al_2009}.
+\indent Os testes podem ser classificados como: testes caixa-preta e testes caixa-branca \cite{barbosa_et_al_2009}.
 
 \subsection{Testes Caixa-preta}
-Testes de caixa-preta, também conhecidos como testes baseados em especificações, visa a avaliação do produto em relação aos requisitos funcionais e não funcionais. É caracterizado por fazer análises a partir de documentação e do software em funcionamento, sem necessidade de averiguação do código-fonte \cite{barbosa_et_al_2009}.
+Testes caixa-preta, também conhecidos como testes baseados em especificações, visam a avaliação do produto em relação aos requisitos funcionais e não funcionais. É caracterizado por fazer análises a partir de documentação e do software em funcionamento, sem necessidade de averiguação do código-fonte \cite{barbosa_et_al_2009}.
 
 \begin{figure}[h]
-  \begin{center}
+  \centering
     \includegraphics[width=0.8\textwidth]{figuras/test_black_box.png}
     \caption{Diagrama Representativo de Testes Caixa Preta}
     \label{test_black_box}
-  \end{center}
 \end{figure}
 
-A Figura \ref{test_black_box} representa um esquemático do funcionamento de um teste caixa-preta: utiliza-se dados de entrada no software e observa-se se correspondem com as expectativas.
+A Figura \ref{test_black_box} representa um esquemático do funcionamento de um teste caixa-preta: utiliza-se dados de entrada no software e observa-se a correspondência, ou não, com as expectativas.
+\par
+\indent Ao utilizar-se de testes caixa-preta desenvolve-se os testes do ponto de vista do usuário, o que auxilia a observar alguma falha nas especificações. Além disso, permite que os casos de teste possam ser produzidos assim que as especificações estiverem prontas \cite{stf_2010}. Essa abordagem de testes também possui pontos negativos, como a pequena quantidade de entradas que podem ser inseridas para testar o produto. Sem especificações claras produzir bons casos de testes caixa-preta torna-se uma tarefa difícil \cite{stf_2010}.
 
-%%% Técnicas de Derivação de Casos de Teste
+\subsubsection{Técnicas de Derivação de Casos de Teste Caixa-preta}
+Testes caixa-preta não são o foco deste trabalho. Dessa forma, apenas um \textit{overview} das técnicas para essa abordagem de testes será abordado. Para a concepção de casos de testes caixa-preta há algumas técnicas utilizadas como guias. São elas: \textbf{particionamento de equivalência}, \textbf{análise de valores limite} e \textbf{gráfico de causa e efeito}.
+
+\begin{description}
+\item[Particionamento de Equivalência:] visa a identificação de agrupamentos de casos de testes que cubram diferentes classes de erros. Essa estratégia permite a redução do número de testes que serão produzidos, diminuindo os custos. O particionamento de equivalência divide as entradas do domínio do software em classes. Essas classes devem ser derivadas a partir de um valor significativo para o domínio \cite{williams_2006}.
+\end{description}
+
 
 \subsection{Testes Caixa-branca}
 Testes de caixa-branca, também referenciados como testes baseados em programa, almejam a avaliação do produto por meio da execução do código-fonte. Isso possibilita o exercício do software em busca de defeitos para serem corrigidos. Para que ocorra a dinâmica de testes de caixa-branca seleciona-se casos de testes que englobem cenários significativos \cite{barbosa_et_al_2009}.
