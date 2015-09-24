@@ -43,13 +43,25 @@ Testes caixa-preta não são o foco deste trabalho. Dessa forma, apenas um \text
 \begin{description}
 \item[Classes de equivalência:] visa a identificação de agrupamentos de casos de testes que cubram diferentes classes de erros. Essa estratégia permite a redução do número de testes que serão produzidos, diminuindo os custos. A técnica de classes de equivalência divide as entradas do domínio do software em classes. Essas classes devem ser derivadas a partir de um valor significativo para o domínio \cite{williams2006}.
 \item[Análise de valores limite:] um ponto crítico, e já observado por especialistas, é que grande parte dos defeitos no código são inseridos nos limites de uma classe de equivalência. Isso permite a conclusão de que o principal foco no caso de teste deve ser sobre os valores limites. Entende-se como \textbf{limite} um valor que esteja imediatamente próximo ao valor de entrada significativo que divide o domínio em classes de equivalência. Sendo assim, num contexto onde o valor significativo, para separar duas classes de equivalência, seja 50, possíveis valores limite seriam 49 e 51 \cite{williams2006}.
-\item[Grafo de causa e efeito:] é uma representação visual das relações entre as entradas e saídas. Permite a observação lógico-combinatória das especificações do programa. É uma representação semelhante a circuitos lógicos. Sua principal vantagem é a visualização que se dá, permitindo identificar casos de teste muito facilmente. NO entanto, quando a rede fica muito grande e complexa, passa a ser considerado o uso de outras técnicas \cite{barbosaEtAl2009}.
+\item[Grafo de causa e efeito:] é uma representação visual das relações entre as entradas e saídas. Permite a observação lógico-combinatória das especificações do programa. É uma representação semelhante a circuitos lógicos. Sua principal vantagem é a visualização que se dá, permitindo identificar casos de teste muito facilmente. No entanto, quando a rede fica muito grande e complexa, passa a ser considerado o uso de outras técnicas \cite{barbosaEtAl2009}.
 \end{description}
 
 
 \subsection{Testes Caixa-branca}
 Testes de caixa-branca, também referenciados como testes baseados em programa, almejam a avaliação do produto por meio da execução do código-fonte. Isso possibilita o exercício do software em busca de defeitos para serem corrigidos. Para que ocorra a dinâmica de testes de caixa-branca seleciona-se casos de testes que englobem cenários significativos \cite{barbosaEtAl2009}.
-%%% Técnicas de Derivação de Casos de Teste
+\par
+\indent Algumas vantagens de teste de caixa-branca podem ser listadas: pode-se dar início ao desenvolvimento de testes desde o começo da codificação, na medida em que a interação com interfaces não é necessária. Além disso, é um tipo de teste capaz de cobrir mais caminhos, pois tem um alcance mais profundo no software. Com relação aos pontos negativos, cita-se a necessidade de programadores para efetuar os testes de caixa-branca \cite{barbosaEtAl2009}.
+
+\subsection{Técnicas de Derivação de Casos de teste Caixa-branca}
+Os testes de caixa-branca são utilizados objetivando que todos os caminhos independentes possam ser percorridos e testados. Algumas técnicas para derivação de casos de teste são utilizadas, com o intuito de garantir que todos os caminhos tenham sido percorridos, pelo menos um vez, e assegurar uma quantidade de teste exclusivamente necessária. São elas: \textbf{Cobertura de Comandos}, \textbf{Cobertura de Decisão}, \textbf{Cobertura de Condição}, \textbf{Cobertura de Decisão-condição} e \textbf{Cobertura de Múltiplas condições}\textsuperscript{Falta Referencia}.
+
+\begin{description}
+\item[Cobertura de comandos:]
+\item[Cobetura de Decisão:]
+\item[Cobertura de Condição:]
+\item[Cobertura de Decisão-condição:]
+\item[Cobertura de Múltiplas condições:]
+\end{description}
 
 %% Níveis de Teste
 %%% Testes de Aceitação
