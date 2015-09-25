@@ -21,13 +21,15 @@ Software é uma atividade que requer um processo com o envolvimento de diversas 
 \section{Testes de Software}
 Testes de software é uma atividade que compõe o processo de verificação e validação de software. É uma das técnicas mais utilizadas no âmbito de garantia de confiabilidade de software. Em linhas gerais, é um trabalho de abordagem dinâmica sobre o código-fonte. Isso significa que há a exigência do funcionamento do software para que possa ser realizada essa atividade \cite{barbosaEtAl2009}. Essa análise dinâmica abre a possiblidade de identificação de defeitos no código-fonte, bem como a prevenção de inserções de novos defeitos. A produção de testes de software fornece, ainda, impulso para atividades de refatoração, manutenção e medição do software \cite{barbosaEtAl2009}.
 \par
-\indent Os testes podem ser classificados como: testes caixa-preta e testes caixa-branca \cite{barbosaEtAl2009}.
-
-%% Níveis de Teste
-%%% Testes de Aceitação
-%%% Testes de Sistema
-%%% Testes de Integração
-%%% Testes Unitários
+\indent Os testes podem ser classificados em \textbf{níveis}. Essa divisão refere-se ao nível de abstração dos testes. Quanto mais próximo do código menos abstrato o nível do teste \cite{sommerville2007}. Os testes de software são divididos da seguinte forma, em ordem descrescente de abstração:
+\begin{description}
+\item[Testes de aceitação:] são testes cuja finalidade é garantir que as especificações do software foram implementadas, de forma a corresponder com as necessidades do usuário final. Em essência, é um teste de validação dos software. \cite{sommerville2007}.
+\item[Testes de sistema:] tipo de teste que visa observar se o sistema funciona por completo. Diferentemente do testes aceitação seu foco não é a experiência do usuário, mas se o sistema é seguro, responde as requisições \cite{sommerville2007}.
+\item[Testes de Integração:] faz a análise e identificação de defeitos relacionados à integração de dois ou mais componentes do software. Normalmente visam as \textit{interfaces} que interagem com esses componentes \cite{sommerville2007}.
+\item[Testes de Unidade:] é o processo de teste de partes específicas do código-fonte. Busca a seleção de partes pequenas, mas de valor sifnigicativo, do código para fazer o teste. Normalmente os métodos (ou funções-membro) são consideradas unidades. Essa análise possibilita a verificação código, de forma a identificar defeitos e mitigá-los \cite{sommerville2007}.
+\end{description}
+\par
+\indent Os testes podem também ser classificados como: testes caixa-preta e testes caixa-branca \cite{barbosaEtAl2009}.
 
 \subsection{Testes Caixa-preta}
 Testes caixa-preta, também conhecidos como testes baseados em especificações, visam a avaliação do produto em relação aos requisitos funcionais e não funcionais. É caracterizado por fazer análises a partir de documentação e do software em funcionamento, sem necessidade de averiguação do código-fonte \cite{barbosaEtAl2009}.
@@ -59,7 +61,7 @@ Testes de caixa-branca, também referenciados como testes baseados em programa, 
 \indent Algumas vantagens de teste de caixa-branca podem ser listadas: pode-se dar início ao desenvolvimento de testes desde o começo da codificação, na medida em que a interação com interfaces não é necessária. Além disso, é um tipo de teste capaz de cobrir mais caminhos, pois tem um alcance mais profundo no software. Com relação aos pontos negativos, cita-se a necessidade de programadores para efetuar os testes de caixa-branca \cite{barbosaEtAl2009}.
 
 \subsection{Técnicas de Derivação de Casos de teste Caixa-branca}
-Os testes de caixa-branca são utilizados objetivando que todos os caminhos independentes possam ser percorridos e testados. Algumas técnicas para derivação de casos de teste são utilizadas, com o intuito de garantir que todos os caminhos tenham sido percorridos, pelo menos um vez, e assegurar uma quantidade de teste exclusivamente necessária. São elas: \textbf{Cobertura de Comandos}, \textbf{Cobertura de Decisão}, \textbf{Cobertura de Condição} e \textbf{Cobertura de Decisão-condição}\textsuperscript{Falta Referencia}.
+Os testes de caixa-branca são utilizados objetivando que todos os caminhos independentes possam ser percorridos e testados. Algumas técnicas para derivação de casos de teste são utilizadas, com o intuito de garantir que todos os caminhos tenham sido percorridos, pelo menos um vez, e assegurar uma quantidade de teste exclusivamente necessária. São elas: \textbf{Cobertura de Comandos}, \textbf{Cobertura de Decisão}, \textbf{Cobertura de Condição} e \textbf{Cobertura de Decisão-condição} \cite{istqb2014}.
 
 \begin{description}
 \item[Cobertura de comandos:] também conhecido como cobertua de linha ou cobertura de segmento. Tem por propósito a execução de todos os comandos do código, ao menos uma vez. Caracteriza-se por cobrir unicamente as linhas com condição verdadeira, e por permitir a observação dos comandos que, por algum motivo, não estão sendo executados. É considerada uma estrátegia incompleta, pois não permite o teste de condições falsas, muito menos a execução de testes de \textit{loops} de forma a ter-se certeza de sua condição de término \cite{istqb2014}.
@@ -68,7 +70,7 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
 \item[Cobertura de Decisão-condição:] é uma estratégia que pretende unir as vantagens da cobertura de decisão e de condição \cite{istqb2014}.
 \end{description}
 \par
-\indent Utilizando-se de um gráfico de fluxo de controle fica mais fácil a visualização e identificação dos caminhos a serem testados \cite{copeland2003}.
+\indent Utilizando-se de um grafo de fluxo de controle fica mais fácil a visualização e identificação dos caminhos a serem testados \cite{copeland2003}.
 
 % Framework
 % Geração de Testes
