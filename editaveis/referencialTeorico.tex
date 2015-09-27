@@ -73,7 +73,7 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
 \indent Utilizando-se de um grafo de fluxo de controle fica mais fácil a visualização e identificação dos caminhos a serem testados \cite{copeland2003}.
 
 \section{\textit{Frameworks}}
-\textit{Frameworks} podem ser definidos como uma forma de reutilização de software. \textit{Frameworks} são um conjunto de objetos e classes, abstratas e/ou concretas, que constitui uma arquitetura especializada a solucionar uma família de problemas \cite{barretoJunior2006}. Esse tipo de solução para o reuso de software, um dos principais objetivos da Engenharia de Software, é, em essência, uma aplicação não plenamente concluída, mas instanciável e que permite adaptações no código para um funcionamento específico, visando a solução de um problema dentro do domínio englobado pelo \textit{framework} \cite{barretoJunior2006}.
+\textit{Frameworks} podem ser definidos como uma forma de reutilização de software. \textit{Frameworks} são um conjunto de objetos e classes, abstratas e/ou concretas, que constitui uma arquitetura especializada a solucionar uma família de problemas \cite{barretoJunior2006}. Esse tipo de solução para o reuso de software, um dos principais objetivos da Engenharia de Software, é, em essência, uma aplicação não plenamente concluída, mas instanciável, e que permite adaptações no código para um funcionamento específico, visando a solução de um problema dentro do domínio englobado pelo \textit{framework} \cite{barretoJunior2006}.
 \par
 \indent Dentre as características de um \textit{framework} pode-se destacar \cite{sauve2006}:
 \begin{itemize}
@@ -84,7 +84,7 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
 \par
 \indent Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reuso, como por exemplo o uso de \textbf{\textit{framewokrs}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reuso de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{sauve2006}.
 \par
-\indent Os três modos de reutilização de software possuem pontos parecidos, como refletirem abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capazes de dar suporte ao desenvolvedor com soluções já pensadas e implementadas (\textit{frameworks} e Bibliotecas de classes e/ou funções).
+\indent Os três modos de reutilização de software possuem pontos parecidos, como refletir abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capazes de dar suporte ao desenvolvedor com soluções já pensadas e implementadas (\textit{frameworks} e bibliotecas de classes e/ou funções).
 \par
 \indent Da mesma forma, há também pontos que diferenciam esses tipos de reuso de software.
   \begin{figure}[h]
@@ -94,7 +94,10 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
     \label{fig:bibFrameworkPattern}
   \end{figure}
 \par
-\indent 
-
+\indent A Figura \ref{fig:bibFrameworkPattern} esquematiza algumas diferenças, bem como conceitos desses modos de reuso de software. Como demonstrado na Figura \ref{fig:bibFrameworkPattern}, biliotecas de classes possuem componentes, classes e/ou funções, já prontos, da mesma forma que \textit{frameworks}, entretanto, não há conexão entre eles. São independentes. Em \textit{frameworks} as classes que o compõe possuem dependências já encravadas por seu projetista, de forma que o modelo de colaboração entre elas já está embutido, enquanto que ao utilizar-se de uma biblioteca o desenvolvedor deve criar por si só esse modelo de colaboração, caso necessário \cite{sauve2006}.
+\par
+\indent \textit{Frameworks}, em contra ponto às bibliotecas de classe, é que está responsável por fazer chamadas ao código da aplicação a qual está vinculado. A essa forma de relação dá-se o nome de \textit{Hollywood Principle} (\textit{"don't call us, we'll call you"}) \cite{sauve2006}.
+\par
+\indent Uma outra diferença entre \textit{frameworks}, bibliotecas e \textit{design patterns} é que no  primeiro caso é previsto a justaposição de conhecimento de domínio, enquanto que nos demais casos não é previsto isso \cite{sauve2006}.
 % Geração de Testes
 % Resumo do Capítulo
