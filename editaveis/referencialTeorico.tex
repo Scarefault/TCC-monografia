@@ -60,7 +60,7 @@ Testes de caixa-branca, também referenciados como testes baseados em programa, 
 \par
 \indent Algumas vantagens de teste de caixa-branca podem ser listadas: pode-se dar início ao desenvolvimento de testes desde o começo da codificação, na medida em que a interação com interfaces não é necessária. Além disso, é um tipo de teste capaz de cobrir mais caminhos, pois tem um alcance mais profundo no software. Com relação aos pontos negativos, cita-se a necessidade de programadores para efetuar os testes de caixa-branca \cite{barbosaEtAl2009}.
 
-\subsection{Técnicas de Derivação de Casos de teste Caixa-branca}
+\subsubsection{Técnicas de Derivação de Casos de Teste Caixa-branca}
 Os testes de caixa-branca são utilizados objetivando que todos os caminhos independentes possam ser percorridos e testados. Algumas técnicas para derivação de casos de teste são utilizadas, com o intuito de garantir que todos os caminhos tenham sido percorridos, pelo menos um vez, e assegurar uma quantidade de teste exclusivamente necessária. São elas: \textbf{Cobertura de Comandos}, \textbf{Cobertura de Decisão}, \textbf{Cobertura de Condição} e \textbf{Cobertura de Decisão-condição} \cite{istqb2014}.
 
 \begin{description}
@@ -84,7 +84,7 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
 \par
 
 \subsection{\textit{Frameworks}, Biliotecas de Classe e \textit{Design Patterns}}
-Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reuso, como por exemplo o uso de \textbf{\textit{framewokrs}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reuso de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{sauve2006}.
+Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reuso, como por exemplo o uso de \textbf{\textit{framewokrs}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reuso de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{barretoJunior2006}.
 \par
 \indent Os três modos de reutilização de software possuem pontos parecidos, como refletir abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capazes de dar suporte ao desenvolvedor com soluções já pensadas e implementadas (\textit{frameworks} e bibliotecas de classes e/ou funções).
 \par
@@ -96,19 +96,45 @@ Durante o desenvolvimento de software a reutilização de soluções é uma prá
     \label{fig:bibFrameworkPattern}
   \end{figure}
 \par
-\indent A Figura \ref{fig:bibFrameworkPattern} esquematiza algumas diferenças, bem como conceitos desses modos de reuso de software. Como demonstrado na Figura \ref{fig:bibFrameworkPattern}, biliotecas de classes possuem componentes, classes e/ou funções, já prontos, da mesma forma que \textit{frameworks}, entretanto, não há conexão entre eles. São independentes. Em \textit{frameworks} as classes que o compõe possuem dependências já encravadas por seu projetista, de forma que o modelo de colaboração entre elas já está embutido, enquanto que ao utilizar-se de uma biblioteca o desenvolvedor deve criar por si só esse modelo de colaboração, caso necessário \cite{sauve2006}.
+\indent A Figura \ref{fig:bibFrameworkPattern} esquematiza algumas diferenças, bem como conceitos desses modos de reuso de software. Como demonstrado na Figura \ref{fig:bibFrameworkPattern}, biliotecas de classes possuem componentes, classes e/ou funções, já prontos, da mesma forma que \textit{frameworks}, entretanto, não há conexão entre eles. São independentes. Em \textit{frameworks} as classes que o compõe possuem dependências já encravadas por seu projetista, de forma que o modelo de colaboração entre elas já está embutido, enquanto que ao utilizar-se de uma biblioteca o desenvolvedor deve criar por si só esse modelo de colaboração, caso necessário \cite{barretoJunior2006}.
 \par
 \indent \textit{Frameworks}, em contra ponto às bibliotecas de classe, é que está responsável por fazer chamadas ao código da aplicação a qual está vinculado. A essa forma de relação dá-se o nome de \textit{Hollywood Principle} (\textit{"don't call us, we'll call you"}) \cite{sauve2006}.
 \par
 \indent Uma outra diferença entre \textit{frameworks}, bibliotecas e \textit{design patterns} é que no  primeiro caso é previsto a justaposição de conhecimento de domínio, são mais especilizados, enquanto que nos demais casos não é previsto isso \cite{sauve2006}.
 \par
 \indent A Figura \ref{fig:bibFrameworkPattern} também evidencia algumas diferenças entre os \textit{frameworks} e \textit{design patterns}. \textit{Design patterns} são elementso de software mais abstratos que \textit{frameworks}. Enquanto que \textit{frameworks} concentram a sua característica de reusabilidade a nível de código, os \textit{design patterns} fazem-no exclusivamente a nível de abstração. \textit{Design pattern} é uma idéia, um conceito capaz de abstrair uma solução padrão para um problema já conhecido. \textit{Frameworks} são abstrações de uma solução para um domínio de problema materializadas a nível de código \cite{sauve2006}. Outra diferença a ser citada é que \textit{design pattern} são elementos de software menores que \textit{frameworks}. Normalmente há uma relação de parte e todo, onde o todo é o \textit{framework} e a parte os \textit{design patterns}, e essa relação nunca é inversa \cite{sauve2006}.
+
 \subsection{Vantagens e Desvantagens de \textit{Frameworks}}
-As vantagens que podem ser citadas para o uso de \textit{frameworks} são \cite{sauve2006}:
+As vantagens que podem ser citadas para o \textbf{uso} de \textit{frameworks} são \cite{barretoJunior2006} \cite{sauve2006}.
 \begin{itemize}
 \item Redução e custos e tempo, na medida em que desenvolvedores passam a agregar valor, ao invés de reinventar a roda. Além disso, a menos anutenção do código, pois o \textit{framework} é uma peça confiável.
 \item Há um aumento da consistência entre as aplicações e compatibilidade, caso o \textit{framework} seja usado.
 \item O conhecimento dos especialistas no domínio relativo ao \textit{framework} fica empacotado, dessa forma, não há o risco de perda de conhecimento numa eventual saída de profissionais. A isso dá-se o nome de \textit{Strategic Asset Building}, um patrimônio estratégico da empresa.
 \end{itemize}
+
+As desvantagens em um \textit{framework} concentram-se no período de \textbf{produção} dele. Algumas dessas desvantagens são \cite{barretoJunior2006} \cite{sauve2006}:
+\begin{itemize}
+\item A construção de \textit{framewoks} exige planejamento e esforço. São elementos complexos.
+\item Os benefícios advindos de um \textit{framework} são sentidos a longo prazo.
+\item O uso de \textit{frameworks} em empresas exige modificação nos processos de desenvolvimento, o que custa dinheiro e tempo.
+\end{itemize}
+\par
+
+\subsection{Categorias de \textit{Frameworks}}
+As formas comumente utilizadas para classificar-se \textit{frameworks} é pelo modo como eles foram projetados para serem utilizados e pelo tipo de conhecimento encapsulado por eles.
+
+\subsubsection{Classificação por Modo de Uso}
+Essa classificação é utilizada com o intuito de evidenciar a forma com que o \textit{framework} é utilizado.
+\begin{description}
+\item[\textit{Inheritance-focused}:] conhecido também como \textit{white-box} ou \textit{architeture-driven}. Esse tipo de \textit{framework} apresenta ao desenvolvedor a possibilidade de estender, ou alterar, funcionalidades por meio do recurso de \textbf{herança}. Assim, pode-se utilizar sub-classes e sobreescrita de métodos (ou funções-membro) para aplicar as alterações necessárias \cite{sauve2006}.
+\item[\textit{Composition-focused}:] chamada de \textit{black-box} ou \textit{data-driven}. Nesse tipo de \textit{framework}  não é possível a alteração, apenas o uso das funcionalidades já fornecidas. Como não há acesso ao código do \textit{framework}, usa-se interfaces providenciadas pelo \textit{framework} \cite{sauve2006}.
+\item[Híbridos:] a maioria dos \textit{frameworks} é híbrida, contendo uma grande porção de seu código como \textit{inheritance-focused} e algumas funcionalidades já pré-definidas (\textit{composition-focused}).
+\end{description}
+
+\subsubsection{Classificação por Conhecimento Embutido}
+\begin{description}
+\item[Framework de Horizontal:]
+\item[Framework de Vertical:]
+\end{description}
 % Geração de Testes
 % Resumo do Capítulo
