@@ -103,7 +103,7 @@ Durante o desenvolvimento de software a reutilização de soluções é uma prá
 \par
 \indent A Figura \ref{fig:bibFrameworkPattern} esquematiza algumas diferenças, bem como conceitos desses modos de reuso de software. Como demonstrado na Figura \ref{fig:bibFrameworkPattern}, biliotecas de classes possuem componentes, classes e/ou funções, já prontos, da mesma forma que \textit{frameworks}, entretanto, não há conexão entre eles. São independentes. Em \textit{frameworks} as classes que o compõe possuem dependências já encravadas por seu projetista, de forma que o modelo de colaboração entre elas já está embutido, enquanto que ao utilizar-se de uma biblioteca o desenvolvedor deve criar por si só esse modelo de colaboração, caso necessário \cite{barretoJunior2006}.
 \par
-\indent \textit{Frameworks}, em contra ponto às bibliotecas de classe, é que está responsável por fazer chamadas ao código da aplicação a qual está vinculado. A essa forma de relação dá-se o nome de \textit{Hollywood Principle} (\textit{"don't call us, we'll call you"}) \cite{sauve2006}.
+\indent \textit{Frameworks}, em contra ponto às bibliotecas de classe, são responsáveis por fazer chamadas ao código da aplicação a qual está vinculado. A esse tipo de relação dá-se o nome de \textit{Hollywood Principle} (\textit{"don't call us, we'll call you"}) \cite{sauve2006}.
 \par
 \indent Uma outra diferença entre \textit{frameworks}, bibliotecas e \textit{design patterns} é que no  primeiro caso é previsto a justaposição de conhecimento de domínio, são mais especilizados, enquanto que nos demais casos não é previsto isso \cite{sauve2006}.
 \par
@@ -151,7 +151,11 @@ Essa classificação é usada para demonstrar como o conhecimento de domínio es
 \end{description}
 
 \section{Geração de Testes}
-A produção de testes de software é uma atividade que vem ganhando foco no desenvolvimento de aplicações. A qualidade do produto, ou serviço, resultante de projetos de software é um fator considerado essencial \cite{barbosaEtAl2009}. Testes de unidade são uma categoria de testes de software cujo objetivo e identificar os defeitos no código-fonte, o mais cedo possível. Isso implica na que o desenvolvimento desse tipo de teste ocorra em paralela com o desenvolvimento do software. No entanto, é comum que haja a defasagem entre a produção de testes e de código-fonte do software \cite{fantinatoEtAl2004}. Essa falta de sincronia ocorre por diversos fatores, dentre eles a falta de tempo e de qualificação técnica dos envolvidos \cite{fantinatoEtAl2004}.
+A produção de testes de software é uma atividade que vem ganhando foco no desenvolvimento de aplicações. A qualidade do produto, ou serviço, resultante de projetos de software é um fator considerado essencial \cite{barbosaEtAl2009}. Testes de unidade são uma categoria de testes de software cujo objetivo e identificar os defeitos no código-fonte, o mais cedo possível. Isso implica que o desenvolvimento desse tipo de teste ocorra em paralela com o desenvolvimento do software. No entanto, é comum que haja a defasagem entre a produção de testes e de código-fonte do software \cite{fantinatoEtAl2004}. Essa falta de sincronia ocorre por diversos fatores, dentre eles a falta de tempo e de qualificação técnica dos envolvidos \cite{fantinatoEtAl2004}.
+\par
+\indent Nesse contexto, o uso de ferramentas, e outras abordagens, de automação de testes de software vem tornando-se um medida bem vista para amenizar o problema \cite{fantinatoEtAl2004}. Em essência, a automação de testes de software é a prática de criar, normalmente via \textit{scripts}, meios do computador executar a tarefa de testar o código. Tendo isso em vista, as atividades de teste consideradas para automação são a geração de testes e execução \cite{fantinatoEtAl2004}.
+
+\subsection{Técnicas de Geração de Teste}
 
 
 
