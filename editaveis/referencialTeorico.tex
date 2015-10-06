@@ -156,7 +156,17 @@ A produção de testes de software é uma atividade que vem ganhando foco no des
 \indent Nesse contexto, o uso de ferramentas, e outras abordagens, de automação de testes de software vem tornando-se um medida bem vista para amenizar o problema \cite{fantinatoEtAl2004}. Em essência, a automação de testes de software é a prática de criar, normalmente via \textit{scripts}, meios do computador executar a tarefa de testar o código. Tendo isso em vista, as atividades de teste consideradas para automação são a geração de testes e execução \cite{fantinatoEtAl2004}.
 
 \subsection{Técnicas de Geração de Teste}
-
+Há diversas técnicas para automação da geração de testes. As principais técnicas são: \textbf{\textit{record/Playback}}, \textbf{\textit{script programming}}, \textbf{\textit{data-driven}} e \textbf{\textit{keyword-driven}} \cite{fantinatoEtAl2004}.
+\subsubsection{\textit{Record/Playback}}
+Em essência, a técnica de \textit{Record/Playback} consiste em repetir, de forma automática, um teste executado sobre a interface gráfica. Grava-se as ações produzidas pelo usuário e transcreve-se para um \textit{script}. A partir desse \textit{script} pode-se repetir as ações do usuário sempre que necessário. Assim, testa-se a aplicação utilizando-se as ações anteriormente bem sucedidas. Caso alguma das ações tenha insucesso, significa que algo foi quebrado. Os \textit{scripts} armazenam não apenas o procedimento de teste, mas também os dados utilizados pelo usuário para a execução deles \cite{kent2007}.
+\par
+\indent Como vantagens relativas ao \textit{Record/Playback} pode-se citar a sua praticidade. No entanto, a quantidade de desvantagens é alta. Ao lidar-se com um número grande de casos de teste essa técnica mostra dificuldades relacionadas ao custo e complexidade de manutenção. Além disso, traz uma inerente sensibilidade a mudanças do software. O fato de ser específico a uma determinada interface também inviabiliza a reutilização dos testes \cite{fantinatoEtAl2004}.
+\subsubsection{\textit{Script programming}}
+Essa técnica é um melhoramento da técnica de \textit{Record/Playback}. Possui a mesma dinâmica de gravar as ações executadas por um usuário para, a partir de um \textit{script}, repetí-las. Diferencia-se pelo fato de alterar os \textit{scripts} originais de teste, inserindo novos comportamentos ao teste. Dessa forma, pode-se manter uma cópia do \textit{script} original e fazer diversas cópias que contemplem ações não executadas \cite{kent2007}.
+\par
+\indent
+\subsubsection{\textit{Data-driven}}
+\subsubsection{\textit{Keyword-driven}}
 
 
 
