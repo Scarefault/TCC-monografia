@@ -150,12 +150,12 @@ Essa classificação é usada para demonstrar como o conhecimento de domínio es
 \item[Framework de Vertical:] também conhecido como \textit{framework} de domínio. O conhecimento encapsulado nesse tipo de \textit{framework} é mais específico a um domínio particular, o que confere ao \textit{framework} uma capacidade de dar maior suporte e, portanto, maior participação no desenvolvimento da aplicação. Porém, não permite a reutilização em uma diversidade de aplicações, na medida em que o domínio é específico. \cite{barretoJunior2006}.
 \end{description}
 
-\section{Geração de Testes}
-A produção de testes de software é uma atividade que vem ganhando foco no desenvolvimento de aplicações. A qualidade do produto, ou serviço, resultante de projetos de software é um fator considerado essencial \cite{barbosaEtAl2009}. Testes de unidade são uma categoria de testes de software cujo objetivo e identificar os defeitos no código-fonte, o mais cedo possível. Isso implica que o desenvolvimento desse tipo de teste ocorra em paralela com o desenvolvimento do software. No entanto, é comum que haja a defasagem entre a produção de testes e de código-fonte do software \cite{fantinatoEtAl2004}. Essa falta de sincronia ocorre por diversos fatores, dentre eles a falta de tempo e de qualificação técnica dos envolvidos \cite{fantinatoEtAl2004}.
+\section{Geração e Automação de Testes}
+A produção de testes de software é uma atividade que vem ganhando foco no desenvolvimento de aplicações. A qualidade do produto, ou serviço, resultante de projetos de software é um fator considerado essencial \cite{barbosaEtAl2009}. Testes de unidade são uma categoria de testes de software cujo objetivo e identificar os defeitos no código-fonte, o mais cedo possível. Isso implica que o desenvolvimento desse tipo de teste ocorra em paralelo com o desenvolvimento do software. No entanto, é comum que haja a defasagem entre a produção de testes e de código-fonte do software \cite{fantinatoEtAl2004}. Essa falta de sincronia ocorre por diversos fatores, dentre eles a falta de tempo e de qualificação técnica dos envolvidos \cite{fantinatoEtAl2004}.
 \par
 \indent Nesse contexto, o uso de ferramentas, e outras abordagens, de automação de testes de software vem tornando-se um medida bem vista para amenizar o problema \cite{fantinatoEtAl2004}. Em essência, a automação de testes de software é a prática de criar, normalmente via \textit{scripts}, meios do computador executar a tarefa de testar o código. Tendo isso em vista, as atividades de teste consideradas para automação são a geração de testes e execução \cite{fantinatoEtAl2004}.
 
-\subsection{Técnicas de Geração de Teste}
+\subsection{Técnicas de Geração e Automação de Teste}
 Há diversas técnicas para automação da geração de testes. As principais técnicas são: \textbf{\textit{record/Playback}}, \textbf{\textit{script programming}}, \textbf{\textit{data-driven}} e \textbf{\textit{keyword-driven}} \cite{fantinatoEtAl2004}.
 \subsubsection{\textit{Record/Playback}}
 Em essência, a técnica de \textit{Record/Playback} consiste em repetir, de forma automática, um teste executado sobre a interface gráfica. Grava-se as ações produzidas pelo usuário e transcreve-se para um \textit{script}. A partir desse \textit{script} pode-se repetir as ações do usuário sempre que necessário. Assim, testa-se a aplicação utilizando-se as ações anteriormente bem sucedidas. Caso alguma das ações tenha insucesso, significa que algo foi quebrado. Os \textit{scripts} armazenam não apenas o procedimento de teste, mas também os dados utilizados pelo usuário para a execução deles \cite{kent2007}.
@@ -164,10 +164,15 @@ Em essência, a técnica de \textit{Record/Playback} consiste em repetir, de for
 \subsubsection{\textit{Script programming}}
 Essa técnica é um melhoramento da técnica de \textit{Record/Playback}. Possui a mesma dinâmica de gravar as ações executadas por um usuário para, a partir de um \textit{script}, repetí-las. Diferencia-se pelo fato de alterar os \textit{scripts} originais de teste, inserindo novos comportamentos ao teste. Dessa forma, pode-se manter uma cópia do \textit{script} original e fazer diversas cópias que contemplem ações não executadas \cite{kent2007}.
 \par
-\indent
+\indent Traz taxas maiores de manutenabilidade e reuso que a \textit{Record/Playback}, como vantagens, entretanto, ainda possui a problemática de gerar grandes quantidades de \textit{scripts} \cite{fantinatoEtAl2004}.
 \subsubsection{\textit{Data-driven}}
+Também conhecida como técnica orientada a dados. Nessa abordagem, que é uma aprimoramento da técnica de \textit{script programming}, dá-se foco maior aos dados de teste utilizados em cada \textit{script}. Extrai-se esses dados dos \textit{scripts}, mantendo-os armazenados em outro arquivo. Assim, deixa apenas os procedimentos - lógica de execução - e as ações de teste de teste escritos nos \textit{scripts}. Dessa maneira, os \textit{scripts} devem acessar os arquivos contendo os dados de teste para que haja a execução correta dos testes \cite{kent2007}.
+\par
+\indent Isto posto, observar-se algumas vantagens do uso dessa técnica: maior abstração dos testes, permitindo que haja o trabalho tanto do projetista de testes quanto do implementador, sem que haja preocupação de um nível de abstração com o outro. Enquanto o projetista visa a seleção dos melhores dados para o teste, o implementador prepara os \textit{scripts}. A facilidade em generalizar os \textit{scripts} e alterar os dados de teste configuram-se como outra vantagem dessa técnica. Permite maior reuso e manutenabilidade dos \textit{scripts} \cite{fantinatoEtAl2004}.
 \subsubsection{\textit{Keyword-driven}}
-
+Por meio dessa técnica pretende-se a extração da lógica, os procedimentos, de teste dos \textit{scripts}, e mantendo-os armazenados em outro arquivo. A partir do arquivo de procedimentos é que os \textit{scripts} retiram a lógica para efetuar as ações determinadas \cite{kent2007}.
+\par
+\indent Essa abordagem facilita a adição, remoção ou a alteração dos passos de execução de algum teste \cite{fantinatoEtAl2004}.
 
 
 
