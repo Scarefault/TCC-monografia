@@ -76,22 +76,17 @@ Os testes de caixa-branca são utilizados objetivando que todos os caminhos inde
 \par
 \indent Utilizando-se de um grafo de fluxo de controle fica mais fácil a visualização e identificação dos caminhos a serem testados \cite{copeland2003}.
 \par
-\indent AVALIAR UMA SEÇÃO MACRO: REUTILIZAÇÃO DE SOFTWARE
-\section{\textit{Frameworks}}
-\textit{Frameworks} podem ser definidos como uma forma de reutilização de software. \textit{Frameworks} são um conjunto de objetos e classes, abstratas e/ou concretas, que constitui uma arquitetura especializada a solucionar uma família de problemas \cite{barretoJunior2006}. Esse tipo de solução para o reuso de software é, em essência, uma aplicação não plenamente concluída mas instanciável. Permite adaptações no código para um funcionamento específico, visando a solução de um problema dentro do domínio englobado pelo \textit{framework} \cite{barretoJunior2006}.
+\section{Reuso de Software}
+O conceito de reutilização é antigo dentro do domínio da engenharia. Foi utilizado a bastante tempo por culturas antigas, como os egípios (\textit{design} das pirâmides) e os romanos (arcos na construção civil). A engenharia civil utiliza-se do conceito do reuso de soluções e de componentes \cite{sutcliffe2002}. O uso do desenvolvimento baseado em componentes também está presente no universo de software, entretanto, num cenário menos consolidado \cite{sutcliffe2002}.
 \par
-\indent Dentre as características de um \textit{framework} pode-se destacar \cite{sauve2006}:
-\begin{itemize}
-\item Provê solução para problemas com um mesmo domínio.
-\item Possui arquitetura baseada em classes e interfaces que abstraem o domínio.
-\item É flexível e extensível.
-\end{itemize}
+\indent \textbf{Reuso} é o uso de conceitos, ou objetos, previamente adquiridos, mas num novo contexto \cite{cybulski1996}. Tendo isso em vista, entende-se que para alcançar-se o reuso há a necessidade de entender o problema e a solução. A partir disso, encapsular em diferentes níveis de abstração, para conseguir extrair conceitos passíveis de serem duplicados e/ou adaptados \cite{sutcliffe2002}.
 \par
+\indent Portanto, pode-se entender como reuso de software o desenvolvimento de software a partir de abstrações, sendo estas conceituais ou componentizadas, que já foram utilizadas com sucesso em outros contextos \textbf{sutcliffe2002}.
 
 \subsection{\textit{Frameworks}, Biliotecas de Classe e \textit{Design Patterns}}
-Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reutilização, como por exemplo o uso de \textbf{\textit{framewokrs}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reutilização de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{barretoJunior2006}.
+Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reutilização, como por exemplo o uso de \textbf{\textit{frameworks}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reutilização de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{barretoJunior2006}.
 \par
-\indent Os três modos de reutilização de software possuem pontos parecidos, como refletir abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capazes de dar suporte ao desenvolvedor com soluções já pensadas e implementadas (\textit{frameworks} e bibliotecas de classes e/ou funções).
+\indent Os três modos de reutilização de software possuem pontos parecidos, como refletir abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capaz de dar suporte ao desenvolvedor por meio de soluções já pensadas e implementadas (\textit{frameworks} e bibliotecas de classes e/ou funções).
 \par
 \indent Da mesma forma, há também pontos que diferenciam esses tipos de reutilização de software.
   \begin{figure}[h]
@@ -109,7 +104,56 @@ Durante o desenvolvimento de software a reutilização de soluções é uma prá
 \par
 \indent A Figura \ref{fig:bibFrameworkPattern} também evidencia algumas diferenças entre os \textit{frameworks} e \textit{design patterns}. \textit{Design patterns} são elementso de software mais abstratos que \textit{frameworks}. Enquanto que \textit{frameworks} concentram a sua característica de reusabilidade a nível de código, os \textit{design patterns} fazem-no exclusivamente a nível de abstração. \textit{Design pattern} é uma idéia, um conceito capaz de abstrair uma solução padrão para um problema já conhecido. \textit{Frameworks} são abstrações de uma solução para um domínio de problema materializadas a nível de código \cite{sauve2006}. Outra diferença a ser citada é que \textit{design pattern} são elementos de software menores que \textit{frameworks}. Normalmente há uma relação de parte e todo, onde o todo é o \textit{framework} e a parte os \textit{design patterns}, e essa relação nunca é inversa \cite{sauve2006}.
 
-\subsection{Vantagens e Desvantagens de \textit{Frameworks}}
+\subsection{Bibliotecas de Classe}
+API, \textit{Application Programming Interface}, é um conjunto particular de regras e especificações que permite a comunicação entre  softwares\textsuperscript{\textbf{Falta referência}}. API's normalmente são vistas como as especificações de como utilizar uma biblioteca de classes, afim de realizar uma tarefa, por meio da interação com a biblioteca \cite{simsek2004}.
+\par
+\indent Bibliotecas de Classes ou funções, podem ser definidas como sendo a implementação de regras de uma \textbf{API}. Elas disponibilizam um conjunto de funções pré definidas, encarregadas de suprir necessidades comuns de programadores em um dado contexto \cite{simsek2004}. As Bibliotecas são auto-suficientes e abstraem um conjunto de funções comuns a um conceito, como por exemplo, bibliotecas de \textit{strings}, funções matemáticas, manipulação de imagens, algoritmos de ordenação e manipulação de estruturas de dados. Essas características concedem ao programador a facilidade de escrever códigos menores e modularizados, garantindo maior legibilidade e manutenabilidade do código \cite{simsek2004}.
+\par
+\indent As Bibliotecas podem ser classificadas como \textbf{bibliotecas estáticas} ou \textbf{bibliotecas compartilhadas}. A principal diferença entre essas categorias é em relação a compilação.
+\begin{description}
+\item[Bibliotecas estáticas:] esse tipo de biblioteca é conectada ao programa que faz uso dela durante a compilação, sem a necessidade de recompilar o aquivo da biblioteca. A principal razão para o uso desse tipo de biblioteca é a redução de tempo de compilação \cite{simsek2004}.
+\item[Bibliotecas compartilhadas:] é um tipo de biblioteca que, a partir da ativação do programa, é inserida, o que exige a sua recompilação. O programa não necessariamente inclui código da biblioteca, mas referências às funções conidas nela \cite{simsek2004}.
+\end{description}
+
+\subsection{\textit{Design Patterns}}
+Uma discussão anterior aos \textit{design patterns} é sobre a arquitetura de software. Há muitas formas de definir arquitetura de sotware. Numa discussão de alto nível, pode-se dizer que arquitetura de sotware são os formatos e estruturas de uma aplicação de software. Já numa visão de mais baixo nível pode-se afirmar que arquitetura de software diz respeito aos módulos da aplicação e suas interconexões, como se relacionam \cite{martin2000}. Um cuidado que projetistas procuram ter com a arquitetura de suas aplicações de sotware é que caracterizem-se por serem manuteníveis, livres de falhas críticas, confiáveis e extensíveis \cite{kleinWeiss2009}.
+
+\subsubsection{Princípios de \textit{Design} da Orientação a Objetos}
+A partir da necessidade de produzir arquiteturas de software consideradas de qualidade, surgiram alguns princípios considerados essenciais para o \textit{design} de projetos orientados a objetos: \textit{open closed principle}, \textit{liskov substitution principle}, \textit{single responsability principle}, \textit{dependency inversion principle} e \textit{interface segregation principle} \cite{martin2000}.
+\begin{description}
+\item[\textit{Open closed principle}:] um módulo deve ser aberto para extensões, no entanto, fechado para modificações.
+\item[\textit{Liskov substitution principle}:] subclasses deve ser substituíveis por suas classes base.
+\item[\textit{Single responsability principle}:] uma classe deve ter apenas uma razão para existir. Cada classe deve lidar apenas com uma responsabilidade.
+\item[\textit{Dependency inversion principle}:] deve-se depender de abstrações e não de classes concretas.
+\item[\textit{Interface segregation principle}:] é melhor possuir interfaces específicas para os clientes de uma classe, ao invés de uma interface genérica.
+\end{description}
+\par
+\subsubsection{Definição de \textit{Design Pattern}} 
+Com o tempo algumas estruturas utilizadas para solucionar determinados problemas, e que respeitavam os princípios descritos acima, foram sendo repetidas. A essas estruturas foi dado o nome de \textit{design patterns}. \textit{Design pattern}, de uma maneira simplista, é definido, segundo \citeonline{martin2000}, como \textit{"uma solução bem conhecida e bastante utilizada para problemas comuns"}\textsuperscript{Como dizer que isso é uma tradução?}. Segundo \citeonline{gammaEtAl1994}, \textit{design pattern} é uma solução simples e elegante para um problema específico. São formados por quatro elementos: \textbf{nome}, \textbf{problema associado}, \textbf{a solução} e as \textbf{consequências}.
+\begin{description}
+\item[Nome:] normalmente é fomado por uma ou duas palavras capazes de invocar tanto o problema a ser atacado e sua solução, bem como as consenquências relativas ao \textit{desgin pattern}. Nomear um \textit{design pattern}, de maneira correta, é importante, na medida em que permite a comunicação fácil entre os desenvolvedores. Permite a referência a um arcabouço de conhecimento e o entendimento entre as partes da conversa de forma simples \cite{martin2000}.
+\item[Problema:] é descrição de quando deve-se aplicar o \textit{design pattern}. Em que circunstância deve-se utilizá-lo, explicando o problema e o contexto. Pode-se listar também condições que devem ser observadas para que faça sentido a aplicação do \textit{design pattern} \cite{martin2000}.
+\item[Solução:] descreve os elementos que devem ser inseridos no \textit{design}, apontando suas responsabilidades, estruturas e relacionamentos. É importante ressaltar que a solução não deve descrever em detalhes a implementação, e sim a abstração, o conceito, por trás da solução. Isso se deve ao fato de que a solução pode ser aplicada a diferentes situações, variando inclusive a linguagem de programação a ser utilizada \cite{martin2000}.
+\item[Consequência:] são os resultados da aplicação do \textit{design pattern} ao projeto. Isso envolve a descrição dos benefícios e e os custos do uso do padrão.Demonstra os impactos à flexibilidade, extensibilidade do sistema e tantos outras possíveis características. Tudo deve ser listado para melhor entendimento do padrão \cite{martin2000}.
+\end{description}
+\par
+\subsubsection{Classificação dos \textit{Design Patterns}}
+A classificação dos \textit{design patterns} vem da necessidade de organizá-los. Além disso, o entendimento do contexto associado a cada uma deles torna-se mais evidente a partir da classificação \cite{gammaEtAl1994}. Como este tema não é escopo desse trabalho, será abordado uma visão geral sobre a classificação dos \textit{design patterns}, sem muitos detalhes. Os \textit{design patterns} podem ser classificados entre: \textbf{padrões criacionais}, \textbf{padrões estruturais} e \textbf{padrões comportamentais}:
+\subsubsubsection{Padrões Criacionais}
+\subsubsubsection{Padrões Estruturais}
+\subsubsubsection{Padrões Comportamentais}
+
+\subsection{\textit{Frameworks}}
+\textit{Frameworks} podem ser definidos como uma forma de reutilização de software. \textit{Frameworks} são um conjunto de objetos e classes, abstratas e/ou concretas, que constitui uma arquitetura especializada a solucionar uma família de problemas \cite{barretoJunior2006}. Esse tipo de solução para o reuso de software é, em essência, uma aplicação não plenamente concluída mas instanciável. Permite adaptações no código para um funcionamento específico, visando a solução de um problema dentro do domínio englobado pelo \textit{framework} \cite{barretoJunior2006}.
+\par
+\indent Dentre as características de um \textit{framework} pode-se destacar \cite{sauve2006}:
+\begin{itemize}
+\item Provê solução para problemas com um mesmo domínio.
+\item Possui arquitetura baseada em classes e interfaces que abstraem o domínio.
+\item É flexível e extensível.
+\end{itemize}
+\par
+\subsubsection{Vantagens e Desvantagens de \textit{Frameworks}}
 As vantagens que podem ser citadas para o \textbf{uso} de \textit{frameworks} são \cite{barretoJunior2006} \cite{sauve2006}.
 \begin{itemize}
 \item Redução e custos e tempo, na medida em que desenvolvedores passam a agregar valor, ao invés de reinventar a roda. Além disso, a menos anutenção do código, pois o \textit{framework} é uma peça confiável.
@@ -125,10 +169,10 @@ As desvantagens em um \textit{framework} concentram-se no período de \textbf{pr
 \end{itemize}
 \par
 
-\subsection{Categorias de \textit{Frameworks}}
+\subsubsection{Categorias de \textit{Frameworks}}
 As formas comumente utilizadas para classificar-se \textit{frameworks} é pelo modo como eles foram projetados para serem utilizados e pelo tipo de conhecimento encapsulado por eles.
 
-\subsubsection{Classificação por Modo de Uso}
+\subsubsubsection{Classificação por Modo de Uso}
 Essa classificação é utilizada com o intuito de evidenciar a forma com que o \textit{framework} é utilizado.
 \begin{description}
 \item[\textit{Inheritance-focused}:] conhecido também como \textit{white-box} ou \textit{architeture-driven}. Esse tipo de \textit{framework} apresenta ao desenvolvedor a possibilidade de estender, ou alterar, funcionalidades por meio do recurso de \textbf{herança}. Assim, pode-se utilizar sub-classes e sobreescrita de métodos (ou funções-membro) para aplicar as alterações necessárias \cite{sauve2006}.
@@ -136,7 +180,7 @@ Essa classificação é utilizada com o intuito de evidenciar a forma com que o 
 \item[Híbridos:] a maioria dos \textit{frameworks} é híbrida, contendo uma grande porção de seu código como \textit{inheritance-focused} e algumas funcionalidades já pré-definidas (\textit{composition-focused}).
 \end{description}
 
-\subsubsection{Classificação por Conhecimento Embutido}
+\subsubsubsection{Classificação por Conhecimento Embutido}
 Essa classificação é usada para demonstrar como o conhecimento de domínio está encapsulado, e de que forma o \textit{framework} pode auxiliar o desenvolvedor.
 \begin{figure}[h]
     \centering
