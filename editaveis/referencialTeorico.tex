@@ -83,7 +83,7 @@ O conceito de reutilização é antigo dentro do domínio da engenharia. Foi uti
 \par
 \indent Portanto, pode-se entender como reuso de software o desenvolvimento de software a partir de abstrações, sendo estas conceituais ou componentizadas, que já foram utilizadas com sucesso em outros contextos \cite{sutcliffe2002}.
 
-\subsection{\textit{•}xtit{Frameworks}, Biliotecas de Classe e \textit{Design Patterns}}
+\subsection{\textit{Frameworks}, Biliotecas de Classe e \textit{Design Patterns}}
 Durante o desenvolvimento de software a reutilização de soluções é uma prática bastante comum. Há diversas formas de colocar em prática o reutilização, como por exemplo o uso de \textbf{\textit{frameworks}}, \textbf{bibliotecas} e \textbf{\textit{design patterns}}. Essas formas de reutilização de software, em alguns momentos, podem ser semelhantes, no entanto, são técnicas distintas \cite{barretoJunior2006}.
 \par
 \indent Os três modos de reutilização de software possuem pontos parecidos, como refletir abstrações, generalizando um domínio de problemas e demonstrando uma solução (\textit{frameworks} e \textit{design pattern}), ou mesmo configurando-se como um conjunto de classes capaz de dar suporte ao desenvolvedor por meio de soluções já pensadas e implementadas (\textit{frameworks} e bibliotecas de classes e/ou funções).
@@ -105,7 +105,7 @@ Durante o desenvolvimento de software a reutilização de soluções é uma prá
 \indent A Figura \ref{fig:bibFrameworkPattern} também evidencia algumas diferenças entre os \textit{frameworks} e \textit{design patterns}. \textit{Design patterns} são elementso de software mais abstratos que \textit{frameworks}. Enquanto que \textit{frameworks} concentram a sua característica de reusabilidade a nível de código, os \textit{design patterns} fazem-no exclusivamente a nível de abstração. \textit{Design pattern} é uma idéia, um conceito capaz de abstrair uma solução padrão para um problema já conhecido. \textit{Frameworks} são abstrações de uma solução para um domínio de problema materializadas a nível de código \cite{sauve2006}. Outra diferença a ser citada é que \textit{design pattern} são elementos de software menores que \textit{frameworks}. Normalmente há uma relação de parte e todo, onde o todo é o \textit{framework} e a parte os \textit{design patterns}, e essa relação nunca é inversa \cite{sauve2006}.
 
 \subsection{Bibliotecas de Classe}
-API, \textit{Application Programming Interface}, é um conjunto particular de regras e especificações que permite a comunicação entre  softwares\textsuperscript{\textbf{Falta referência}}. API's normalmente são vistas como as especificações de como utilizar uma biblioteca de classes, afim de realizar uma tarefa, por meio da interação com a biblioteca \cite{simsek2004}.
+API, \textit{Application Programming Interface}, é um conjunto particular de regras e especificações que permite a comunicação entre  softwares \cite{simsek2004}. API's normalmente são vistas como as especificações de como utilizar uma biblioteca de classes, afim de realizar uma tarefa, por meio da interação com a biblioteca \cite{simsek2004}.
 \par
 \indent Bibliotecas de Classes ou funções, podem ser definidas como sendo a implementação de regras de uma \textbf{API}. Elas disponibilizam um conjunto de funções pré definidas, encarregadas de suprir necessidades comuns de programadores em um dado contexto \cite{simsek2004}. As Bibliotecas são auto-suficientes e abstraem um conjunto de funções comuns a um conceito, como por exemplo, bibliotecas de \textit{strings}, funções matemáticas, manipulação de imagens, algoritmos de ordenação e manipulação de estruturas de dados. Essas características concedem ao programador a facilidade de escrever códigos menores e modularizados, garantindo maior legibilidade e manutenabilidade do código \cite{simsek2004}.
 \par
@@ -140,6 +140,8 @@ Com o tempo algumas estruturas utilizadas para solucionar determinados problemas
 \subsubsection{Classificação dos \textit{Design Patterns}}
 A classificação dos \textit{design patterns} vem da necessidade de organizá-los. Além disso, o entendimento do contexto associado a cada uma deles torna-se mais evidente a partir da classificação \cite{gammaEtAl1994}. Como este tema não é escopo desse trabalho, será abordado uma visão geral sobre a classificação dos \textit{design patterns}, sem muitos detalhes. Os \textit{design patterns} podem ser classificados entre: \textbf{padrões criacionais}, \textbf{padrões estruturais} e \textbf{padrões comportamentais}:
 \subsubsubsection{Padrões Criacionais}
+Esse tipo de \textit{design pattern} objetiva a abstração do processo de instantiação de objetos, permitindo o desenvolvimento de um sistema independente de criação, composição e representação \cite{gammaEtAl1994}.
+Esse tipo de padrão viabiliza que o próprio programa decida quais os objetos devem ser criados, para cada caso que surja, adequando-se a situação. Evita determinados problemas que aparecem no método tradicional de criação, por meio de um controle maior dessa ação. Os padrões criacionais possuem duas características marcantes: encapsular o conhecimento sobre as classes concretas utilizadas pelo sistema e esconder como essas instâncias de classes concretas são criadas e combinadas \cite{gammaEt1994}.
 \subsubsubsection{Padrões Estruturais}
 \subsubsubsection{Padrões Comportamentais}
 
