@@ -1,7 +1,7 @@
 \chapter[Proposta]{Proposta}
 Este capítulo apresenta detalhes sobre o \textit{framework} proposto neste trabalho de conclusão de curso. O capítulo está organizado em seções. Na seção 4.1, é explanado sobre os requisitos gerais do \textit{framework}. Em seguida, na seção 4.2, é apresentado os objetivos da prova de conceito. Na seção 4.3, é relatado os resultados obtidos até o momento.
 
-\section{Framework para Geração de Teste Unitário}
+\section{Framework para Geração de Teste Unitário} \label{ch4sec1}
 
 A proposta deste trabalho é a implementação de um \textit{framework} capaz de dar suporte ao desenvolvedor na tarefa de produzir testes unitários.  Esse suporte deve ser capaz de gerar testes de forma semiautomatizada, visto que o programador deverá incluir no código especificações que guiem o \textit{framework} na criação dos testes unitários. 
 \par
@@ -57,9 +57,29 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 \par
 \indent \textit{Grails} utiliza-se de um sistema de comandos capaz de fornecer ao desenvolvedor a possibilidade de gerar código. Isso evita tarefas monótonas, mas necessárias, como funções básicas de \textit{models} e de \textit{controllers}. Esses métodos gerados podem ser modificados pelo desenvolvedor, conforme a necessidade de adequação ao contexto de trabalho  \cite{grails2015}.
 \par
-\indent Os geradores de código do \textit{Grails} produzem  \textit{stubs} para os testes. \textit{Stubs} são métodos ou classes vazias, contendo apenas cabeçalhos. Ao analisas os \textit{stubs} gerados, observa-se que eles são classes filhas do \textit{GroovyTestCase} que, por sua vez, é um \textit{facade} sobre o JUnit \cite{broughton2010}. Devido a isso, qualquer desenvolvedor que esteja familiarizado com o uso de funcionalidades comuns ao JUnit, como \textit{asserts}, \textit{setup} e \textit{teardown}, está apto a entender os testes em \textit{Grails} \cite{broughton2010}.   	
- 
+\indent Os geradores de código do \textit{Grails} produzem  \textit{stubs} para os testes. \textit{Stubs} são métodos ou classes vazias, contendo apenas cabeçalhos. Ao analisas os \textit{stubs} gerados, observa-se que eles são classes filhas do \textit{GroovyTestCase} que, por sua vez, é um \textit{facade} sobre o JUnit \cite{broughton2010}. Devido a isso, qualquer desenvolvedor que esteja familiarizado com o uso de funcionalidades comuns ao JUnit, como \textit{asserts}, \textit{setup} e \textit{teardown}, está apto a entender os testes em \textit{Grails} \cite{broughton2010}.
+\par
+\indent Abaixo segue um exemplo de um teste escrito utilizando o \textit{web framework Grails}:
+
+\begin{lstlisting}[language=java, label=exTesteGrails, caption={Exemplo de Teste em \textit{Grails}}]
+// Model
+class HotelStay{
+  String hotel
+}
+
+// Test
+class HotelStayTests extends GroovyTestCase {
+  void testSomething(){
+    HotelStay hs = new HotelStay(hotel:"Sheraton")
+    assertEquals "Sheraton", hs.hotel
+  }
+}
+\end{lstlisting}
+
 \subsection{Especificação dos Casos de Testes}
+Como referenciado na seção \ref{ch4sec1}, será utilizado uma notação no código fonte que possibilitará ao desenvolvedor especificar seus casos de teste. Essa notação será inserida em comentários de documentação, permitindo assim, a especificação dos testes e a documentação dos mesmos, tudo centrado no código fonte.
+\par
+\indent Em essência, o desenvolvedor deverá ser responsável por definir quais serão as entradas dos testes e a saída esperada. Fazendo isso, o \textit{framework} será capaz de identificar esses valores e gerar os testes solicitados.
 
 \section{Prova de Conceito}
 
