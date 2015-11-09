@@ -45,7 +45,7 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  \par
  \indent A Figura \ref{fig:Framework-interior} permite a visualização do fluxo básico do funcionamento do \textit{framework}.  
 
-\subsection{Alvo Inicial: \textit{Grails}} 
+\section{Alvo Inicial: \textit{Grails}} 
 \textit{Grails}, antigamente conhecido como \textit{Groovy on Grails}, é um \textit{web framework} para plataforma Java. Com o objetivo de propiciar maior produtividade ao desenvolvedor, \textit{Grail} faz uso do paradigma \textit{Convention-over-Configuration}.  Por ser integrado com a JVM (\textit{Java Virtual Machine}), \textit{Grails} possui diversas características, entre elas: a integração com ORM (\textit{Object Relational Mapping}), uso de uma \textit{domain-specific-language} e programação assíncrona \cite{grails2015}.
 \par
 \indent Devido ao fato de ser um \textit{web framework}, \textit{Grails} faz uso do padrão MVC (\textit{Model-View-Controller}), ou seja, as aplicações em \textit{Grails} separam a interação com usuário da representação da informação \cite{grails2015}.
@@ -71,7 +71,7 @@ class RestaurantTests extends GroovyTestCase {
 }
 \end{lstlisting}
 
-\subsection{Especificação dos Casos de Testes}
+\section{Especificação dos Casos de Testes}
 Como referenciado na seção \ref{ch4sec1}, será utilizado uma notação no código fonte que possibilitará ao desenvolvedor especificar seus casos de teste. Essa notação será inserida em comentários de documentação, permitindo assim, a especificação dos testes e a documentação dos mesmos, tudo centrado no código fonte.
 \par
 \indent Em essência, o desenvolvedor deverá ser responsável por definir quais serão as entradas dos testes e a saída esperada. Fazendo isso, o \textit{framework} será capaz de identificar esses valores e gerar os testes solicitados.
@@ -228,8 +228,14 @@ int main(int argc, char **argv)
 \indent O código implementado teve o comportamento conforme o esperado.
 
 \subsection{Gerador de Teste Unitário}
+Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizado a implementação de um gerador simples capaz. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto. 
+\par 
+\indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
+\par 
+\indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo.
 
 \section{Resultados Obtidos}
+ 
  
 \section{Resumo do Capítulo}
 %%  Resumo do capítulo
