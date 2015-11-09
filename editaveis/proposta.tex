@@ -45,11 +45,6 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  \par
  \indent A Figura \ref{fig:Framework-interior} permite a visualização do fluxo básico do funcionamento do \textit{framework}.  
 
-
-\subsection{Arquitetura do \textit{Framework}}
-
-
-
 \subsection{Alvo Inicial: \textit{Grails}} 
 \textit{Grails}, antigamente conhecido como \textit{Groovy on Grails}, é um \textit{web framework} para plataforma Java. Com o objetivo de propiciar maior produtividade ao desenvolvedor, \textit{Grail} faz uso do paradigma \textit{Convention-over-Configuration}.  Por ser integrado com a JVM (\textit{Java Virtual Machine}), \textit{Grails} possui diversas características, entre elas: a integração com ORM (\textit{Object Relational Mapping}), uso de uma \textit{domain-specific-language} e programação assíncrona \cite{grails2015}.
 \par
@@ -63,15 +58,15 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 
 \begin{lstlisting}[language=java, label=exTesteGrails, caption={Exemplo de Teste em \textit{Grails}}]
 // Model
-class HotelStay{
-  String hotel
+class Restaurant{
+  String name
 }
 
 // Test
-class HotelStayTests extends GroovyTestCase {
+class RestaurantTests extends GroovyTestCase {
   void testSomething(){
-    HotelStay hs = new HotelStay(hotel:"Sheraton")
-    assertEquals "Sheraton", hs.hotel
+    Restaurant restaurant = new Restaurant(name:"Gepetohut")
+    assertEquals "Gepetohut", restaurant.name
   }
 }
 \end{lstlisting}
@@ -80,12 +75,157 @@ class HotelStayTests extends GroovyTestCase {
 Como referenciado na seção \ref{ch4sec1}, será utilizado uma notação no código fonte que possibilitará ao desenvolvedor especificar seus casos de teste. Essa notação será inserida em comentários de documentação, permitindo assim, a especificação dos testes e a documentação dos mesmos, tudo centrado no código fonte.
 \par
 \indent Em essência, o desenvolvedor deverá ser responsável por definir quais serão as entradas dos testes e a saída esperada. Fazendo isso, o \textit{framework} será capaz de identificar esses valores e gerar os testes solicitados.
+\par
+\indent Abaixo consta um exemplo de uma notação candidata que poderá ser usada para definir os dados de entrada para o \textit{framework}.
+
+\begin{lstlisting}[language=java, label=notacaoCandidata, caption={Notação Candidata}]
+/**
+ * This method sum two numbers.
+ * 
+ * @param fisrtParcel a parcel of sum.
+ * @param secondParcel a parcel of sum.
+ * @return result the result of sum.
+ * 
+ * scarefault.test
+ *   scenario: "sum two valid numbers"
+ *     scarefault.entries: 2, 2
+ *     scarefault.out: 4
+ *
+ *   scenario: "sum zeros"
+ *     scarefault.entries: 0, 0
+ *     scarefault.out: 0
+ */
+def addTwoNumbers(Integer firstParcel, Integer secondParcel) {
+   result = firstParcel + secondParcel
+   return result
+}
+
+//Test
+void sumTwoValidNumbers extends GroovyCaseTest() {
+  expectedResult = 4
+  result = addTwoNumbers( 2, 2 )
+  
+  assertEquals expectedResult, result
+}
+
+void sumZerosTest extends GroovyCaseTest() {
+  expectedResult = 0
+  result = addTwoNumbers( 0, 0 )
+  
+  assertEquals expectedResult, result
+}
+\end{lstlisting}
 
 \section{Prova de Conceito}
 
-\subsection{Bisonc++}
+Para averiguar a viabilidade da implementação do \textit{framework} proposto, foi planejado a execução de uma prova de conceito. Com o objetivo de verificar se as ferramentas, Bisonc++ e Flexc++, atenderão a expectativa no desenvolvimento do \textit{framework}, tornou-se necessário realizar provas de conceito com elas também. 
 
-\subsection{Flexc++}
+\subsection{Flexc++} \label{flexcpp}
+O Flexc++ é um analisador léxico que, diferente do Flex, gera código em linguagem de programação C++. A prova de conceito dessa ferramenta foi produzida em etapas: um estudo sobre o Flexc++, seguido de sua instalação e configuração e, por fim, a execução de um exemplo recomendado pelo \textit{site} oficial.
+\par
+\indent Com o estudo, constatou-se que o Flexc++ se assemelha ao Flex. Com isso, o seu uso é viável no projeto, já que se possui conhecimento prévio da ferramenta. No Apêndice A constam os resultados desse estudo.
+\par
+\indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utiizando apenas o Flexc++. Para isso, definiu-se o analisador léxico abaixo:
+
+\begin{lstlisting}[language=c, label=analisadorPCF, caption={Analisador Léxico da Prova de Conceito do Flexc++}]
+%%
+[_a-zA-Z][_a-zA-Z0-9]* return 1;
+\end{lstlisting}
+\par
+\indent O Código \ref{analisadorPCF} faz uso de uma expressão regular, \textit{regex}, que identifica qualquer termo alfanumérico. Caso encontra, ele retorna o dígito um, provocando  a chamada da função \textit{match}.
+\par
+\indent Com a compilação do Flexc++ gera-se uma classe: \textit{Scanner}. Para a demonstração do uso dessa classe, foi implementado um arquivo em linguagem de programação C++ contendo uma função \textit{main} que a utiliza. Abaixo consta o código citado.
+\begin{lstlisting}[language=c, label=mainPCF, caption={Função \textit{main} para demonstração do Flexc++}]
+#include <iostream>
+#include "Scanner.h"
+
+using namespace std;
+
+int main()
+{
+  Scanner scanner;
+  while( scanner.lex() )
+  {
+    cout << "[Identifier: " << scanner.matched() << "]";
+  }
+}
+\end{lstlisting}
+\par
+\indent O código implementado teve o comportamento conforme o esperado.
+
+\subsection{Bisonc++}
+Como referenciado na seção \ref{suporteGeracao}, o Bisonc++ é um gerador de \textit{parsers} capaz de converter uma gramática de contexto livre em uma classe \textit{parser} em linguagem C++. A prova de conceito dessa ferramenta é composta pela realização de um estudo, da instalação e configuração da ferramenta e, enfim, de seu uso em um exemplo simples, sugerido no \textit{site} oficial.
+\par
+\indent Por meio do estudo, foi averiguado que a estrutura do arquivo de entrada do Bisonc++ é semelhante à estrutura do Bison. Dessa forma, constatou-se que a curva de aprendizagem seria aceitável, na medida em que já se tem conhecimento prévio do uso do Bison. Todo o levantamento efetuado por esse estudo consta no Apêndice A.
+\par
+\indent A instalação do Bisonc++ foi realizada em uma máquina virtual que, por sua vez, foi estabelecida com o auxílio do Vagrant. Com a execução dessa etapa, foi iniciada a configuração de um \textit{script} para automatizar a instalação. O tipo de \textit{script} utilizado foi Makefile, comum na automação de tarefas de construção e compilação de programs em C/C++. Para o funcionamento adequado do Bisonc++ foi necessário a integração dele com o Flexc++, descrito na subseção \ref{flexcpp}.
+\par
+\indent O uso do Bisonc++ foi realizado por meio da implementação de um identificador de \textit{tokens}. Inicialmente, foi produzido o analisador léxico utilizando o Flexc++. Abaixo consta o código resultante:
+
+\begin{lstlisting}[language=c, label=analisadorLexicoPCB, caption=Analisador Léxico da Prova de Conceito do Bisonc++]
+%%
+
+[ \t\n]+                            // skip white space chars.
+[0-9]+                              return Parser::NUMBER;
+[[:alpha:]_][[:alpha:][:digit:]_]*  return Parser::IDENTIFIER;
+.                                   return Parser::CHAR;
+\end{lstlisting}
+
+\par 
+\indent O analisador sintático é onde estão definidas as regras gramáticais. Ele possibilita identificar se a sequência de \textit{tokens} corresponde a uma regra específica e, a partir disso, é realizada uma ação. As regras da prova de conceito do bisonc++ foram definidas da seguinte forma:
+\begin{description}
+\item[startrule:] permite a leitura completa do arquivo de entrada. Para isso, faz-se uso de recursividade. Essa é a regra inicial onde é definido que o arquivo de entrada deve ser uma regra \textit{tokenshow} ou ela mesma seguida de uma regra \textit{tokenshow}.
+\item[tokenshow:] é definido como um \textit{token} que, ao ser identificado, provoca a ação de impressão do mesmo.
+\item[token:] é caracterizado como sendo um identificador, um número ou um caractere. Esses elementos são definidos no Flexc++.
+\end{description} 
+
+\begin{lstlisting}[language=c, label=analisadorSintaticoPC, caption=Analisador Sintático da Prova de Conceito do Bisonc++]
+%scanner                ../scanner/Scanner.h
+%scanner-token-function d_scanner.lex()
+
+%token IDENTIFIER
+%token NUMBER
+%token CHAR
+
+%%
+
+startrule:
+  startrule tokenshow
+|
+  tokenshow
+;
+
+tokenshow:
+  token
+  {
+    std::cout << "Matched: " << d_scanner.matched() << "\n";
+  }
+;
+
+token:
+  IDENTIFIER
+|
+  NUMBER
+|
+  CHAR
+;
+\end{lstlisting}
+\par
+\indent O código listado em \ref{analisadorSintaticoPC} é o resultado da implementação das regras explicadas anteriormente. Após a compilação desses dois arquivos, foi gerado duas classes em linguagem C++: \textit{Scanner} e \textit{Parser}. Permite-se, com a geração dessas classes, a customização desses arquivos conforme necessidade.
+\par
+\indent Para a demonstração do uso das classes geradas foi implementada uma função \textit{main} que instancia e a utiliza.
+\begin{lstlisting}[language=c, label=mainPCB, caption=Função \textit{main} para demosntração do Bisonc++]
+#include "parser/Parser.h"
+
+int main(int argc, char **argv)
+{
+    Parser parser;
+
+    parser.parse();
+}
+\end{lstlisting}
+\par
+\indent O código implementado teve o comportamento conforme o esperado.
 
 \subsection{Gerador de Teste Unitário}
 
