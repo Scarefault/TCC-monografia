@@ -235,8 +235,19 @@ Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste uni
 \indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo.
 
 \section{Resultados Obtidos}
- 
- 
+As provas de conceito realizadas com o intuito de verificar o funcionamento das ferramentas Flexc++ e Bisonc++ foram consideradas bem sucedidas. Ambas possuiam como objetivo identificar \textit{tokens} do arquivo de entrada e imprimi-los, entretanto, o software gerado apenas com o uso do Flexc++ não faz uso de regras sintáticas. 
+
+ \begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth,height=3cm]{figuras/resultadosPCBF.png}
+    \caption{Resultados das Provas de Conceito sobre Flexc++ e Bisonc++}
+    \label{fig:resultadosPCBF}
+ \end{figure}
+
+
+\par
+\indent A Figura \ref{fig:resultadosPCBF} apresenta as saídas dos identificadores de \textit{tokens} usando apenas o Flexc++ e o Flexc++ junto com o Bisonc++, respectivamente. Observa-se que ambas foram capazes de identificar as palavras do arquivo de entrada conforme previsto. Obteve-se como principais resultados dessas duas provas de conceito os conhecimentos adquiridos sobre as ferramentas e integração entre elas, bem como a viabilidade da utilização das mesmas para implementação do \textit{framework} para geração de teste unitário.
+
 \section{Resumo do Capítulo}
 %%  Resumo do capítulo
 
