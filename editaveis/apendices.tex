@@ -1,13 +1,224 @@
 \begin{apendicesenv}
 
-\partapendices
+\chapter{Resumo do Estudo das Ferramentas Flexc++ e Bisonc++}
 
-\chapter{Primeiro Apêndice}
+\section{Flexc++}
+Flexc++ é um analisador léxico escrito por Frank B. Brokken, gerente de segurança e conferencista na \textit{University of Groningen}, Holanda. O desenvolvimento desse analisador começou em 2008 e é mantido até hoje. Atualmente está na versão 2.03.03, é mantido por: Frank B. Brokken, Jean-Paul van Oosten e Richard Berendsen. No entanto, por hora, será utilizado a versão 1.05.
 
-Texto do primeiro apêndice.
+\subsection{Comparativo entre Flex e Flexc++}
+\par
+\indent Basicamente, a diferença é que Flexc++ tem por intuito gerar código em C++ para que possa ser usado juntamente com programas escritos em C++. Enquanto isso, Flex gera código escrito em C e Flex++ dificilmente dar suporte a todo o pontencial que C++ oferece hoje.
 
-\chapter{Segundo Apêndice}
+\subsection{Como Executar o Flexc++}
 
-Texto do segundo apêndice.
+Sua execução se dá pelo comando:
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex1, caption=Comando para Execução do Flexc++]
+ flexc++ [opções] rules-file
+\end{lstlisting}
+
+Onde:
+\begin{description}
+\item[rules-file:] é o arquivo que contém as regras.
+\item[opções:] são opções que o Flexc++ suporta. O intuito delas é customizar algum elemento do \textit{Scanner} ou alguns detalhes, mas que provavelmente não serão usadas aqui. 
+\end{description}
+
+\subsection{A Estrutura do Arquivo de Entrada}
+
+A seguir, algumas informações sobre a estrutura do Arquivo de entrada para o Flexc++.
+
+\subsubsection{Nome do Arquivo}
+
+O arquivo pode ser chamado de qualquer forma, no entanto, sua extensão deve ser do tipo .l.
+
+\subsubsection{Corpo do Arquivo}
+
+O arquivo deve possuir duas seções: \textbf{seção de definições} e \textbf{seção de regras}. Essas seções devem estar estruturadas da seguinte forma:
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex2, caption=Corpo do Arquivo do Flec++]
+seção de definições
+%%
+seção de regras
+\end{lstlisting}
+\par
+\indent Onde a linha $2$ define o fim e o início entre as seções.
+
+\subsubsubsection{Seção de Definições}
+
+A seção de definições é onde deve-se definir, por meio de expressões regulares, o que será avaliado e como será identificado pelo analisador léxico. A seção deve seguir o padrão sendo o nome do identificador seguido da \textit{regex}. Segue o exemplo de como ficaria:
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex3, caption=Seção de Definições]
+
+DIGIT      [0-9]
+INTEGER    {DIGIT}
+REAL       -?{INTEGER}("."{INTEGER})?
+
+CHARACTER  [a-zA-Z]
+LITERAL    \"[a-zA-Z0-9][a-zA-Z0-9].*\"
+%%
+\end{lstlisting}
+
+\subsubsubsection{Seção de Regras}
+
+A seção de regras é onde deve-se explicitar o que deve ser feito pelo analisador após a identificação dos padrões no texto. A seção deve seguir o seguinte padrão: \textit{padrão    ação}. Ficaria conforme exemplo abaixo:
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex4, caption=Seção de Regras]
+%%
+LITERAL    { cout << "Hello World!"; }
+\end{lstlisting}
+
+\subsection{Compilando com o Flexc++}
+
+Para executar a compilação utilizando o Flexc++, supondo possuir um arquivo de entrada flexcpp.l, deve-se:
+\begin{enumerate}
+\item Compilar o arquivo de entrada com o Flexc++
+
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex5, caption=Comando para Compilar Flexc++]
+ flexc++ flexcpp.l
+\end{lstlisting}
+
+\item Com isso, serão gerados alguns arquivos. Deve-se alterar a extensão do arquivo lex.ccpara lex.cpp
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex6, caption=Comando para Alterar Extensão dos Arquivos]
+mv lex.cc lex.cpp
+\end{lstlisting}
+
+\item Agora, supondo que o arquivo que utilizará o analisador léxico chama-se analizer.cpp. Assim, para compilar o programa deve-se:
+
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex7, caption=Compilar o Programa]
+g++ -o [nome_arquivo_saida] analizer.cpp lex.cpp
+\end{lstlisting}
+\end{enumerate}
+
+\par 
+\indent Pronto! Agora você possui um programa analisador léxico chamado analizer. Para executar use:
+\begin{lstlisting}[language=make, label=apendiceCodigoFlex8, caption=Executanto o Programa]
+./analizer
+\end{lstlisting}
+
+\section{ Bisonc++}
+
+Bisonc++ é um gerador de parsers capaz de converter uma gramática de context livre em uma classe paser em C++. Bisonc++ foi escrito e é mantido por Frank B. Brokken, da \textit{University of Groningen}, Holanda. Bisonc++, diferentemente do Bison, fornece uma classe em C++ após ser compilado para que possa ser usada. Bison fornece um código em C.
+
+\subsection{Pequeno Glossário}
+\begin{description}
+\item[Símbolo Terminal:] elemento que por si só já define algo. Já possui significado em si mesmo na gramática.
+\item[Símbolo Não-terminal: ] elemento que é formado para ter significado completo depende dos símbolos terminais.
+\end{description}
+
+\subsection{Como Executar o Bisonc++}
+Sua execução se dá pelo comando:
+
+\begin{lstlisting}[language=c, caption=Comando para Executar Bisonc++]
+bisonc++ [opções] file
+\end{lstlisting}
+
+\par
+\indent Onde:
+\begin{description}
+\item[file:] é o arquivo que contém as regras e ações.
+\item[opções:] são opções que o Bisonc++ suporta. O intuito delas é customizar algum elemento do \textit{Parser} ou alguns detalhes, mas que provavelmente não serão usadas aqui.
+\end{description}
+
+\subsection{A Estrutura do Arquivo de Entrada}
+A seguir, algumas informações sobre a estrutura do Arquivo de entrada para o Bisonc++.
+
+\subsubsection{Corpo do Arquivo}
+
+É formado por duas seções: \textbf{seção de diretivas} e \textbf{seção de regras gramaticais}. Essas seções devem estar estruturadas da seguinte forma:
+
+\begin{lstlisting}[language=c, caption=Corpo do Arquivo do Bisonc++]
+seção de diretivas
+%%
+seção de regras gramaticais
+\end{lstlisting}
+\par
+\indent Onde a linha $2$ define o fim e o início entre as seções.
+
+\subsubsubsection{Seção de Diretivas}
+Na seção de diretivas são especificadas algumas opções relativas ao \textit{parser}. Além disso, é nessa seção que se deve definir o nome de todos os \textit{tokens}, exceto aqueles com o nome formado por um único caractere. A inclusão de bibliotecas externas também é feita nessa seção.
+
+\par
+\indent Algumas diretivas importantes são:
+
+\begin{description}
+\item[start:] designa algum símbolo não-terminal para se a regra inicial.
+\item[token:] é utilizado para definir símbolos terminais. Sua sintaxe segue os termos abaixo:
+
+\begin{lstlisting}[language=c,  caption=Sintaxe]
+token [<type>] terminal token
+\end{lstlisting}
+A opção \textit{<type>} é usada quando deseja-se especificar o tipo que será declarado aquele \textit{token}. Alguns nomes não devem ser usados como \textit{token}: ABORT, ACCEPT, ERROR, clearin, debug, error, setDebug.
+\item[namespace:] define um \textit{namespace} para a classe \textit{Parser}.
+\item[include:] é usada para alterar o \textit{pathname} enquanto a gramática é processada.
+\end{description}
+
+\subsubsubsection{Seção de Regras Gramaticas}
+De forma geral, uma regra gramatical é definida da seguinte forma:
+
+\begin{lstlisting}[language=c,  caption=Definição de Regra Gramatical]
+result:
+  components
+;
+\end{lstlisting}
+
+\par
+\indent Onde \textit{result} é o símbolo não-terminal que a regra descreve. Por sua vez,  \textit{components} são vários símbolos terminais e não-terminais que são postos em conjunto, formando a regra. Um exemplo:
+\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical]
+expression:
+  expression '+' expression
+;
+\end{lstlisting}
+
+\par 
+\indent Pode-se também determinar ações para cada símbolo, terminal ou não-terminal, por meio de código em C++:
+\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando C++]
+expression:
+  expression '+' expression {
+    C++ statements
+  }
+;
+\end{lstlisting}
+
+\par 
+\indent Pode-se criar múltiplas regras para o mesmo\textit{result}:
+
+\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando Múltiplas Regras]
+result:
+  rule1-components {
+    C++ statements
+  }
+|
+  rule2-components {
+    C++ statements
+  }
+;
+\end{lstlisting}
+
+\par 
+\indent Há também a opção de deixar um componente vazio. Nesse caso, result pode corresponder a uma string vazia.
+\par 
+\indent \textit{Regras Recursivas:} é quando o result não-terminal aparece também do lado direto de um componente desse mesmo \textit{result}. Praticamente, todas as regras no Bisonc++ precisam ser recursivas. Há também como utilizar a recursão pelo lado esquerdo. Inclusive é a forma correta. Outra forme possível é fazer a recursividade indireta. Essa pode ocorrer da seguinte forma:
+
+\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando Recursividade]
+expr:     
+  primary '+' primary
+|
+  primary
+;
+
+primary:
+  constant
+|
+  '(' expr ')'
+;
+\end{lstlisting}
+
+\subsection{Compilando o Bisonc++}
+Para executar a compilação utilizando o Bisonc++, supondo possuir um arquivo de entrada bisoncpp.y, deve-se compilar o arquivo de entrada com o Bisonc++. Para isso, utiliza-se o seguinte comando:
+\begin{lstlisting}[language=c,  caption=Comando para Compilação do Bisonc++]
+bisonc++ bisoncpp.y
+\end{lstlisting}
+
 
 \end{apendicesenv}
