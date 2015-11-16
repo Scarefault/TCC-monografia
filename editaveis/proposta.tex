@@ -7,12 +7,12 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 \par
 \indent A princípio, o \textit{framework} será desenvolvido com o intuito de gerar testes unitários em aplicações escritas em \textit{Grails}, especificamente para as operações básicas conhecidas como CRUD (\textit{create}, \textit{read}, \textit{update} e \textit{detele}). Entretanto, há intenção de evoluir o \textit{framework} para que ele seja compatível com demais métodos e linguagens de programação. 
 \par
-\indent Para a implementação do \textit{framework}, será utilizada a linguagem de programação C++, junto com as ferramentas Flexc++ \cite{flexcpp2015} e Bisonc++ \cite{bisoncpp2015}. A ilustração a seguir fornece uma visão geral da arquitetura do \textit{framework}.
+\indent Para a implementação do \textit{framework}, será utilizada a linguagem de programação C++, junto com as ferramentas Flexc++ \cite{flexcpp2015} e Bisonc++ \cite{bisoncpp2015}. A Figura 4 fornece uma visão geral das camadas do \textit{framework}.
  
  \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/estruturaarquitetural.jpg}
-    \caption{Visão Geral do \textit{Framework}}
+    \caption{Camadas do \textit{Framework}}
     \label{fig:estruturaarquitetural}
  \end{figure}
 
@@ -27,12 +27,12 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  \end{figure}
  
  \par
-\indent A Figura \ref{fig:entradasesaidas} enfatiza o fluxo do funcionamento do \textit{framework}. A entrada do \textit{framework} será o código fonte, bem como as especificações dos testes seguindo uma notação pré-determinada. Como saída, serão gerados os testes unitários conforme especifícados. O fluxo do funcionamento do \textit{framework} pode ser entendido, de forma simplificada, em quatro etapas: análise léxica, análise sintática, análise semântica e geração dos testes. 
+\indent A Figura \ref{fig:entradasesaidas} enfatiza o fluxo do funcionamento do \textit{framework}. A entrada do \textit{framework} será o código fonte, bem como as especificações dos testes seguindo uma notação pré-determinada. Como saída, serão gerados os testes unitários conforme especifícados. O fluxo do funcionamento do \textit{framework} pode ser entendido, de forma simplificada, em quatro módulos: análise léxica, análise sintática, análise semântica e geração dos testes. 
  \begin{description}
  \item[Análise léxica:] onde será realizada a análise do código fonte de forma a reconhecer as palavras específicas, os \textit{tokens}. Essas palavras serão previamente definidas por meio do Flexc++ que fornece suporte para essa etapa \cite{flexcpp2015}.
- \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.
+ \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.Verificar se FOI
  \item[Análise semântica:] será realizada uma interpretação do código apresentado verificando sua semântica, ou seja, será averiguado o significado dos \textit{tokens} identificados dentro do contexto.
-  \item[Geração dos testes:] após as análises do código, será efetuado o \textit{parser} com o intuito de gerar os testes unitários especificados pelo desenvolvedor. Esses testes serão armazenados nos arquivos apropriados e serão a principal saída do \textit{framework}.
+  \item[Geração dos testes:] após as análises do código, será efetuado o \textit{parser} com o intuito de gerar os testes unitários especificados pelo desenvolvedor. Esses testes serão armazenados nos arquivos apropriados e representarão a principal saída do \textit{framework}.
  \end{description}
  
  \begin{figure}[h]
@@ -54,7 +54,7 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 \par
 \indent Os geradores de código do \textit{Grails} produzem  \textit{stubs} para os testes. \textit{Stubs} são métodos ou classes vazias, contendo apenas cabeçalhos. Ao analisar os \textit{stubs} gerados, observa-se que eles são classes filhas do \textit{GroovyTestCase} que, por sua vez, é um \textit{facade} sobre o JUnit \cite{broughton2010}. Devido a isso, qualquer desenvolvedor que esteja familiarizado com o uso de funcionalidades comuns ao JUnit, como \textit{asserts}, \textit{setup} e \textit{teardown}, está apto a entender os testes em \textit{Grails} \cite{broughton2010}.
 \par
-\indent Abaixo segue um exemplo de um teste escrito utilizando o \textit{web framework Grails}:
+\indent A seguir - Código 4.1 - é apresentado um exemplo de um teste escrito utilizando o \textit{web framework Grails}:
 
 \begin{lstlisting}[language=java, label=exTesteGrails, caption={Exemplo de Teste em \textit{Grails}}]
 // Model
@@ -72,11 +72,11 @@ class RestaurantTests extends GroovyTestCase {
 \end{lstlisting}
 
 \section{Especificação dos Casos de Testes}
-Como referenciado na seção \ref{ch4sec1}, será utilizado uma notação no código fonte que possibilitará ao desenvolvedor especificar seus casos de teste. Essa notação será inserida em comentários de documentação, permitindo assim, a especificação dos testes e a documentação dos mesmos, tudo centrado no código fonte.
+Como referenciado na seção \ref{ch4sec1}, será utilizada uma notação no código fonte que possibilitará ao desenvolvedor especificar seus casos de teste. Essa notação será inserida em comentários de documentação, permitindo assim, a especificação dos testes e a documentação dos mesmos, tudo centrado no código fonte.
 \par
 \indent Em essência, o desenvolvedor deverá ser responsável por definir quais serão as entradas dos testes e a saída esperada. Fazendo isso, o \textit{framework} será capaz de identificar esses valores e gerar os testes solicitados.
 \par
-\indent Abaixo consta um exemplo de uma notação candidata que poderá ser usada para definir os dados de entrada para o \textit{framework}.
+\indent A seguir - Código 4.2 - consta um exemplo de uma notação candidata, que poderá ser usada para definir os dados de entrada para o \textit{framework}.
 
 \begin{lstlisting}[language=java, label=notacaoCandidata, caption={Notação Candidata}]
 /**
@@ -118,14 +118,14 @@ void sumZerosTest() {
 
 \section{Prova de Conceito}
 
-Para averiguar a viabilidade da implementação do \textit{framework} proposto, foi planejado a execução de uma prova de conceito. Com o objetivo de verificar se as ferramentas, Bisonc++ e Flexc++, atenderão a expectativa no desenvolvimento do \textit{framework}, tornou-se necessário realizar provas de conceito com elas também. 
+Para averiguar a viabilidade da implementação do \textit{framework} proposto, foi planejada a execução de uma prova de conceito. Com o objetivo de verificar se as ferramentas, Bisonc++ e Flexc++, atenderão à expectativa no desenvolvimento do \textit{framework}, tornou-se necessário realizar provas de conceito com elas também. 
 
 \subsection{Flexc++} \label{flexcpp}
-O Flexc++ é um analisador léxico que, diferente do Flex, gera código em linguagem de programação C++. A prova de conceito dessa ferramenta foi produzida em etapas: um estudo sobre o Flexc++, seguido de sua instalação e configuração e, por fim, a execução de um exemplo recomendado pelo \textit{site} oficial.
+O Flexc++ é um analisador léxico que é diferente do Flex, pois gera código em linguagem de programação C++. A prova de conceito dessa ferramenta foi produzida em etapas: um estudo sobre o Flexc++, seguido de sua instalação e configuração e, por fim, a execução de um exemplo recomendado pelo \textit{site} oficial.
 \par
 \indent Com o estudo, constatou-se que o Flexc++ se assemelha ao Flex. Com isso, o seu uso é viável no projeto, já que se possui conhecimento prévio da ferramenta. No Apêndice A constam os resultados desse estudo.
 \par
-\indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utiizando apenas o Flexc++. Para isso, definiu-se o analisador léxico abaixo:
+\indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utiizando apenas o Flexc++. Para isso, definiu-se o analisador léxico apresentado a seguir em Código 4.3.:
 
 \begin{lstlisting}[language=C++, label=analisadorPCF, caption={Analisador Léxico da Prova de Conceito do Flexc++}]
 %%
@@ -134,7 +134,7 @@ O Flexc++ é um analisador léxico que, diferente do Flex, gera código em lingu
 \par
 \indent O Código \ref{analisadorPCF} faz uso de uma expressão regular, \textit{regex}, que identifica qualquer termo alfanumérico. Caso encontre, ele retorna o dígito um, provocando  a chamada da função \textit{match}.
 \par
-\indent Com a compilação do Flexc++ gera-se uma classe: \textit{Scanner}. Para a demonstração do uso dessa classe, foi implementado um arquivo em linguagem de programação C++ contendo uma função \textit{main} que a utiliza. Abaixo consta o código citado.
+\indent Com a compilação do Flexc++ gera-se uma classe: \textit{Scanner}. Para a demonstração do uso dessa classe, foi implementado um arquivo em linguagem de programação C++ contendo uma função \textit{main} que a utiliza. A seguir - em Código 4.4 - é apresentado o código citado.
 \begin{lstlisting}[language=C++, label=mainPCF, caption={Função \textit{main} para demonstração do Flexc++}]
 #include <iostream>
 #include "Scanner.h"
@@ -158,9 +158,9 @@ Como referenciado na seção \ref{suporteGeracao}, o Bisonc++ é um gerador de \
 \par
 \indent Por meio do estudo, foi averiguado que a estrutura do arquivo de entrada do Bisonc++ é semelhante à estrutura do Bison. Dessa forma, constatou-se que a curva de aprendizagem seria aceitável, na medida em que já se tem conhecimento prévio do uso do Bison. Todo o levantamento efetuado por esse estudo consta no Apêndice A.
 \par
-\indent A instalação do Bisonc++ foi realizada em uma máquina virtual que, por sua vez, foi estabelecida com o auxílio do Vagrant. Com a execução dessa etapa, foi iniciada a configuração de um \textit{script} para automatizar a instalação. O tipo de \textit{script} utilizado foi Makefile, comum na automação de tarefas de construção e compilação de programs em C/C++. Para o funcionamento adequado do Bisonc++ foi necessário a integração dele com o Flexc++, descrito na subseção \ref{flexcpp}.
+\indent A instalação do Bisonc++ foi realizada em uma máquina virtual que, por sua vez, foi estabelecida com o auxílio do Vagrant. Com a execução dessa etapa, foi iniciada a configuração de um \textit{script} para automatizar a instalação. O tipo de \textit{script} utilizado foi Makefile, comum na automação de tarefas de construção e compilação de programs em C/C++. Para o funcionamento adequado do Bisonc++ foi necessária a integração dele com o Flexc++, descrito na subseção \ref{flexcpp}.
 \par
-\indent O uso do Bisonc++ foi realizado por meio da implementação de um identificador de \textit{tokens}. Inicialmente, foi produzido o analisador léxico utilizando o Flexc++. Abaixo consta o código resultante:
+\indent O uso do Bisonc++ foi realizado por meio da implementação de um identificador de \textit{tokens}. Inicialmente, foi produzido o analisador léxico utilizando o Flexc++. Em Código 4.5 é apresentado o código resultante.
 
 \begin{lstlisting}[language=C++, label=analisadorLexicoPCB, caption=Analisador Léxico da Prova de Conceito do Bisonc++]
 %%
@@ -174,7 +174,7 @@ Como referenciado na seção \ref{suporteGeracao}, o Bisonc++ é um gerador de \
 \par 
 \indent O analisador sintático é onde estão definidas as regras gramáticais. Ele possibilita identificar se a sequência de \textit{tokens} corresponde a uma regra específica e, a partir disso, é realizada uma ação. As regras da prova de conceito do bisonc++ foram definidas da seguinte forma:
 \begin{description}
-\item[startrule:] permite a leitura completa do arquivo de entrada. Para isso, faz-se uso de recursividade. Essa é a regra inicial onde é definido que o arquivo de entrada deve ser uma regra \textit{tokenshow} ou ela mesma seguida de uma regra \textit{tokenshow}.
+\item[startrule:] permite a leitura completa do arquivo de entrada. Para isso, faz-se uso de recursividade. Essa é a regra inicial, onde é definido que o arquivo de entrada deve ser uma regra \textit{tokenshow} ou ela mesma seguida de uma regra \textit{tokenshow}.
 \item[tokenshow:] é definido como um \textit{token} que, ao ser identificado, provoca a ação de impressão do mesmo.
 \item[token:] é caracterizado como sendo um identificador, um número ou um caractere. Esses elementos são definidos no Flexc++.
 \end{description} 
@@ -211,9 +211,9 @@ token:
 ;
 \end{lstlisting}
 \par
-\indent O código listado em \ref{analisadorSintaticoPC} é o resultado da implementação das regras explicadas anteriormente. Após a compilação desses dois arquivos, foi gerado duas classes em linguagem C++: \textit{Scanner} e \textit{Parser}. Permite-se, com a geração dessas classes, a customização desses arquivos conforme necessidade.
+\indent O código listado em \ref{analisadorSintaticoPC} é o resultado da implementação das regras explicadas anteriormente. Após a compilação desses dois arquivos, foram geradas duas classes em linguagem C++: \textit{Scanner} e \textit{Parser}. Permite-se, com a geração dessas classes, a customização desses arquivos conforme necessidade.
 \par
-\indent Para a demonstração do uso das classes geradas foi implementada uma função \textit{main} que instancia e a utiliza.
+\indent Para a demonstração do uso das classes geradas foi implementada uma função \textit{main} que instancia e utiliza tais classes, conforme ilustra o Código 4.7.
 \begin{lstlisting}[language=C++, label=mainPCB, caption=Função \textit{main} para demosntração do Bisonc++]
 #include "parser/Parser.h"
 
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 \indent O código implementado teve o comportamento conforme o esperado.
 
 \subsection{Gerador de Teste Unitário}
-Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizado a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto. 
+Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto. 
 \par 
 \indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
 \par 
@@ -244,7 +244,7 @@ As provas de conceito realizadas com o intuito de verificar o funcionamento das 
  \end{figure}
 
 \par
-\indent A Figura \ref{fig:resultadosPCBF} apresenta as saídas dos identificadores de \textit{tokens} usando apenas o Flexc++ e o Flexc++ junto com o Bisonc++, respectivamente. Observa-se que ambas foram capazes de identificar as palavras do arquivo de entrada conforme previsto. Obteve-se como principais resultados dessas duas provas de conceito os conhecimentos adquiridos sobre as ferramentas e integração entre elas, bem como a viabilidade da utilização das mesmas para implementação do \textit{framework} para geração de teste unitário.
+\indent A Figura \ref{fig:resultadosPCBF} apresenta as saídas dos identificadores de \textit{tokens} usando apenas o Flexc++ e o Flexc++ junto com o Bisonc++, respectivamente. É possível observar que ambas foram capazes de identificar as palavras do arquivo de entrada conforme previsto. Obteve-se como principais resultados dessas duas provas de conceito os conhecimentos adquiridos sobre as ferramentas e a integração entre elas, bem como a viabilidade da utilização das mesmas para implementação do \textit{framework} para geração de teste unitário.
 
 \section{Resumo do Capítulo}
 O capítulo abordou sobre a proposta deste trabalho. Com isso, foi explanado sobre como o \textit{framework} funcionará, bem como qual a entrada e saída esperada com o seu uso. Detalhou-se também sobre a linguagem de programação escolhida para geração dos testes unitários e um exemplo de notação candidata que possibilitará o uso do \textit{framework}. Por fim, abordou-se sobre as provas de conceitos desenvolvidas durante o trabalho de conclusão de curso 1 que possuem como objetivo principal constatar a viabilidade do projeto. 
