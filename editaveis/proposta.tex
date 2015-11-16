@@ -100,15 +100,15 @@ def addTwoNumbers(Integer firstParcel, Integer secondParcel) {
    return result
 }
 
-//Test
-void sumTwoValidNumbers extends GroovyCaseTest() {
+// Test
+void sumTwoValidNumbers() {
   expectedResult = 4
   result = addTwoNumbers( 2, 2 )
   
   assertEquals expectedResult, result
 }
 
-void sumZerosTest extends GroovyCaseTest() {
+void sumZerosTest() {
   expectedResult = 0
   result = addTwoNumbers( 0, 0 )
   
@@ -127,7 +127,7 @@ O Flexc++ é um analisador léxico que, diferente do Flex, gera código em lingu
 \par
 \indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utiizando apenas o Flexc++. Para isso, definiu-se o analisador léxico abaixo:
 
-\begin{lstlisting}[language=c, label=analisadorPCF, caption={Analisador Léxico da Prova de Conceito do Flexc++}]
+\begin{lstlisting}[language=C++, label=analisadorPCF, caption={Analisador Léxico da Prova de Conceito do Flexc++}]
 %%
 [_a-zA-Z][_a-zA-Z0-9]* return 1;
 \end{lstlisting}
@@ -135,7 +135,7 @@ O Flexc++ é um analisador léxico que, diferente do Flex, gera código em lingu
 \indent O Código \ref{analisadorPCF} faz uso de uma expressão regular, \textit{regex}, que identifica qualquer termo alfanumérico. Caso encontre, ele retorna o dígito um, provocando  a chamada da função \textit{match}.
 \par
 \indent Com a compilação do Flexc++ gera-se uma classe: \textit{Scanner}. Para a demonstração do uso dessa classe, foi implementado um arquivo em linguagem de programação C++ contendo uma função \textit{main} que a utiliza. Abaixo consta o código citado.
-\begin{lstlisting}[language=c, label=mainPCF, caption={Função \textit{main} para demonstração do Flexc++}]
+\begin{lstlisting}[language=C++, label=mainPCF, caption={Função \textit{main} para demonstração do Flexc++}]
 #include <iostream>
 #include "Scanner.h"
 
@@ -162,7 +162,7 @@ Como referenciado na seção \ref{suporteGeracao}, o Bisonc++ é um gerador de \
 \par
 \indent O uso do Bisonc++ foi realizado por meio da implementação de um identificador de \textit{tokens}. Inicialmente, foi produzido o analisador léxico utilizando o Flexc++. Abaixo consta o código resultante:
 
-\begin{lstlisting}[language=c, label=analisadorLexicoPCB, caption=Analisador Léxico da Prova de Conceito do Bisonc++]
+\begin{lstlisting}[language=C++, label=analisadorLexicoPCB, caption=Analisador Léxico da Prova de Conceito do Bisonc++]
 %%
 
 [ \t\n]+                            // skip white space chars.
@@ -179,7 +179,7 @@ Como referenciado na seção \ref{suporteGeracao}, o Bisonc++ é um gerador de \
 \item[token:] é caracterizado como sendo um identificador, um número ou um caractere. Esses elementos são definidos no Flexc++.
 \end{description} 
 
-\begin{lstlisting}[language=c, label=analisadorSintaticoPC, caption=Analisador Sintático da Prova de Conceito do Bisonc++]
+\begin{lstlisting}[language=C++, label=analisadorSintaticoPC, caption=Analisador Sintático da Prova de Conceito do Bisonc++]
 %scanner                ../scanner/Scanner.h
 %scanner-token-function d_scanner.lex()
 
@@ -214,7 +214,7 @@ token:
 \indent O código listado em \ref{analisadorSintaticoPC} é o resultado da implementação das regras explicadas anteriormente. Após a compilação desses dois arquivos, foi gerado duas classes em linguagem C++: \textit{Scanner} e \textit{Parser}. Permite-se, com a geração dessas classes, a customização desses arquivos conforme necessidade.
 \par
 \indent Para a demonstração do uso das classes geradas foi implementada uma função \textit{main} que instancia e a utiliza.
-\begin{lstlisting}[language=c, label=mainPCB, caption=Função \textit{main} para demosntração do Bisonc++]
+\begin{lstlisting}[language=C++, label=mainPCB, caption=Função \textit{main} para demosntração do Bisonc++]
 #include "parser/Parser.h"
 
 int main(int argc, char **argv)
