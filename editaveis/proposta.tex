@@ -30,7 +30,7 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 \indent A Figura \ref{fig:entradasesaidas} enfatiza o fluxo do funcionamento do \textit{framework}. A entrada do \textit{framework} será o código fonte, bem como as especificações dos testes seguindo uma notação pré-determinada. Como saída, serão gerados os testes unitários conforme especifícados. O fluxo do funcionamento do \textit{framework} pode ser entendido, de forma simplificada, em quatro módulos: análise léxica, análise sintática, análise semântica e geração dos testes. 
  \begin{description}
  \item[Análise léxica:] onde será realizada a análise do código fonte de forma a reconhecer as palavras específicas, os \textit{tokens}. Essas palavras serão previamente definidas por meio do Flexc++ que fornece suporte para essa etapa \cite{flexcpp2015}.
- \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.Verificar se FOI
+ \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.
  \item[Análise semântica:] será realizada uma interpretação do código apresentado verificando sua semântica, ou seja, será averiguado o significado dos \textit{tokens} identificados dentro do contexto.
   \item[Geração dos testes:] após as análises do código, será efetuado o \textit{parser} com o intuito de gerar os testes unitários especificados pelo desenvolvedor. Esses testes serão armazenados nos arquivos apropriados e representarão a principal saída do \textit{framework}.
  \end{description}
@@ -229,11 +229,29 @@ int main(int argc, char **argv)
 \subsection{Gerador de Teste Unitário}
 Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto. 
 \par 
-\indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
+\indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. A princípio, foram levantadas as palavras-chave e símbolos referenciados na Tabela 1.
+
+\begin{table}[h]
+  \tiny
+  \centering
+  \caption{Palavras-chave e símbolos do analisador léxico inicial}
+  \label{keywords}
+  \begin{tabular}{| c | c |}
+    \hline
+    Tipo & Símbolos Identificados\\ \hline
+     Símbolos & "(";  ")";  "{";  "}";  "[";  "]";  "," e "." \\
+     Palavras-chave &   \textit{package}; \textit{import}; \textit{def}; \textit{Integer}; \textit{return}; \textit{scarefault}, \textit{test}; \textit{scenario}; \textit{entries} e \textit{out} \\ \hline
+  \end{tabular}
+\end{table}
+
+
+
+Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
 \par 
 \indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo da prova de conceito.
 
 \section{Resultados Obtidos}
+\subsection{Resultados Obtidos com as Provas de Conceito do Flexc++ e Bisonc++}
 As provas de conceito realizadas com o intuito de verificar o funcionamento das ferramentas Flexc++ e Bisonc++ foram consideradas bem sucedidas. Ambas possuiam como objetivo identificar \textit{tokens} do arquivo de entrada e imprimi-los, entretanto, o software gerado apenas com o uso do Flexc++ não faz uso de regras sintáticas. 
 
  \begin{figure}[h]
@@ -245,6 +263,8 @@ As provas de conceito realizadas com o intuito de verificar o funcionamento das 
 
 \par
 \indent A Figura \ref{fig:resultadosPCBF} apresenta as saídas dos identificadores de \textit{tokens} usando apenas o Flexc++ e o Flexc++ junto com o Bisonc++, respectivamente. É possível observar que ambas foram capazes de identificar as palavras do arquivo de entrada conforme previsto. Obteve-se como principais resultados dessas duas provas de conceito os conhecimentos adquiridos sobre as ferramentas e a integração entre elas, bem como a viabilidade da utilização das mesmas para implementação do \textit{framework} para geração de teste unitário.
+
+\subsection{Resultado Obtido com a Provc de Conceito do Gerador de Teste}
 
 \section{Resumo do Capítulo}
 O capítulo abordou sobre a proposta deste trabalho. Com isso, foi explanado sobre como o \textit{framework} funcionará, bem como qual a entrada e saída esperada com o seu uso. Detalhou-se também sobre a linguagem de programação escolhida para geração dos testes unitários e um exemplo de notação candidata que possibilitará o uso do \textit{framework}. Por fim, abordou-se sobre as provas de conceitos desenvolvidas durante o trabalho de conclusão de curso 1 que possuem como objetivo principal constatar a viabilidade do projeto. 
