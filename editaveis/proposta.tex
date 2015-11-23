@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 \indent O código implementado teve o comportamento conforme o esperado.
 
 \subsection{Gerador de Teste Unitário}
-Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto.
+Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultante é parte integrante da primeira versão do \textit{framework} proposto.
 \par 
 \indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. A princípio, foram levantadas as palavras-chave e símbolos referenciados na Tabela 1.
 
@@ -264,7 +264,7 @@ FALSE   "false"
 BOOLEAN {TRUE}|{FALSE}
 \end{lstlisting}
 \par
-\indent Foram definidos os \textit{tokens} a serem utilizados para a prova de conceito. A partir daí foi efetuado um teste, com o intuito de observar se o \textit{parser} estava realmente identificando os tokens.
+\indent Foram definidos os \textit{tokens} a serem utilizados para a prova de conceito. A partir daí foi efetuado um teste, com o intuito de observar se o \textit{parser} estava realmente identificando os \textit{tokens}.
 \par
  \begin{figure}[h]
     \centering
@@ -273,7 +273,7 @@ BOOLEAN {TRUE}|{FALSE}
     \label{fig:test-tokens}
  \end{figure}
 \par
-\indent Na Figura \ref{fig:test-tokens} é demonstrado o resultado teste para identificação dos \textit{tokens}, tendo como entrada a \textit{string}:
+\indent Na Figura \ref{fig:test-tokens} é demonstrado o resultado do teste para identificação dos \textit{tokens}, tendo como entrada a \textit{string}:
 \par
 \begin{lstlisting}[language=java, label=string-entry, caption=\textit{string} de entrada]
 def addTwoNumbers( Interger firstParcel, Integer secondParcel ) { return }
@@ -325,10 +325,10 @@ NUMBER
 \par
 \indent O Código \ref{rules-grails} e \ref{rules-scarefault} descrevem as regras desenvolvidas para a prova de conceito.
 \par
-\indent A partir das regras produzidas iniciou-se o desenvolvimento das ações a serem tomadas pelo \textit{parser} quando essas regras fossem identificadas. Nesse ponto foi feito um aprofundamento na documentação da Flexc++ e do Bisonc++, em especial deste último. Observou-se que o referencial das duas ferramentas é completo, apresentando uma descrição de cada parte, comando ou ação que deseja-se efetuar.
+\indent A partir das regras produzidas iniciou-se o desenvolvimento das ações a serem tomadas pelo \textit{parser} quando essas regras fossem identificadas. Nesse ponto, foi feito um aprofundamento do estudo da documentação da Flexc++ e do Bisonc++, em especial deste último. Observou-se que o referencial das duas ferramentas é completo, apresentando uma descrição de cada parte, comando ou ação que se deseja efetuar.
 \par
 \indent Flexc++ e Bisonc++, quando executados, geram duas classes escritas em C++. É necessário fazer a comunicação entre o analisador léxico, produzido pelo Flexc++, com o analisador sintático gerado pelo Bisonc++. Para isso, foi necessário a criação de um ponteiro dentro do analisador léxico que apontasse para um atributo especial no analisador sintático. Assim, a comunicação entre ambos os módulos foi possível.
-\begin{lstlisting}[language=C++, label=talk-FB-scannerh, caption=Alterações no Scannner.h para comunicação entre Analisador Léxico e Sintático]
+\begin{lstlisting}[language=C++, label=talk-FB-scannerh, caption=Alterações no Scanner.h para comunicação entre Analisador Léxico e Sintático]
 #include "../parser/Parserbase.h"
 
 class Scanner: public ScannerBase
@@ -432,7 +432,7 @@ scenario_declaration:
 \par
 \indent Observa-se no Código \ref{grammar-action} alguns exemplos de declarações de regras já com ações associadas. As variáveis \textdollar\lstinline|2| e \textdollar\lstinline|3| são representações dos \textit{tokens} localizados nessas posições. Assim, é possível ter acesso a esses valores durante a implementação das ações e manipulá-los. É importante ressaltar que esses valores estão associados a \textit{tokens} devido a comunicação com o analisador léxico.
 \par
-\indent Evidencia-se também o uso de um objeto \lstinline|test_generator|. Esse objeto é do tipo \lstinline|Generator::TestGenerator|. Esse tipo é implementado na classe de mesmo nome. Representa o módulo Gerador. \lstinline|test_generator|, em essência, coleta os dados relacionados ao teste do \textit{parser}. Assim que solicitado ele faz uso desses dados para a geração no teste.
+\indent Evidencia-se também o uso de um objeto \lstinline|test_generator|. Esse objeto é do tipo \lstinline|Generator::TestGenerator|. Esse tipo é implementado na classe de mesmo nome. Representa o módulo Gerador. \lstinline|test_generator|, em essência, coleta os dados relacionados ao teste, a partir do \textit{parser}. Assim que solicitado ele faz uso desses dados para a geração do teste.
 \begin{lstlisting}[language=C++, label=testgeneratorhpp, caption=Interface (\textit{header}) da classe TestGenerator]
   class TestGenerator
   {
@@ -517,7 +517,7 @@ scenario_declaration:
   }
 \end{lstlisting}
 \par
-\indent O Código \ref{testgeneratorcpp} apresenta alguns trechos da implementação da classe \lstinline|TestGenerator|.
+\indent O Código \ref{testgeneratorcpp} apresenta trechos da implementação da classe \lstinline|TestGenerator|.
 \par
 \indent O objeto \lstinline|test_generator| é chamado para gerar testes no função \lstinline|main()|. Nesse ponto, observa-se a necessidade de acessar o objeto criado no \textit{parser} para produzir testes na \lstinline|main()|. Novamente, faz-se uso de ponteiros para acessar esse objeto.
 \begin{lstlisting}[language=C++, label=main, caption=função \lstinline|main()| Fazendo Uso da \lstinline|TestGenerator|]
@@ -557,8 +557,27 @@ As provas de conceito realizadas com o intuito de verificar o funcionamento das 
 \par
 \indent A Figura \ref{fig:resultadosPCBF} apresenta as saídas dos identificadores de \textit{tokens} usando apenas o Flexc++ e o Flexc++ junto com o Bisonc++, respectivamente. É possível observar que ambas foram capazes de identificar as palavras do arquivo de entrada conforme previsto. Obteve-se como principais resultados dessas duas provas de conceito os conhecimentos adquiridos sobre as ferramentas e a integração entre elas, bem como a viabilidade da utilização das mesmas para implementação do \textit{framework} para geração de teste unitário.
 
-\subsection{Resultado Obtido com a Provc de Conceito do Gerador de Teste}
-
+\subsection{Resultado Obtido com a Prova de Conceito do Gerador de Teste}
+O principal objetivo da prova de conceito é o entendimento do que pretende-se fazer, bem como uma investigação inicial dos caminhos possíveis. É importante entender que outro  resultado na prova de conceito é o conhecimento adquirido, e não propriamente um produto final.
+\par
+\indent Por meio da prova de conceito alcançou-se, inicialmente, conhecimento sobre o levantamento de ambientes por meio de ferramentas de automatização de configuração. O uso do Vagrant e de \textit{scripts}, bem como um estudo das ferramentas de desenvolvimento a serem utilizadas, foram foco da etapa inicial. O resultado disso é a possibilidade de levantar o ambiente com apenas seis passos simples. Tudo isso documentado na \textit{wiki}  do repositório:
+\par
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/guide-vagrant.png}
+    \caption{Guia para Levantamento do Ambiente}
+    \label{fig:guide-vagrant}
+ \end{figure}
+\par
+\indent Na Figura \ref{fig:guide-vagrant}, ao executar o comando \lstinline|vagrant up| o Vagrant encarrega-se de baixar a máquina virtual e configurá-la com os \textit{scripts} disponíveis no diretório do projeto.
+\par
+\indent Outro resultado importante foi o estudo feito sobre o Flexc++ e o Bisonc++. A leitura dos principais capítulos da documentação dessas ferramentas permitiu maior segurança em seu uso, bem como do seu funcionamento e de como interagem.
+\par
+\indent É fruto também desse estudo o contato, por meio de \textit{e-mail}, com o criador de ambas as ferramentas. Através dessa comunicação não foi apenas tirada uma dúvida, como também foi estabelecido um canal de comunicação com o principal mantenedor do Flexc++ e Bisonc++.
+\par
+\indent O principal resultado da prova de conceito foi a prática. A experiência de utilizar o Flexc++ e Bisonc++ em conjunto com código escrito para esse TCC foi produtiva. Permitiu ver na prática o que foi estudado e, principalmente, entender que é possível alcançar o resultado planejado para esse trabalho.
+\par
+\indent 
 \section{Resumo do Capítulo}
 O capítulo abordou sobre a proposta deste trabalho. Com isso, foi explanado sobre como o \textit{framework} funcionará, bem como qual a entrada e saída esperada com o seu uso. Detalhou-se também sobre a linguagem de programação escolhida para geração dos testes unitários e um exemplo de notação candidata que possibilitará o uso do \textit{framework}. Por fim, abordou-se sobre as provas de conceitos desenvolvidas durante o trabalho de conclusão de curso 1 que possuem como objetivo principal constatar a viabilidade do projeto. 
 
