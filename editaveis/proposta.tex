@@ -7,7 +7,7 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
 \par
 \indent A princípio, o \textit{framework} será desenvolvido com o intuito de gerar testes unitários em aplicações escritas em \textit{Grails}, especificamente para as operações básicas conhecidas como CRUD (\textit{create}, \textit{read}, \textit{update} e \textit{detele}). Entretanto, há intenção de evoluir o \textit{framework} para que ele seja compatível com demais métodos e linguagens de programação. 
 \par
-\indent Para a implementação do \textit{framework}, será utilizada a linguagem de programação C++, junto com as ferramentas Flexc++ \cite{flexcpp2015} e Bisonc++ \cite{bisoncpp2015}. A Figura 4 fornece uma visão geral das camadas do \textit{framework}.
+\indent Para a implementação 	do \textit{framework}, será utilizada a linguagem de programação C++, junto com as ferramentas Flexc++ \cite{flexcpp2015} e Bisonc++ \cite{bisoncpp2015}. A Figura 4 fornece uma visão geral das camadas do \textit{framework}.
  
  \begin{figure}[h]
     \centering
@@ -101,14 +101,14 @@ def addTwoNumbers(Integer firstParcel, Integer secondParcel) {
 }
 
 // Test
-void sumTwoValidNumbers() {
+void testSumTwoValidNumbers() {
   expectedResult = 4
   result = addTwoNumbers( 2, 2 )
   
   assertEquals expectedResult, result
 }
 
-void sumZerosTest() {
+void testSumZeros() {
   expectedResult = 0
   result = addTwoNumbers( 0, 0 )
   
@@ -279,7 +279,7 @@ BOOLEAN {TRUE}|{FALSE}
 def addTwoNumbers( Interger firstParcel, Integer secondParcel ) { return }
 \end{lstlisting}
 \par
-\indent Com os resultados anteriores foi possível definir as regras necessárias para a execução da prova de conceito. Essa regras foram classificadas em duas categorias: regras de leitura do \textit{Grails} e regras de leitura da notação.
+\indent Com os resultados anteriores foi possível definir as regras necessárias para a execução da prova de conceito. Essas regras foram classificadas em duas categorias: regras de leitura do \textit{Grails} e regras de leitura da notação.
 \par
 \begin{lstlisting}[language=C++, label=rules-grails, caption=Regras de Leitura do \textit{Grails}]
 type:
@@ -328,31 +328,29 @@ NUMBER
 \indent A partir das regras produzidas iniciou-se o desenvolvimento das ações a serem tomadas pelo \textit{parser} quando essas regras fossem identificadas. Nesse ponto foi feito um aprofundamento na documentação da Flexc++ e do Bisonc++, em especial deste último. Observou-se que o referencial das duas ferramentas é completo, apresentando uma descrição de cada parte, comando ou ação que deseja-se efetuar.
 \par
 \indent Flexc++ e Bisonc++, quando executados, geram duas classes escritas em C++. É necessário fazer a comunicação entre o analisador léxico, produzido pelo Flexc++, com o analisador sintático gerado pelo Bisonc++. Para isso, foi necessário a criação de um ponteiro dentro do analisador léxico que apontasse para um atributo especial no analisador sintático. Assim, a comunicação entre ambos os módulos foi possível.
-\begin{lstlisting}[language=C++, label=talk-lexer-grammar, caption=Comunicação Entre Analisador Léxico e Analisador Sintático]
-
-/* Alterações no arquivo Scanner.h */
+\begin{lstlisting}[language=C++, label=talk-FB-scannerh, caption=Alterações no Scannner.h para comunicação entre Analisador Léxico e Sintático]
 #include "../parser/Parserbase.h"
 
 class Scanner: public ScannerBase
 {
   public:
   [...]
-  // Adição de função membro
   void setSval(Parser::STYPE__* d_val__);
   
   private:
   [...]
-  // Adição de ponteiro como atributo
   Parser::STYPE__* d_val;
 };
 
-// Adição de implementação da função membro
 inline void Scanner::setSval(Parser::STYPE__* d_val__)
 {
   d_val = d_val__;
 }
-
-/* Alterações no arquivo Parser.h */
+\end{lstlisting}
+\par
+\indent No Código \ref{talk-FB-scannerh} apresentam-se as alterações feitas no arquivo Scanner.h. Foi adicionado um atributo, do tipo ponteiro, com a finalidade de receber a localização de um atributo especial do \textit{parser}. Para atribuir valores a esse atributo foi definida uma função membro e sua implementação.
+\par
+\begin{lstlisting}[language=C++, label=talk-FB-parserh, caption=Alterações no Parser.h para comunicação entre Analisador Léxico e Sintático]
 #include "../scanner/Scanner.h"
 
 class Parser: public ParserBase
@@ -360,31 +358,190 @@ class Parser: public ParserBase
   Scanner d_scanner;
   
   public:
-    // Adição de um construtor
     explicit Parser(std::istream &in = std::cin,
                     std::ostream &out = std::cout);
   [...]
 };
 
-/* Alterações no arquivo Parser.ih */
+\end{lstlisting}
+\par
+\indent No Código \ref{talk-FB-parserh} observa-se apenas uma alteração: a definição de uma novo construtor.
+\par
+\begin{lstlisting}[language=C++, label=talk-FB-parserih, caption=Alterações no Parser.ih para comunicação entre Analisador Léxico e Sintático]
 #include "Parser.h"
 
-// Implementação do novo construtor
 Parser::Parser(std::istream &in, std::ostream &out)
 {
-  // Indicando endereço do atributo d_val__ ao Scanner.
-  //   Garantindo, assim, a comunicação.
   d_scanner.setSval(&d_val__);  
 }
 
 [...]
-
 \end{lstlisting}
 \par
-\indent Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
-\par 
-\indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo da prova de conceito.
+\indent No Código \ref{talk-FB-parserih} mostra-se a implementação do construtor. Permite-se, assim, ao objeto \lstinline|d_scanner| conhecer o endereço de \lstinline|d_val__|, garantindo a comunicação entre o analisador léxico e sintático.
+\par
+\indent Com os módulos tendo comunicação consolidada implementou-se a coleta e transmissão dos dados identificados pelo analisador léxico para o analisador sintático. Para isso, fez-se uso do ponteiro descrito no Código \ref{talk-FB-parserih}.
+\par
+\begin{lstlisting}[language=C++, label=lexer-communication, caption=Estabelecendo coleta e transmissão de dados entre analisador léxico e sintático]
+"def" {
+  *d_val = matched();
+  return Parser::DEF;
+}
 
+"scenario" {
+  *d_val = matched();
+  return Parser::SCENARIO;
+}
+
+{DIGIT}       |
+{INTEGER}     |
+{REAL} {
+  *d_val = matched();
+  return Parser::NUMBER;
+}
+\end{lstlisting}
+\par
+\indent O Código \ref{lexer-communication} exemplifica a forma como foi feita a coleta e transmissão de dados. Todo valor que o analisador léxico é capaz de identificar, por meio da função membro \lstinline|matched()|, é atribuído ao ponteiro que se comunica com o analisador sintático.
+\par
+\indent Tendo os dados passados aos \textit{tokens}, foi possível definir ações para cada regra sintática identificada pelo analisador sintático. As ações pensadas são, em essência, de coleta dos dados observados para o gerador de teste.
+\begin{lstlisting}[language=C++, label=grammar-action, caption=Definindo ações para as regras do analisador sintático]
+method_declaration:
+  DEF IDENTIFIER LEFT_PARENTHESES RIGHT_PARENTHESES {
+    const string identifier_token( (*@\textdollar@*)2 );
+    test_generator.set_method_name( identifier_token );
+  }
+|
+  DEF IDENTIFIER LEFT_PARENTHESES params_declaration RIGHT_PARENTHESES {
+    const string identifier_token( (*@\textdollar@*)2 );
+    test_generator.set_method_name( identifier_token );
+  }
+;
+
+[...]
+
+scenario_declaration:
+  SCENARIO COLON text {
+    const string text_token( (*@\textdollar@*)3 );
+  
+    test_generator.set_scenario_name( text_token );
+  }
+;
+\end{lstlisting}
+\par
+\indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo da prova de conceito.
+\par
+\indent Observa-se no Código \ref{grammar-action} alguns exemplos de declarações de regras já com ações associadas. As variáveis \textdollar\lstinline|2| e \textdollar\lstinline|3| são representações dos \textit{tokens} localizados nessas posições. Assim, é possível ter acesso a esses valores durante a implementação das ações e manipulá-los. É importante ressaltar que esses valores estão associados a \textit{tokens} devido a comunicação com o analisador léxico.
+\par
+\indent Evidencia-se também o uso de um objeto \lstinline|test_generator|. Esse objeto é do tipo \lstinline|Generator::TestGenerator|. Esse tipo é implementado na classe de mesmo nome. Representa o módulo Gerador. \lstinline|test_generator|, em essência, coleta os dados relacionados ao teste do \textit{parser}. Assim que solicitado ele faz uso desses dados para a geração no teste.
+\begin{lstlisting}[language=C++, label=testgeneratorhpp, caption=Interface (\textit{header}) da classe TestGenerator]
+  class TestGenerator
+  {
+    public:
+      TestGenerator( std::vector<int> input, int output,
+                     std::string name = "\"without name\"" );
+      TestGenerator( std::string name = "\"without name\"" );
+
+
+      std::string generate_method_header();
+      std::string generate_expectations();
+      std::string generate_call_method();
+      std::string generate_assertation();
+
+      void add_scenario_entry( int );
+
+
+      void set_method_name( std::string );
+      void set_scenario_out( int );
+      void set_scenario_name( std::string );
+      void set_scenario_entries( std::vector<int> );
+
+    private:
+      const static bool       EXIST = true;
+      const static bool       NOT_EXIST = false;
+
+      int              scenario_out;
+      std::string      scenario_name;
+      std::vector<int> scenario_entries;
+
+      std::string      method_name;
+
+
+      int              get_scenario_out();
+      std::string      get_method_name();
+      std::string      get_scenario_name();
+      std::vector<int> get_scenario_entries();
+
+      void        remove_character( std::string*, char );
+      bool        check_whitespaces( std::string );
+      bool        check_quotes( std::string );
+      std::string prepare_scenario_name();
+  };
+\end{lstlisting}
+\par
+\indent No Código \ref{testgeneratorhpp} tem-se a interface da classe \lstinline|TestGenerator|, onde pode-se observar as funções membro e atributos a ela associados.
+\par
+\begin{lstlisting}[language=C++, label=testgeneratorcpp, caption=Trecho de implementação da classe TestGenerator]
+  TestGenerator::TestGenerator( std::vector<int> input, int output, std::string name )
+  {
+    this->set_scenario_name( name );
+    this->set_scenario_entries( input );
+    this->set_scenario_out( output );
+  }
+  
+  [...]
+  
+  std::string TestGenerator::prepare_scenario_name()
+  {
+    std::string scenario( this->scenario_name );
+
+    while( check_whitespaces( scenario ) || check_quotes( scenario ) )
+    {
+      if( check_whitespaces( scenario ) )
+      {
+        remove_character( &scenario, ' ' );
+      } else
+      {
+        /* Nothing to do. */
+      }
+
+      if( check_quotes( scenario ) )
+      {
+        remove_character( &scenario, '\"' );
+      } else
+      {
+        /* Nothing to do. */
+      }
+    }
+
+    return scenario;
+  }
+\end{lstlisting}
+\par
+\indent O Código \ref{testgeneratorcpp} apresenta alguns trechos da implementação da classe \lstinline|TestGenerator|.
+\par
+\indent O objeto \lstinline|test_generator| é chamado para gerar testes no função \lstinline|main()|. Nesse ponto, observa-se a necessidade de acessar o objeto criado no \textit{parser} para produzir testes na \lstinline|main()|. Novamente, faz-se uso de ponteiros para acessar esse objeto.
+\begin{lstlisting}[language=C++, label=main, caption=função \lstinline|main()| Fazendo Uso da \lstinline|TestGenerator|]
+int main( int argc, char **argv )
+{
+  Parser parser;
+  parser.parse();
+
+  Generator::TestGenerator* test_generator_ptr;
+  test_generator_ptr = Generator::addresses_test_generators.at( 0 );
+
+  std::string method_header( test_generator_ptr->generate_method_header() );
+  std::string expectation( test_generator_ptr->generate_expectations() );
+  std::string call_method( test_generator_ptr->generate_call_method() );
+  std::string assertation( test_generator_ptr->generate_assertation() );
+
+  cout << method_header;
+  cout << expectation;
+  cout << call_method;
+  cout << assertation << endl;
+}
+\end{lstlisting}
+\par
+\indent No Código \ref{main} observa-se, enfim, a etapa final da prova de conceito: o gerador de testes sendo chamado para produzir um teste de um método simples de soma de dois números.
 
 \section{Resultados Obtidos}
 \subsection{Resultados Obtidos com as Provas de Conceito do Flexc++ e Bisonc++}

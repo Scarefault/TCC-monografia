@@ -57,7 +57,7 @@
   basicstyle=\footnotesize,
   numbers=left,
   numbersep=5pt,
-  mathescape=true,
+  mathescape=false,
   tabsize=4,
   keepspaces=true,
   fontadjust=true
@@ -80,11 +80,13 @@
   {&}{{\&}}1 
   {ç}{{\c c}}1 
   {³}{{$^3$}}1 
+  {\$}{{\$}}1 
   {Ω}{{$\Omega$}}1,
 %
   breaklines=true,
   showstringspaces=false,
-  basicstyle=\small\ttfamily
+  basicstyle=\small\ttfamily,
+  escapeinside={(*@}{@*)}
 }
 
 \lstdefinelanguage{Groovy}{
