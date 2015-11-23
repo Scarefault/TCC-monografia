@@ -11,17 +11,17 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  
  \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/estruturaarquitetural.jpg}
+    \includegraphics[width=0.6\textwidth]{figuras/layers.png}
     \caption{Camadas do \textit{Framework}}
     \label{fig:estruturaarquitetural}
  \end{figure}
 
  \par
- \indent O \textit{framework} proposto será constituído essencialmente por duas camadas: uma camada para \textbf{geração de testes} e uma camada para \textbf{customização}. A camada de geração de testes é o núcleo do \textit{framework}. Essa camada é responsável por produzir os testes especificados, enquanto que a camada mais de customização, mais 
+ \indent O \textit{framework} proposto será constituído essencialmente por duas camadas: uma camada para \textbf{geração de testes} e uma camada para \textbf{customização}. A camada de geração de testes é o núcleo do \textit{framework}. Essa camada será responsável por produzir os testes especificados, enquanto que a camada de customização tratará de permitir a extensibilidade e interface com aplicações extenas.
  
    \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{figuras/entradasesaidas.jpg}
+    \includegraphics[width=0.7\textwidth]{figuras/module-view-generator.png}
     \caption{Fluxo do funcionamento do \textit{Framework}}
     \label{fig:entradasesaidas}
  \end{figure}
@@ -31,7 +31,7 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  \begin{description}
  \item[Análise léxica:] onde será realizada a análise do código fonte de forma a reconhecer as palavras específicas, os \textit{tokens}. Essas palavras serão previamente definidas por meio do Flexc++ que fornece suporte para essa etapa \cite{flexcpp2015}.
  \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.
- \item[Análise semântica:] será realizada uma interpretação do código apresentado verificando sua semântica, ou seja, será averiguado o significado dos \textit{tokens} identificados dentro do contexto.
+ \item[Análise semântica:] será realizada uma interpretação do código apresentado verificando sua semântica, ou seja, será averiguado o significado dos \textit{tokens} identificados dentro do contexto. A príncipio, o analisador semântico será limitado a verificar a validade dos parâmetros. Ou seja, garantir que o tipo e quantidade de parâmetros estejam correspondentes ao esperado.
   \item[Geração dos testes:] após as análises do código, será efetuado o \textit{parser} com o intuito de gerar os testes unitários especificados pelo desenvolvedor. Esses testes serão armazenados nos arquivos apropriados e representarão a principal saída do \textit{framework}.
  \end{description}
  
@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 \indent O código implementado teve o comportamento conforme o esperado.
 
 \subsection{Gerador de Teste Unitário}
-Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto. 
+Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste unitário, foi idealizada a implementação de um gerador simples. Ele deve ser capaz de criar testes, conforme especificação, referentes a um método de adição de dois números inteiros, escrito em \textit{Grails}. O código resultando é parte integrante da primeira versão do \textit{framework} proposto.
 \par 
 \indent Inicialmente, definiu-se o analisador léxico capaz de identificar as informações necessárias para a geração do teste. A princípio, foram levantadas as palavras-chave e símbolos referenciados na Tabela 1.
 
@@ -239,16 +239,103 @@ Com o intuito de provar a viabilidade do desenvolvimento do gerador de teste uni
   \begin{tabular}{| c | c |}
     \hline
     Tipo & Símbolos Identificados\\ \hline
-     Símbolos & "(";  ")";  "{";  "}";  "[";  "]";  "," e "." \\
-     Palavras-chave &   \textit{package}; \textit{import}; \textit{def}; \textit{Integer}; \textit{return}; \textit{scarefault}, \textit{test}; \textit{scenario}; \textit{entries} e \textit{out} \\ \hline
+     Símbolos & (;  );  \{;  \};  [;  ];  , e . \\
+     Palavras-chave &   \textit{package}; \textit{import}; \textit{def}; \textit{Integer}; \textit{return}; \textit{scarefault}; \textit{scenario}; \textit{entries} e \textit{out} \\ \hline
   \end{tabular}
 \end{table}
+\par
+\indent As primeiras cinco palavras-chave (\textit{package}, \textit{import}, \textit{def}, \textit{Integer} e \textit{return}) são próprias da linguagem \textit{Grails}. As demais são exclusivas da notação do \textit{framework}. \textit{Scarefault} é o identificador do gerador de testes. \textit{Scenario} é a descrição do teste a ser efetuado e será utilizado como nome para o teste derivado desse cenário. \textit{Entries} identifica as entradas válidas para o teste e \textit{out} identifica a saída válida para o teste.
+\par
+\indent Feito o levantamento das palavras-chave a serem identificadas pelo analisador léxico, iniciou-se a pesquisa pelos padrões a serem reconhecidos. Foram identificados os padrões \textbf{digit}, \textbf{integer}, \textbf{real}, \textbf{character}, \textbf{literal}, \textbf{whitespace} e \textbf{boolean}.
+\par
+\indent São definidos da seguinte forma:
+\begin{lstlisting}[language=C++, label=pattern-nominate, caption=Padrões Nominados]
+DIGIT   [[:digit:]]
+INTEGER {DIGIT}+
+REAL    -?{INTEGER}+("."{INTEGER}+)?
 
+CHARACTER .
+LITERAL   \".*\"
 
+WHITESPACE [[:blank:]]+
 
-Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
+TRUE    "true"
+FALSE   "false"
+BOOLEAN {TRUE}|{FALSE}
+\end{lstlisting}
+\par
+\indent Foram definidos os \textit{tokens} a serem utilizados para a prova de conceito. A partir daí foi efetuado um teste, com o intuito de observar se o \textit{parser} estava realmente identificando os tokens.
+\par
+ \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figuras/second-test-grammar.png}
+    \caption{Teste de Execução do \textit{parser} para identificação dos \textit{tokens}}
+    \label{fig:test-tokens}
+ \end{figure}
+\par
+\indent Na Figura \ref{fig:test-tokens} é demonstrado o resultado teste para identificação dos \textit{tokens}, tendo como entrada a \textit{string}:
+\par
+\begin{lstlisting}[language=java, label=string-entry, caption=\textit{string} de entrada]
+def addTwoNumbers( Interger firstParcel, Integer secondParcel ) { return }
+\end{lstlisting}
+\par
+\indent Com os resultados anteriores foi possível definir as regras necessárias para a execução da prova de conceito. Essa regras foram classificadas em duas categorias: regras de leitura do \textit{Grails} e regras de leitura da notação.
+\par
+\begin{lstlisting}[language=C++, label=rules-grails, caption=Regras de Leitura do \textit{Grails}]
+type:
+TYPE_INTEGER
+;
+
+text:
+STRING
+;
+
+method_declaration:
+DEF IDENTIFIER LEFT_PARENTHESES RIGHT_PARENTHESES
+| DEF IDENTIFIER LEFT_PARENTHESES params_declaration RIGHT_PARENTHESES
+;
+
+params_declaration:
+type IDENTIFIER
+| params_declaration COMMA params_declaration
+;
+\end{lstlisting}
+\par 
+\begin{lstlisting}[language=C++, label=rules-scarefault, caption=Regras de Leitura da notação]
+scenario_declaration:
+SCENARIO COLON text
+;
+
+entries_declaration:
+SCAREFAULT DOT ENTRIES COLON test_input SEMICOLON
+;
+
+test_input COMMA test_input
+| NUMBER
+;
+
+out_declaration:
+SCAREFAULT DOT OUT COLON test_output SEMICOLON
+;
+
+test_output:
+NUMBER
+;
+\end{lstlisting}
+\par
+\indent O Código \ref{rules-grails} e \ref{rules-scarefault} descrevem as regras desenvolvidas para a prova de conceito.
+\par
+\indent A partir das regras produzidas iniciou-se o desenvolvimento das ações a serem tomadas pelo \textit{parser} quando essas regras fossem identificadas. Nesse ponto foi feito um aprofundamento na documentação da Flexc++ e do Bisonc++, em especial deste último. Observou-se que o referencial das duas ferramentas é completo, apresentando uma descrição de cada parte, comando ou ação que deseja-se efetuar.
+\par
+\indent Flexc++ e Bisonc++, quando executados, geram duas classes escritas em C++. É necessário fazer a comunicação entre o analisador léxico, produzido pelo Flexc++, com o analisador sintático gerado pelo Bisonc++. Para isso, foi necessário a criação de um ponteiro dentro do analisador léxico que apontasse para um atributo especial no analisador sintático. Assim, a comunicação entre ambos os módulos foi possível.
+\begin{lstlisting}[language=C++, label=talk-lexer-grammar, caption=Comunicação Entre Analisador Léxico e Analisador Sintático]
+
+\end{lstlisting}
+\par
+\indent Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
 \par 
 \indent O gerador produzido na prova de conceito possui apenas os analisadores léxico e sintático. O analisador semântico não faz parte do escopo da prova de conceito.
+
 
 \section{Resultados Obtidos}
 \subsection{Resultados Obtidos com as Provas de Conceito do Flexc++ e Bisonc++}
