@@ -330,6 +330,55 @@ NUMBER
 \indent Flexc++ e Bisonc++, quando executados, geram duas classes escritas em C++. É necessário fazer a comunicação entre o analisador léxico, produzido pelo Flexc++, com o analisador sintático gerado pelo Bisonc++. Para isso, foi necessário a criação de um ponteiro dentro do analisador léxico que apontasse para um atributo especial no analisador sintático. Assim, a comunicação entre ambos os módulos foi possível.
 \begin{lstlisting}[language=C++, label=talk-lexer-grammar, caption=Comunicação Entre Analisador Léxico e Analisador Sintático]
 
+/* Alterações no arquivo Scanner.h */
+#include "../parser/Parserbase.h"
+
+class Scanner: public ScannerBase
+{
+  public:
+  [...]
+  // Adição de função membro
+  void setSval(Parser::STYPE__* d_val__);
+  
+  private:
+  [...]
+  // Adição de ponteiro como atributo
+  Parser::STYPE__* d_val;
+};
+
+// Adição de implementação da função membro
+inline void Scanner::setSval(Parser::STYPE__* d_val__)
+{
+  d_val = d_val__;
+}
+
+/* Alterações no arquivo Parser.h */
+#include "../scanner/Scanner.h"
+
+class Parser: public ParserBase
+{
+  Scanner d_scanner;
+  
+  public:
+    // Adição de um construtor
+    explicit Parser(std::istream &in = std::cin,
+                    std::ostream &out = std::cout);
+  [...]
+};
+
+/* Alterações no arquivo Parser.ih */
+#include "Parser.h"
+
+// Implementação do novo construtor
+Parser::Parser(std::istream &in, std::ostream &out)
+{
+  // Indicando endereço do atributo d_val__ ao Scanner.
+  //   Garantindo, assim, a comunicação.
+  d_scanner.setSval(&d_val__);  
+}
+
+[...]
+
 \end{lstlisting}
 \par
 \indent Em seguida, foram estabelecidas as regras gramáticais para criação do arquivo de teste contendo os casos de testes conforme especificados no arquivo de entrada.
