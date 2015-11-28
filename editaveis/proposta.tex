@@ -17,17 +17,17 @@ A proposta deste trabalho é a implementação de um \textit{framework} capaz de
  \end{figure}
 
  \par
- \indent O \textit{framework} proposto será constituído essencialmente por duas camadas: uma camada para \textbf{geração de testes} e uma camada para \textbf{customização}. A camada de geração de testes é o núcleo do \textit{framework}. Essa camada será responsável por produzir os testes especificados, enquanto que a camada de customização tratará de permitir a extensibilidade e interface com aplicações extenas.
+ \indent O \textit{framework} proposto será constituído essencialmente por duas camadas: uma camada para \textbf{geração de testes} e uma camada para \textbf{customização}. A camada de geração de testes é o núcleo do \textit{framework}. Essa camada será responsável por produzir os testes especificados, enquanto que a camada de customização tratará de permitir a extensibilidade e interface com aplicações externas.
  
    \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/module-view-generator.png}
-    \caption{Fluxo do funcionamento do \textit{Framework}}
+    \caption{Interação dos Módulos da Camada de Geração de Testes}
     \label{fig:entradasesaidas}
  \end{figure}
  
  \par
-\indent A Figura \ref{fig:entradasesaidas} enfatiza o fluxo do funcionamento do \textit{framework}. A entrada do \textit{framework} será o código fonte, bem como as especificações dos testes seguindo uma notação pré-determinada. Como saída, serão gerados os testes unitários conforme especifícados. O fluxo do funcionamento do \textit{framework} pode ser entendido, de forma simplificada, em quatro módulos: análise léxica, análise sintática, análise semântica e geração dos testes. 
+\indent A Figura \ref{fig:entradasesaidas} enfatiza o fluxo do funcionamento do \textit{framework}. A entrada do \textit{framework} será o código fonte, bem como as especificações dos testes seguindo uma notação pré-determinada. Como saída, serão gerados os testes unitários conforme especificados. O fluxo do funcionamento do \textit{framework} pode ser entendido, de forma simplificada, em quatro módulos: análise léxica, análise sintática, análise semântica e geração dos testes. 
  \begin{description}
  \item[Análise léxica:] onde será realizada a análise do código fonte de forma a reconhecer as palavras específicas, os \textit{tokens}. Essas palavras serão previamente definidas por meio do Flexc++ que fornece suporte para essa etapa \cite{flexcpp2015}.
  \item[Análise sintática:] ocorrerá uma avaliação do código fonte considerando as regras sintáticas definidas. Essas regras são formadas utilizando sequências de \textit{tokens}. Essa etapa será implementada com o auxílio do Bisonc++ \cite{bisoncpp2015}.
@@ -125,7 +125,7 @@ O Flexc++ é um analisador léxico que é diferente do Flex, pois gera código e
 \par
 \indent Com o estudo, constatou-se que o Flexc++ se assemelha ao Flex. Com isso, o seu uso é viável no projeto, já que se possui conhecimento prévio da ferramenta. No Apêndice A constam os resultados desse estudo.
 \par
-\indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utiizando apenas o Flexc++. Para isso, definiu-se o analisador léxico apresentado a seguir em Código 4.3.:
+\indent Após a sua instalação, foi implementado um identificador de \textit{tokens} utilizando apenas o Flexc++. Para isso, definiu-se o analisador léxico apresentado a seguir em Código 4.3.:
 
 \begin{lstlisting}[language=C++, label=analisadorPCF, caption={Analisador Léxico da Prova de Conceito do Flexc++}]
 %%
@@ -273,11 +273,7 @@ BOOLEAN {TRUE}|{FALSE}
     \label{fig:test-tokens}
  \end{figure}
 \par
-\indent Na Figura \ref{fig:test-tokens} é demonstrado o resultado do teste para identificação dos \textit{tokens}, tendo como entrada a \textit{string}:
-\par
-\begin{lstlisting}[language=java, label=string-entry, caption=\textit{string} de entrada]
-def addTwoNumbers( Interger firstParcel, Integer secondParcel ) { return }
-\end{lstlisting}
+\indent Na Figura \ref{fig:test-tokens} é demonstrado o resultado do teste para identificação dos \textit{tokens}, tendo como entrada a \textit{string}: \lstinline|def addTwoNumbers( Interger firstParcel, Integer secondParcel ) { return }|
 \par
 \indent Com os resultados anteriores foi possível definir as regras necessárias para a execução da prova de conceito. Essas regras foram classificadas em duas categorias: regras de leitura do \textit{Grails} e regras de leitura da notação.
 \par
