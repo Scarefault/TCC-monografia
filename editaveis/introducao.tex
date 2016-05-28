@@ -31,10 +31,7 @@ testes, com diferentes intenções de análise sobre o produto, foram surgindo,
 a saber: testes de unidade, testes de integração e testes de aceitação.
 testes de integração são aqueles que permitem a observação de que os
 componentes que formam o software funcionam corretamente em conjunto. Testes
-de aceitação garantem que as interfaces do sistema estão de acordo com o
-especificado, bem como o comportamento esperado por elas. Os testes de
-unidade têm como proposta a garantia  de que uma determinada parte (unidade)
-do código esteja respondendo como o esperado \cite{sommerville2007}.
+de aceitação pode ser caracterizado como a verificação do sistema em relação aos requisitos iniciais e a necessidade do usuário. Geralmente esse teste é realizado em um ambiente criado para essa finalidade e necessita do apoio de um ou mais usuários finais \cite{myers2004}. Os testes de unidade têm como proposta a garantia  de que uma determinada parte (unidade) do código esteja respondendo como o esperado \cite{sommerville2007}.
 \par
 \indent Outra questão que surge na produção de software, e que é um fator
 importante a ser considerado, é o custo que \textit{bugs} geram no
@@ -119,21 +116,14 @@ entendimento de teste de software e aplicação dos conhecimentos sobre
 engenharia de software e, portanto, fazem parte dos objetivos específicos desse
 trabalho. São eles:
 \begin{enumerate}
-  \item Aprofundar o conhecimento na área de Testes de Software.
 
-  \item Investigar abordagens associadas ao tema foco desse trabalho de
-    conclusão de curso, via revisão bibliográfica e provas de conceito, no
-    intuito de compilar soluções candidatas ao desenvolvimento do
-    \textit{framework} de geração de testes de unidade.
-
-  \item Aplicar métodos, técnicas e boas práticas de Engenharia de Software
-    no processo de desenvolvimento do \textit{framework}.
+  \item Identificar regras gramáticais da linguagem alvo inicial.
 
   \item Gerar testes unitários por meio do \textit{framework} que cubram
-    métodos simples, como criar, recuperar, atualizar e apagar.
+    os métodos criar, recuperar, atualizar e apagar entidades de negócio.
+    
+  \item Permitir inclusão de outras linguagens para geração de testes unitários.
 
-  \item Coletar as primeiras impressões dos testes gerados pelo
-    \textit{framework} e documentá-las, afim de facilitar a evolução no futuro.
 \end{enumerate}
 
 \section{Organização do Documento}
@@ -143,15 +133,15 @@ trabalho. São eles:
   \item[Capítulo 2 - Referencial Teórico:] apresenta conceitos, modelos e
     abordagens associados ao tema foco desse trabalho;
 
-  \item[Capítulo 3 - Suporte Tecnológico:] caracteriza as recursos
+  \item[Capítulo 3 - Suporte Tecnológico:] caracteriza os principais recursos
     tecnólogicos utilizados durante a elaboração desse trabalho;
 
-  \item[Capítulo 4 - Proposta:] descreve a proposta de desenvolvimento de
-    um \textit{framework} para geração de testes unitários;
-
-  \item[Capítulo 5 - Metodologia:] especifica a metodologia utilizada para
+  \item[Capítulo 4 - Metodologia:] especifica a metodologia utilizada para
     pesquisa e desenvolvimento deste trabalho;
 
-  \item[Capítulo 6 - Resultados Parciais:] apresenta os resultados obtidos
-    até o momento.
+  \item[Capítulo 5 - Scarefault:] descreve o \textit{framework} desenvolvido, Scarefault, evidenciando seu funcionamento e arquitetura;
+
+  \item[Capítulo 6 - Resultados:] descreve os resultados considerando principalmente os objetivos específicos desse projeto.
+  
+  \item[Capítulo 7 - Considerações Finais:] apresenta a conclusão.
 \end{description}
