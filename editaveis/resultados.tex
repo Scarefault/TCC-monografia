@@ -16,9 +16,24 @@ Para a identificação das regras gramaticias foram selecionadas duas ferramenta
 bastante utilizadas em contextos de desenvolvimento de compiladores e
 \textit{parsers}: \textsf{Flexc++} e \textsf{Bisonc++}. 
 
+Ambas as ferramentas, \textsf{Flexc++} e \textsf{Bisonc++} foram desenvolvidas
+por Frank B. Brokken, gerente de segurança em TI e conferencista na
+\textit{University of Groningen}, Holanda. A primeira ferramenta foi utilizada para
+definir \textit{scanners}, cujo propósito é a identificação de padrões léxicos em
+um arquivo de texto. Esses padrões foram definidos a partir de \textit{regex},
+na primeira seção do arquivo fonte do Flexc++. Na próxima seção definiu-se o
+que acontece quando um dos padrões é identificado. No Código \ref{REFERENCIA AQUI}
+demonstra-se um fragmento do arquivo produzido para a execução do \textsf{Flexc++}.
 
+[CÓDIGO AQUI]
 
-
+Observa-se no Código \ref{REFERENIA AO CÓDIGO ACIMA}, entre as linhas [NÚMERO
+DA LINHA] e [NÚMERO DA LINHA], um exemplo de como o \textsf{Flexc++} é usado:
+defini-se um padrão léxico a ser encontrado no texto; define-se a ação a ser
+executada para aquele padrão. No caso exemplificado, o padrão a ser encontrado
+é a palavra \textsf{class}. Assim, quando o Flexc++ identifica essa palavra ele armazena o resutado da comparação entre a palavra em análise e o padrão definido.
+Caso haja correspondência o Flexc++ retorna um \textit{token} definido no
+arquivo gerado pelo \textsf{Bisonc++}.
 
 
 
