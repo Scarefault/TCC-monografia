@@ -41,7 +41,7 @@ define-se um padrão léxico a ser encontrado no texto, linha \ref{fragflexcpp12
 define-se a ação a ser executada para aquele padrão. No caso exemplificado, o
 padrão a ser encontrado é a palavra \textsf{class}. Assim, quando o Flexc++
 identifica essa palavra ele armazena o resutado da comparação entre a palavra em
-análise e o padrão definido, \ref{fragflexcpp13}. Caso haja correspondência o
+análise e o padrão definido, linha \ref{fragflexcpp13}. Caso haja correspondência o
 Flexc++ retorna um \textit{token} definido no arquivo gerado pelo
 \textsf{Bisonc++}, linha \ref{fragflexcpp14}.
 
@@ -88,49 +88,74 @@ e faz valer apenas as definidas por ele. Para este trabalho foram definidos apen
 duas funções a mais: a \textit{StartCondition\_\_::[nome do mini scanner]}, que
 inicia o \textit{mini scanner}, e a \textit{StartCondition\_\_::INITIAL} que
 finaliza seu uso. Quando o \textit{scanner} encontra no texto em análise o
-padrão que dá início a um \miniscanner, ele para o se processo e
-inicia o do \miniscanner. Assim, apenas as regras do \miniscanner passam a ser
-válidas. No momento que o \miniscanner encontra o padrão de finalização
-ele retoma o processo do \scanner.
+padrão que dá início a um \textit{mini scanner}, ele para o se processo e
+inicia o do \textit{mini scanner}. Assim, apenas as regras do \miniscanner passam a ser
+válidas. No momento que o \textit{miniscanner} encontra o padrão de finalização
+ele retoma o processo do \textit{scanner}.
 
 Em conjunto com o \textsf{Flexc++} foi utilizado o \textsf{Bisonc++}. Como já
 apresentada, a primeira ferramenta identifica padrões léxicos, enquanto que a
 segunda ferramenta é responsável pela definição das regras sintáticas da
 gramática.
 
-Da mesma forma que o \flexcpp, o arquivo a ser compilado pelo \bisoncpp é divido
+Da mesma forma que o \textsf{Flexc++}, o arquivo a ser compilado pelo \bisoncpp é divido
 em duas seções. A primeira traz algumas diretrizes que fornecem infomações ao
 \bisoncpp sobre configurações e opções que serão adicionadas ao código fonte
 gerado pela ferramenta. A segunda parte desse mesmo arquivo traz as regras
 que definem a gramática. O Código \ref{fragbisoncpp} descreve um fragmento
-do arquivo com a implementação das regras gramaticais do \grails.
+do arquivo com a implementação das regras gramaticais do \textsf{Grails}.
 
 \begin{lstlisting}[language=C++, label=fragbisoncpp, caption=Fragmento do código fonte para o \bisoncpp]
 // Seção de diretivas
-%scanner                  ../scanner/Scanner.h
-%scanner-token-function   d_scanner.lex()
-%baseclass-preinclude     ParserPreinclude.h
+%scanner                  ../scanner/Scanner.h (*@\label{fragbisoncpp1}@*)
+%scanner-token-function   d_scanner.lex() (*@\label{fragbisoncpp2}@*)
+%baseclass-preinclude     ParserPreinclude.h (*@\label{fragbisoncpp3}@*)
 
-%stype std::string
-%start startrule
+%stype std::string (*@\label{fragbisoncpp5}@*)
+%start startrule (*@\label{fragbisoncpp6}@*)
 
-%include spec/tokens.y
+%include spec/tokens.y (*@\label{fragbisoncpp8}@*)
 
 %%
 
 
 // Definição de uma das regras gramaticais do Grails
-class_definition:
-  CLASS IDENTIFIER {
-    std::string identifier_token( (*@\textdollar@*)2 );
-    collector->collect_data( "c", identifier_token.c_str() );
+class_definition: (*@\label{fragbisoncpp14}@*)
+  CLASS IDENTIFIER { (*@\label{fragbisoncpp15}@*)
+    std::string identifier_token( (*@\textdollar@*)2 ); (*@\label{fragbisoncpp16}@*)
+    collector->collect_data( "c", identifier_token.c_str() ); (*@\label{fragbisoncpp17}@*)
   }
-| ABSTRACT class_definition
-| class_definition class_complements
+| ABSTRACT class_definition (*@\label{fragbisoncpp18}@*)
+| class_definition class_complements (*@\label{fragbisoncpp19}@*)
 ;
 \end{lstlisting}
 
-[DESCREVER O FRAGMENTO TENDO COMO BASE O APÊNDICE]
+Como dito anteriormente, na primeira parte do arquivo foram utilizadas algumas
+diretivas do \bisoncpp que forneceram opções úteis para o desenvolvimento do
+\parser e, consequentemente, da identificação das regras gramaticais. Das
+diretivas apresentas entre as linhas \ref{fragbisoncpp1} e
+\ref{fragbisoncpp8}, as que merecem menção são a da linha
+\ref{fragbisoncpp1}, que indica o \scanner que foi utilizado,
+a \ref{fragbisoncpp2}, que indica de onde serão lidas as palavras identificadas
+pelo \textit{scanner}, e a linha \ref{fragbisoncpp9}, que inclui um outro
+arquivo contendo os \tokens utilizados na construção da gramática.
+
+Entre as linhas \ref{fragbisoncpp14} e \ref{fragbisoncpp19} do Código
+\ref{fragbisoncpp}, pode-se observar uma das regras construídas neste trabalho.
+A linha \ref{fragbisoncpp14} indica o nome da regra a ser construída, o que
+gera a adição de um novo símbolo não terminal, chamado
+\lstinline|class_definition|. Essa nova regra possui três definições possíveis,
+listadas nas linhas \ref{fragbisoncpp15}, \ref{fragbisoncpp18} e
+\ref{fragbisoncpp19}. É importante observar que as definições de regras no
+\bisoncpp são recursivas. Dessa forma, definiu-se uma definição base para a
+\lstinline|class_definition| que foi reutilizada nas outras duas possibilidades.
+As linhas \ref{fragbisoncpp16} e \ref{fragbisoncpp17} são as ações que foram
+implementandas para serem executadas quando essa regra for identificada.
+No caso, a linha \ref{fragbisoncpp16} acrescenta uma mensagem no arquivo de
+\textit{log}, enquanto que a linha \ref{fragbisoncpp17} faz a coleta da
+palavra encontrada na segunda posição da regra. A coleta de dados é explica mais
+adiante, no decorrer do texto.
+
 
 
 
