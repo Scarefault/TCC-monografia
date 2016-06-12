@@ -14,28 +14,123 @@ aprofundar-se o conhecimento sobre as regras gramaticais do alvo inicial do
 
 Para a identificação das regras gramaticias foram selecionadas duas ferramentas,
 bastante utilizadas em contextos de desenvolvimento de compiladores e
-\textit{parsers}: \textsf{Flexc++} e \textsf{Bisonc++}. 
+\textit{parsers}: \textsf{Flexc++} e \textsf{Bisonc++}. Ambas as ferramentas, \textsf{Flexc++} e \textsf{Bisonc++} foram desenvolvidas por Frank B. Brokken, gerente de segurança em TI e conferencista na \textit{University of Groningen}, Holanda.
 
-Ambas as ferramentas, \textsf{Flexc++} e \textsf{Bisonc++} foram desenvolvidas
-por Frank B. Brokken, gerente de segurança em TI e conferencista na
-\textit{University of Groningen}, Holanda. A primeira ferramenta foi utilizada para
-definir \textit{scanners}, cujo propósito é a identificação de padrões léxicos em
-um arquivo de texto. Esses padrões foram definidos a partir de \textit{regex},
-na primeira seção do arquivo fonte do Flexc++. Na próxima seção definiu-se o
-que acontece quando um dos padrões é identificado. No Código \ref{REFERENCIA AQUI}
-demonstra-se um fragmento do arquivo produzido para a execução do \textsf{Flexc++}.
+A primeira ferramenta foi utilizada para definir \textit{scanners}, cujo propósito é a identificação de padrões léxicos em um arquivo de texto. Esses padrões foram definidos a partir de \textit{regex}, na primeira seção do arquivo fonte do Flexc++. Na próxima seção definiu-se o que acontece quando um dos padrões é identificado. No Código \ref{fragflexcpp} demonstra-se um fragmento do arquivo produzido para a execução do \textsf{Flexc++}.
 
-[CÓDIGO AQUI]
+\begin{lstlisting}[language=C++, label=fragflexcpp, caption=Fragmento do código fonte para o \flexcpp]
+TRUE    true (*@\label{fragflexcpp1}@*)
+FALSE   false (*@\label{fragflexcpp2}@*)
+BOOLEAN {TRUE}|{FALSE} (*@\label{fragflexcpp3}@*)
 
-Observa-se no Código \ref{REFERENIA AO CÓDIGO ACIMA}, entre as linhas [NÚMERO
-DA LINHA] e [NÚMERO DA LINHA], um exemplo de como o \textsf{Flexc++} é usado:
-defini-se um padrão léxico a ser encontrado no texto; define-se a ação a ser
-executada para aquele padrão. No caso exemplificado, o padrão a ser encontrado
-é a palavra \textsf{class}. Assim, quando o Flexc++ identifica essa palavra ele armazena o resutado da comparação entre a palavra em análise e o padrão definido.
-Caso haja correspondência o Flexc++ retorna um \textit{token} definido no
-arquivo gerado pelo \textsf{Bisonc++}.
+%x oneline_string (*@\label{fragflexcpp5}@*)
+%x multiline_string (*@\label{fragflexcpp6}@*)
+%x multiline_comment (*@\label{fragflexcpp7}@*)
 
 
+%%
+
+"class" { (*@\label{fragflexcpp12}@*)
+  *d_val = matched(); (*@\label{fragflexcpp13}@*)
+  return Parser::CLASS; (*@\label{fragflexcpp14}@*)
+}
+\end{lstlisting}
+
+Observa-se no Código \ref{fragflexcpp}, entre as linhas \ref{fragflexcpp12} e \ref{fragflexcpp14}, um exemplo de como o \textsf{Flexc++} é usado:
+define-se um padrão léxico a ser encontrado no texto, linha \ref{fragflexcpp12};
+define-se a ação a ser executada para aquele padrão. No caso exemplificado, o
+padrão a ser encontrado é a palavra \textsf{class}. Assim, quando o Flexc++
+identifica essa palavra ele armazena o resutado da comparação entre a palavra em
+análise e o padrão definido, \ref{fragflexcpp13}. Caso haja correspondência o
+Flexc++ retorna um \textit{token} definido no arquivo gerado pelo
+\textsf{Bisonc++}, linha \ref{fragflexcpp14}.
+
+Um outro recurso do \textsf{Flexc++} utilizado para a identificação das regras
+gramaticais do \textsf{Grails} foi a definição de \textit{mini scanners}. É um
+recurso fornecido pelo \textsf{Flexc++} que permite a definição de \textit{scanners}
+com regras mais específicas dentro do \textit{scanner} maior. Isso foi útil para
+definir os padrões de identificação de \textit{strings} e comentários do alvo inicial deste trabalho.
+
+O Código \ref{miniscanner} apresenta o \textit{mini scanner} definido para
+identificação de \textit{strings}.
+
+\begin{lstlisting}[language=C++, label=miniscanner, caption=Implementação do Mini scanner de Strings]
+// Condição inicial para o mini scanner
+"\'\'\'" |
+"\"\"\"" {
+  more();
+  begin( StartCondition__::multiline_string );
+}
+
+
+// Mini scanner e suas regras
+<multiline_string> {
+  "\'\'\'"  |
+  "\"\"\"" {
+    begin( StartCondition__::INITIAL );
+    *d_val = matched();
+    return Parser::STRING;
+  }
+
+  .|\n {
+    more();
+  }
+}
+\end{lstlisting}
+
+O uso de \textit{mini scanners} é semelhante ao \textit{scanner} comum. É
+importante ressaltar que há dois tipos de \textit{mini scanners}: os exclusivos
+e o inclusivos. Um \textit{mini scanner} inclusivo permite a inclusão de novos
+padrões ao identificador a partir do momento em que este é chamado. Já o
+\textit{exclusivo} cessa as atividades das regras definidas pelo \textit{scanner}
+e faz valer apenas as definidas por ele. Para este trabalho foram definidos apenas
+\textit{mini scanners} exclusivos. Além disso, \textit{mini scanners} possuem
+duas funções a mais: a \textit{StartCondition\_\_::[nome do mini scanner]}, que
+inicia o \textit{mini scanner}, e a \textit{StartCondition\_\_::INITIAL} que
+finaliza seu uso. Quando o \textit{scanner} encontra no texto em análise o
+padrão que dá início a um \miniscanner, ele para o se processo e
+inicia o do \miniscanner. Assim, apenas as regras do \miniscanner passam a ser
+válidas. No momento que o \miniscanner encontra o padrão de finalização
+ele retoma o processo do \scanner.
+
+Em conjunto com o \textsf{Flexc++} foi utilizado o \textsf{Bisonc++}. Como já
+apresentada, a primeira ferramenta identifica padrões léxicos, enquanto que a
+segunda ferramenta é responsável pela definição das regras sintáticas da
+gramática.
+
+Da mesma forma que o \flexcpp, o arquivo a ser compilado pelo \bisoncpp é divido
+em duas seções. A primeira traz algumas diretrizes que fornecem infomações ao
+\bisoncpp sobre configurações e opções que serão adicionadas ao código fonte
+gerado pela ferramenta. A segunda parte desse mesmo arquivo traz as regras
+que definem a gramática. O Código \ref{fragbisoncpp} descreve um fragmento
+do arquivo com a implementação das regras gramaticais do \grails.
+
+\begin{lstlisting}[language=C++, label=fragbisoncpp, caption=Fragmento do código fonte para o \bisoncpp]
+// Seção de diretivas
+%scanner                  ../scanner/Scanner.h
+%scanner-token-function   d_scanner.lex()
+%baseclass-preinclude     ParserPreinclude.h
+
+%stype std::string
+%start startrule
+
+%include spec/tokens.y
+
+%%
+
+
+// Definição de uma das regras gramaticais do Grails
+class_definition:
+  CLASS IDENTIFIER {
+    std::string identifier_token( (*@\textdollar@*)2 );
+    collector->collect_data( "c", identifier_token.c_str() );
+  }
+| ABSTRACT class_definition
+| class_definition class_complements
+;
+\end{lstlisting}
+
+[DESCREVER O FRAGMENTO TENDO COMO BASE O APÊNDICE]
 
 
 
