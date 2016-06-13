@@ -91,13 +91,20 @@ Utilizando o estudo descrito anteriormente como base, foi definida a metodologia
 	\end{description}
 \par
 \indent O detalhamento de cada \textit{feature} ocorreu conforme execução do projeto e maior entendimento do desenvolvimento de cada funcionalidade.
+
 \subsubsection{FE01 Identificação dos elementos da linguagem de programação Grails}
 Esse funcionalidade é responsável pela criação da gramática capaz de identificar a linguagem de programação Grails. Para isso, foi identificado 10 histórias de usuários que estão listadas na Tabela \ref{feature01}. Essa \textit{feature} foi a primeira detalhada e implementada. No desenvolvimento houve dificuldade de construir uma gramática com o mínimo de conflitos possível capaz de identificar toda a linguagem Grails e, por esse motivo, a implementação dessa funcionalidade foi concluída na sprint 3.
 
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
+\subsubsection{FE 02 Análise dos métodos da camada de domínio (\textit{model})}
+Essa funcionalidade engloba a análise e criação dos testes de modelo. Embora a quantidade de histórias de usuários desse \textit{feature} seja reduzida, a dificuldade técnica associada foi desafiadora. Objetivou-se, nesse momento, concluir um gerador de testes para model que seja capaz de gerar casos de testes para métodos da camada de modelo. Esse funcionalidade foi implementada nas sprints 4 e 5 e as histórias relacionadas estão listadas na Tabela \ref{feature02}.
+
+\subsubsection{FE 03 Análise dos métodos da Camada de Controle (\textit{controller})}
+Funcionalidade similar a \textit{feature} 02 cujo objetivo pode ser resumido na geração de testes. Entretanto, a \textit{feature} 03 visa gerar testes para a camada de controle. Os métodos abordados foram os responsáveis pela criação, leitura, atualização e exclusão de uma classe. A implementação dessa funcionalidade ocorreu em paralelo com a \textit{feature} 02, ou seja, nas sprints 4 e 5. Segue na Tabela \ref{feature03} as histórias dessa funcionalidade.
+
+\subsubsection{FE 04 Desenvolvimento do Framework}
+A \textit{feature} 04 visa tornar o gerador de testes criado em um \textit{framework} tornando-o extensível e adaptável para diferentes linguagens de programação. Para isso, foi necessário identificar os pontos do software que é genérico para qualquer linguagem e os pontos que são adaptáveis, conhecidos como \textit{hotspots}. Para auxiliar nesse processo utilizou-se diagramas de classe e de sequência. Em seguida, executou-se uma refatoração aplicando os padrões de projeto identificados como candidatos e, por fim, documentou-se o uso do \textit{framework}. Essa funcionalidade foi implementada na sprint 6 e suas histórias estão detalhadas na Tabela \ref{feature04}.
+
+\begin{table}[h]
 \centering
 \caption{Histórias da \textit{feature} 01}
 \label{feature01}
@@ -118,13 +125,7 @@ US10 & \begin{tabular}[c]{@{}c@{}}Eu, como desenvolvedor, quero identificar elem
 \end{tabular}
 \end{table}
 
-\subsubsection{FE 02 Análise dos métodos da camada de domínio (\textit{model})}
-Essa funcionalidade engloba a análise e criação dos testes de modelo. Embora a quantidade de histórias de usuários desse \textit{feature} seja reduzida, a dificuldade técnica associada foi desafiadora. Objetivou-se, nesse momento, concluir um gerador de testes para model que seja capaz de gerar casos de testes para métodos da camada de modelo. Esse funcionalidade foi implementada nas sprints 4 e 5 e as histórias relacionadas estão listadas na Tabela \ref{feature02}
-
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
+\begin{table}[h]
 \centering
 \caption{Histórias da \textit{feature} 02}
 \label{feature02}
@@ -137,14 +138,7 @@ US13 & \begin{tabular}[c]{@{}c@{}}Eu, como desenvolvedor, quero analisar método
 \end{tabular}
 \end{table}
 
-
-\subsubsection{FE 03 Análise dos métodos da Camada de Controle (\textit{controller})}
-Funcionalidade similar a \textit{feature} 02 cujo objetivo pode ser resumido na geração de testes. Entretanto, a \textit{feature} 03 visa gerar testes para a camada de controle. Os métodos abordados foram os responsáveis pela criação, leitura, atualização e exclusão de uma classe. A implementação dessa funcionalidade ocorreu em paralelo com a \textit{feature} 02, ou seja, nas sprints 4 e 5. Segue na Tabela \ref{feature03} as histórias dessa funcionalidade.
-
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
+\begin{table}[h]
 \centering
 \caption{Histórias da \textit{feature} 03}
 \label{feature03}
@@ -158,13 +152,7 @@ US16 & \begin{tabular}[c]{@{}c@{}}Eu, como desenvolvedor, quero analisar método
 \end{tabular}
 \end{table} 
 
-\subsubsection{FE 04 Desenvolvimento do Framework}
-A \textit{feature} 04 visa tornar o gerador de testes criado em um \textit{framework} tornando-o extensível e adaptável para diferentes linguagens de programação. Para isso, foi necessário identificar os pontos do software que é genérico para qualquer linguagem e os pontos que são adaptáveis, conhecidos como \textit{hotspots}. Para auxiliar nesse processo utilizou-se diagramas de classe e de sequência. Em seguida, executou-se uma refatoração aplicando os padrões de projeto identificados como candidatos e, por fim, documentou-se o uso do \textit{framework}. Essa funcionalidade foi implementada na sprint 6 e suas histórias estão detalhadas na Tabela \ref{feature04}
-
-% Please add the following required packages to your document preamble:
-% \usepackage[table,xcdraw]{xcolor}
-% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
-\begin{table}[]
+\begin{table}[h]
 \centering
 \caption{Histórias da \textit{feature} 04}
 \label{feature04}
@@ -179,10 +167,8 @@ US22 & \begin{tabular}[c]{@{}c@{}}Eu, como desenvolvedor, quero documentar o fra
 \end{tabular}
 \end{table}
  
- 
  \subsection{Cronograma}
- 
-	Os cronogramas a seguir evidenciam a execução, visão temporal, das atividades referentes ao trabalho de conclusão de curso 01 e 02. 
+ Os cronogramas a seguir evidenciam a execução, visão temporal, das atividades referentes ao trabalho de conclusão de curso 01 e 02. 
 	  
 \begin{table}[h]
   \tiny
