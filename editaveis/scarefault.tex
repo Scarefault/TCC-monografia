@@ -14,6 +14,15 @@ coleta informações necessárias para a produção dos casos de teste e gera
 um arquivo contendo os testes solicitados. É importante ressaltar que,
 para esse trabalho, os testes gerados são apenas testes caixa preta.
 
+O \framework se propõe em permitir a acoplagem de diferentes linguagens
+de programação. Para isso, há a necessidade da construção de um \parser
+que identifique a sintaxe da linguagem alvo por meio de duas
+ferramentas: \flexcpp e \textsf{Bisonc++}. Essas duas ferramentas são
+comuns em contextos de produção de compiladores. Com o \parser
+implementando o desenvolvedor poderá implemetnar as especificidades
+relacionadas aos testes da linguagem alvo, tendo como base o código
+oferecido pelo \Scarefault.
+
 O \scarefault foi escrito em \cpp e está licenciado dentro das condições
 da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
 \url{https://github.com/Scarefault/scarefault}.
@@ -29,17 +38,18 @@ dois módulos básicos: o \textsf{identificador} e o \textsf{gerador}. A Figura
     \caption{Representação dos módulos do \Scarefault}
     \label{modules-scarefault}
 \end{figure}
+\FloatBarrier
 
 \begin{description}
 \item[Identificador:] é responsável pela identificação das regras que regem
 a gramática da linguagem de programação alvo, bem como da coleta dos dados
 necessários para a produção dos casos de teste.
 \item[Gerador:] responsável pela geração dos casos de teste. A partir dos dados
-coletados dos especificações do desenvolvedor e do próprio código fonte, esse
+coletados das especificações do desenvolvedor e do próprio código fonte, esse
 módulo é capaz de gerar casos de teste.
 \end{description}
 
-Expandindo-se os módulos pode observar os pacotes associados a cada um deles
+Expandindo-se os módulos pode-se observar os pacotes associados a cada um deles
 e o relacionamento entre esses pacotes, como mostra a Figura
 \ref{expand-modules-scarefault-1}.
 
@@ -49,5 +59,51 @@ e o relacionamento entre esses pacotes, como mostra a Figura
     \caption{Representação expandida dos módulos do \Scarefault}
     \label{expand-modules-scarefault-1}
 \end{figure}
+
+Como indicado na Figura \ref{expand-modules-scarefault-1}, os pacotes associados ao
+módulo \textsf{identifier} são:
+\begin{description}
+\item[\textit{scanner}:] responsável pela análise léxica do arquivo contendo o código
+fonte em avaliação. As classes contidas nesse pacote são geradas pelo \flexcpp durante
+a compilação.
+\item[\textit{parser}:] responsável pela análise sintática do arquivo contendo o
+código em avaliação. As ações que ele executa quando determinada regra gramatical é
+encontrada são, essencialmente, ações de coleta de dados. As classes associadas
+a esse pacote são geradas pelo \bisoncpp durante a compilação.
+\item[\textit{collector}:] responsável pela coleta de dados necessários para a
+criação de testes unitários.
+\item[\textit{file}:] responsável por guardar os dado coletados do código fonte.
+Dados como as dependências (\textit{libraries} importadas), métodos e classe
+do arquivo em análise.
+\end{description}
+
+Os pacotes associados ao módulo \textsf{generator}, como mostra a Figura
+\ref{expand-modules-scarefault-1}, são:
+\begin{description}
+\item[	\textit{tester}:] responsável pela construção dos arquivos de teste. A partir
+dele é que os testes ganham forma, conforme a linguagem de programação.
+\item[	\textit{testecase}:] responsável por guardar os dados relacionados
+a cada caso de teste especificado pelo desenvolvedor, a partir dos
+comentários no código fonte.
+\item[	\textit{value\_generator}:] responsável por gerar valores randômicos
+para o desenvolvimento dos testes.
+\item[\textit{writer}:] responsável por escrever as informações da arquivo de
+teste, enviadas pelo \textsf{tester}. Para isso, ele cria o arquivo e
+escreve todas as informações a ele solicitadas.
+\end{description}
+
+As Figuras \ref{modules-scarefault} e \ref{expand-modules-scarefault-1} mostram
+a visão de pacotes do \scarefault e como eles se relacionam, bem como a
+responsabilidade que cabe a cada um deles. Aprofundando-se mais, chega-se a uma
+visão das entidades associadas a cada pacote. A visão de quais são essas
+entidades e como elas se relacionam pode ser verificada pelo diagrama de 
+domínio, mostrado na Figura \ref{domain-diagram}.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/domain-diagram.png}
+    \caption{Diagrama de domínio do \Scarefault}
+    \label{domain-diagram}
+\end{figure}
+\FloatBarrier
 
 \section{A Utilização do \scarefault}
