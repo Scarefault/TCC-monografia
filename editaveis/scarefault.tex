@@ -28,6 +28,12 @@ da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
 \url{https://github.com/Scarefault/scarefault}.
 
 \section{A Arquitetura do \scarefault}
+Essa seção evidencia os elementos da arquitetura do \Scarefault. Como
+ele foi desenhado, quais conceitos foram utilizados e como ele funciona.
+Em um primeiro momento são exploradas visões estáticas da arquitetura,
+para então mostrar o \scarefault dinamicamente.
+
+\subsection{Visão de Pacotes}
 Partindo-se de uma visão macroscópica, o \scarefault pode ser dividido em
 dois módulos básicos: o \textsf{identificador} e o \textsf{gerador}. A Figura
 \ref{modules-scarefault} ilustra esses módulos básicos.
@@ -92,6 +98,7 @@ teste, enviadas pelo \textsf{tester}. Para isso, ele cria o arquivo e
 escreve todas as informações a ele solicitadas.
 \end{description}
 
+\subsection{Visão de Classes}
 As Figuras \ref{modules-scarefault} e \ref{expand-modules-scarefault-1} mostram
 a visão de pacotes do \scarefault e como eles se relacionam, bem como a
 responsabilidade que cabe a cada um deles. Aprofundando-se mais, chega-se a uma
@@ -105,5 +112,44 @@ domínio, mostrado na Figura \ref{domain-diagram}.
     \label{domain-diagram}
 \end{figure}
 \FloatBarrier
+
+O diagrama de domínio na Figura \ref{domain-diagram} demonstra a relação
+entre as principais entidades que o \framework trabalha. O \textsf{Collector}
+recolhe as  informações essencias para os testes a partir do
+\textsf{Parser} que, por sua vez, recebe um \textit{stream} de dados a partir
+do \textsf{Scanner}. Como dados importantes para a produção de testes pelo
+\scarefault tem-se métodos (\textsf{Method}) e seus parâmetros (\textsf{Param})
+e, para arquiteturas voltadas ao MVC, tem-se propriedades (\textsf{Propriety})
+e suas restrições (\textsf{Constraint}). Esses dados estão intimamente ligados
+ao arquivo em análise, portanto, são armazenados na entidade arquivo (\textsf{FileBase}).
+Há também a entidade \textsf{TestCase} que tem papel fundamental na produção
+dos testes, pois carrega as informações dispostas pelo desenvolvedor sobre os
+testes a serem criados. Uma parte importante dos casos de teste são os
+argumentos (\textsf{Arg}) que devem ser passados ao método em teste durante o
+teste.
+
+Partindo-se do diagrama de domínio exposto na Figura \ref{domain-diagram}, pode-se
+visualizar o diagrama de classe, mostrado na Figura \ref{class-diagram}.
+%\begin{landscape}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/class-diagram.png}
+    \caption{Diagrama de classe completo do \Scarefault}
+    \label{class-diagram}
+\end{figure}
+\FloatBarrier
+%\end{landscape}
+
+O diagrama de classes permite obter uma visualização mais apurada dos
+relacionamentos entre as classes contidas no \textit{framework}. As principais
+entidades do \textit{framework}, apresentadas na Figura \ref{domain-diagram},
+estão presentes e muitas delas passaram a ter um conjunto de classes auxiliar,
+de forma a permitir a sua adaptação ao contexto em que será inserida.
+
+Por meio da Figura \ref{class-diagram} pode-se identificar o uso de alguns
+\textit{design patterns} de criação e de estrutura, com o intuito de 
+permitir a extensibilidade do \framework e a sua facilidade de uso.
+Para esse fim, foram usados os conceitos do \textbf{\textit{builder pattern}} e
+\textbf{\textit{factory pattern}}.
 
 \section{A Utilização do \scarefault}
