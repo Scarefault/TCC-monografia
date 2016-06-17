@@ -147,9 +147,52 @@ estão presentes e muitas delas passaram a ter um conjunto de classes auxiliar,
 de forma a permitir a sua adaptação ao contexto em que será inserida.
 
 Por meio da Figura \ref{class-diagram} pode-se identificar o uso de alguns
-\textit{design patterns} de criação e de estrutura, com o intuito de 
-permitir a extensibilidade do \framework e a sua facilidade de uso.
-Para esse fim, foram usados os conceitos do \textbf{\textit{builder pattern}} e
+\textit{design patterns} de criação, com o intuito de permitir a
+extensibilidade do \framework e a sua facilidade de uso. Para esse fim,
+foram usados os conceitos do \textbf{\textit{builder pattern}} e
 \textbf{\textit{factory pattern}}.
+
+\subsubsection{\textit{Builder Pattern}}
+O uso do \textit{builder pattern} vem para solucionar um problema
+na criação de objetos complexos. Seu intuito é a separação do processo
+de construção da representação em si. Desse modo, é possível que o
+mesmo processo de construção sirva para diferentes representações
+\cite{gammaEtAl1994}.
+
+No desenvolvimento do \framework observou-se essa necessidade na
+criação de objetos \textsf{Testfile}. Essa entidade é diferente para
+cada linguagem associada a ele. Não é possível manter uma mesma
+representação desse objeto, no entanto, o processo de criação de um
+\textsf{Testfile} é igual em todos os casos: escreve-se as
+dependências da classe de teste, o cabeçalho da classe de teste,
+as ações iniciais para cada testes (\textit{setup}) para os testes,
+os casos de teste, as ações para depois de cada teste
+(\textit{teardown}) e a finalização do arquivo.
+
+Nesse sentido, viu-se a solução proposta pelo \textit{builder pattern}
+como saída para o problema dentro do contexto do desenvolvimento do
+\Scarefault. A Figura \ref{testfile-diagram} mostra como a solução
+foi desenhada.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/testfile-diagram.png}
+    \caption{Diagrama de classes apresentando o \textit{builder pattern} no \framework}
+    \label{testfile-diagram}
+\end{figure}
+\FloatBarrier
+
+O objeto a ser construído é da classe \textsf{TestfileProduct}. Há
+diversas representações que esse objeto pode tomar, conforme a linguagem.
+No entanto, o processo de construção é o mesmo. Os passos desse processo são definidos
+pela classe \textsf{TestfileBuilder}. Essa classe é uma classe
+\textsf{virtual} (abstrata). Ela define uma interface que deve ser
+implementada pelas suas classes filhas, afim de construir o objeto
+\textsf{TestfileProduct}. Dessa forma, garante-se que qualquer
+classe com a responsabilidade de construir um \textsf{TestfileProduct}
+terá funções-membro que criem os elementos essenciais do produto. Com a garantia
+que os passos de construção estão implementados, pode-se fazer o processo de
+criação. Essa atividade é responsabilidade do \textsf{TesterDirector}. O
+método \lstinline|generate_testfile()| possui a definição do processo de
+construção, a partir dos passos estipulados pelo \textsf{TestfileBuilder}.
 
 \section{A Utilização do \scarefault}
