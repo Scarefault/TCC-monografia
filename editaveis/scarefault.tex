@@ -30,8 +30,8 @@ da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
 \section{A Arquitetura do \scarefault}
 Essa seção evidencia os elementos da arquitetura do \Scarefault. Como
 ele foi desenhado, quais conceitos foram utilizados e como ele funciona.
-Em um primeiro momento são exploradas visões estáticas da arquitetura,
-para então mostrar o \scarefault dinamicamente.
+Em um primeiro momento são exploradas visões estáticas da arquitetura.
+A visão dinâmica da arquitetura é melhor evidenciada pela seção seguinte.
 
 \subsection{Visão de Pacotes}
 Partindo-se de uma visão macroscópica, o \scarefault pode ser dividido em
@@ -194,5 +194,48 @@ que os passos de construção estão implementados, pode-se fazer o processo de
 criação. Essa atividade é responsabilidade do \textsf{TesterDirector}. O
 método \lstinline|generate_testfile()| possui a definição do processo de
 construção, a partir dos passos estipulados pelo \textsf{TestfileBuilder}.
+
+\subsubsection{\textit{Factory Pattern}}
+\textit{Facotry pattern} é uma solução pensada com o propósito de deixar a
+instanciação de objetos de uma mesma família mais flexível. Através desse
+padrão  é possível instanciar um objeto sem expor a lógica dessa ação, bem
+como ser capaz de referenciar-se a novos objetos por uma interface comum
+\cite{gammaEtAl1994}.
+
+No construção do \scarefault deparou-se com a necessidade de flexibilizar
+a instanciação de objetos de coleta de dados. Isso fornece maior liberdade
+ao desenvolvedor usuário do \framework para criar suas próprias classes de
+coleta, que estarão relacionadas a uma determinada linguagem de programação
+e suas peculiaridades.
+
+Por esse motivo foi pensado no \textit{Factory pattern} como solução. A Figura
+\ref{collector-diagram} mostra a solução desenhada para o \textit{framework}.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/collector-diagram.png}
+    \caption{Diagrama de classes apresentando o \textit{factory pattern} no \framework}
+    \label{collector-diagram}
+\end{figure}
+\FloatBarrier
+
+A solução de \textit{factory pattern} desenvolvida utiliza-se de uma classe
+\textsf{virtual} denominada \textsf{CollectorBase}. Optou-se por uma classe
+desse tipo, ao invés de uma \textsf{virtual} pura (\textsf{interface}), pois
+imaginou-se em já deixar implementadas determinadas funções-membro auxliares,
+preparadas para serem usadas pelo usuário. Essas funções-membro, embora já implementadas,
+são passíveis de sobreescrita, o que dá a possibilidade do desenvolvedor
+decidir criar as sua própria forma de coletar determinados elmentos ou utilizar-se
+da já disponível.
+
+A única função-membro obrigatória de implementação para as classes derivadas da
+\textsf{CollectorBase} é a \lstinline|collect_data(char *, ...)|. Além disso, já
+há uma outra classe de coleta preparada para linguagens que se utilizem do padrão
+de projeto MVC: a \textsf{CollectorMVC}. Ela também extende a \textsf{CollectorBase},
+mas traz outras funções-membro auxiliares.
+
+A classe \textsf{CollectorFactory} é reponsável por esconder a lógica de instanciação
+da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objeto
+\textsf{CollectorFactory} retorna uma instancia do \textit{Collector} solicitado na
+classe cliente.
 
 \section{A Utilização do \scarefault}
