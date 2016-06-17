@@ -19,7 +19,7 @@ de programação. Para isso, há a necessidade da construção de um \parser
 que identifique a sintaxe da linguagem alvo por meio de duas
 ferramentas: \flexcpp e \textsf{Bisonc++}. Essas duas ferramentas são
 comuns em contextos de produção de compiladores. Com o \parser
-implementando o desenvolvedor poderá implemetnar as especificidades
+implementando o desenvolvedor poderá implementar as especificidades
 relacionadas aos testes da linguagem alvo, tendo como base o código
 oferecido pelo \Scarefault.
 
@@ -35,7 +35,7 @@ A visão dinâmica da arquitetura é melhor evidenciada pela seção seguinte.
 
 \subsection{Visão de Pacotes}
 Partindo-se de uma visão macroscópica, o \scarefault pode ser dividido em
-dois módulos básicos: o \textsf{identificador} e o \textsf{gerador}. A Figura
+dois módulos básicos: o \textsf{identifier} e o \textsf{generator}. A Figura
 \ref{modules-scarefault} ilustra esses módulos básicos.
 
 \begin{figure}[h]
@@ -47,10 +47,10 @@ dois módulos básicos: o \textsf{identificador} e o \textsf{gerador}. A Figura
 \FloatBarrier
 
 \begin{description}
-\item[Identificador:] é responsável pela identificação das regras que regem
+\item[identifier:] é responsável pela identificação das regras que regem
 a gramática da linguagem de programação alvo, bem como da coleta dos dados
 necessários para a produção dos casos de teste.
-\item[Gerador:] responsável pela geração dos casos de teste. A partir dos dados
+\item[generator:] responsável pela geração dos casos de teste. A partir dos dados
 coletados das especificações do desenvolvedor e do próprio código fonte, esse
 módulo é capaz de gerar casos de teste.
 \end{description}
@@ -224,7 +224,7 @@ desse tipo, ao invés de uma \textsf{virtual} pura (\textsf{interface}), pois
 imaginou-se em já deixar implementadas determinadas funções-membro auxliares,
 preparadas para serem usadas pelo usuário. Essas funções-membro, embora já implementadas,
 são passíveis de sobreescrita, o que dá a possibilidade do desenvolvedor
-decidir criar as sua própria forma de coletar determinados elmentos ou utilizar-se
+decidir criar as sua própria forma de coletar determinados elementos ou utilizar-se
 da já disponível.
 
 A única função-membro obrigatória de implementação para as classes derivadas da
