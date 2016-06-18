@@ -37,13 +37,13 @@ BOOLEAN {TRUE}|{FALSE} (*@\label{fragflexcpp3}@*)
 \end{lstlisting}
 
 Observa-se no Código \ref{fragflexcpp}, entre as linhas \ref{fragflexcpp12} e \ref{fragflexcpp14}, um exemplo de como o \textsf{Flexc++} é usado:
-define-se um padrão léxico a ser encontrado no texto, linha \ref{fragflexcpp12};
-define-se a ação a ser executada para aquele padrão. No caso exemplificado, o
+define-se um padrão léxico a ser encontrado no texto linha (\ref{fragflexcpp12}) e
+a ação a ser executada para aquele padrão. No caso exemplificado, o
 padrão a ser encontrado é a palavra \textsf{class}. Assim, quando o Flexc++
 identifica essa palavra ele armazena o resutado da comparação entre a palavra em
-análise e o padrão definido, linha \ref{fragflexcpp13}. Caso haja correspondência o
+análise e o padrão definido (linha \ref{fragflexcpp13}). Caso haja correspondência o
 Flexc++ retorna um \textit{token} definido no arquivo gerado pelo
-\textsf{Bisonc++}, linha \ref{fragflexcpp14}.
+\textsf{Bisonc++} (linha \ref{fragflexcpp14}).
 
 Um outro recurso do \textsf{Flexc++} utilizado para a identificação das regras
 gramaticais do \textsf{Grails} foi a definição de \textit{mini scanners}. É um
@@ -151,8 +151,8 @@ listadas nas linhas \ref{fragbisoncpp15}, \ref{fragbisoncpp18} e
 \lstinline|class_definition| que foi reutilizada nas outras duas possibilidades.
 As linhas \ref{fragbisoncpp16} e \ref{fragbisoncpp17} são as ações que foram
 implementandas para serem executadas quando essa regra for identificada.
-No caso, a linha \ref{fragbisoncpp16} acrescenta uma mensagem no arquivo de
-\textit{log}, enquanto que a linha \ref{fragbisoncpp17} faz a coleta da
+No caso, a linha \ref{fragbisoncpp16} captura o token e o atribui a uma \str,
+enquanto que a linha \ref{fragbisoncpp17} faz a coleta da
 palavra encontrada na segunda posição da regra. A coleta de dados será explicada mais
 adiante no decorrer do texto.
 
@@ -245,8 +245,8 @@ a execução do \parser utilizando três código fonte.
 Mesmo sendo capaz de identificar grande porção das regras gramaticais da
 linguagem \textsf{Grails}, o \parser ainda não é capaz de identificar todas
 as regras definidas para essa linguagem. Algumas especificidades, como alguns
-operadores, exemplo o \textsf{elvis}, e cadeias de expressões dentro de
-contidas em parênteses. Ao adicionar essas regras alguns conflitos do tipo
+operadores, exemplo o \textsf{elvis}, e cadeias de expressões contidas
+em parênteses. Ao adicionar essas regras alguns conflitos do tipo
 \lstinline|reduce/reduce| eram reportados, o que inviabilizava o
 prosseguimento da implementação. Foram efetuadas diversas pesquisas
 sobre como resolver esse tipo de conflito numa gramática, mas não foi

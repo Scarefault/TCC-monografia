@@ -125,7 +125,7 @@ ao arquivo em análise, portanto, são armazenados na entidade arquivo (\textsf{
 Há também a entidade \textsf{TestCase} que tem papel fundamental na produção
 dos testes, pois carrega as informações dispostas pelo desenvolvedor sobre os
 testes a serem criados. Uma parte importante dos casos de teste são os
-argumentos (\textsf{Arg}) que devem ser passados ao método em teste durante o
+argumentos (\textsf{Arg}) que devem ser passados ao método em avaliação durante o
 teste.
 
 Partindo-se do diagrama de domínio exposto na Figura \ref{domain-diagram}, pode-se
@@ -143,7 +143,7 @@ visualizar o diagrama de classe, mostrado na Figura \ref{class-diagram}.
 O diagrama de classes permite obter uma visualização mais apurada dos
 relacionamentos entre as classes contidas no \textit{framework}. As principais
 entidades do \textit{framework}, apresentadas na Figura \ref{domain-diagram},
-estão presentes e muitas delas passaram a ter um conjunto de classes auxiliar,
+estão presentes e muitas delas passaram a ter um conjunto auxiliar de classes,
 de forma a permitir a sua adaptação ao contexto em que será inserida.
 
 Por meio da Figura \ref{class-diagram} pode-se identificar o uso de alguns
@@ -165,7 +165,7 @@ cada linguagem associada a ele. Não é possível manter uma mesma
 representação desse objeto, no entanto, o processo de criação de um
 \textsf{Testfile} é igual em todos os casos: escreve-se as
 dependências da classe de teste, o cabeçalho da classe de teste,
-as ações iniciais para cada testes (\textit{setup}) para os testes,
+as ações iniciais para os testes (\textit{setup}),
 os casos de teste, as ações para depois de cada teste
 (\textit{teardown}) e a finalização do arquivo.
 
@@ -235,7 +235,7 @@ mas traz outras funções-membro auxiliares.
 
 A classe \textsf{CollectorFactory} é reponsável por esconder a lógica de instanciação
 da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objeto
-\textsf{CollectorFactory} retorna uma instancia do \textit{Collector} solicitado na
+\textsf{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
 classe cliente.
 
 \section{A Utilização do \scarefault}
