@@ -221,7 +221,7 @@ Por esse motivo foi pensado no \textit{Factory pattern} como solução. A Figura
 A solução de \textit{factory pattern} desenvolvida utiliza-se de uma classe
 \textsf{virtual} denominada \textsf{CollectorBase}. Optou-se por uma classe
 desse tipo, ao invés de uma \textsf{virtual} pura (\textsf{interface}), pois
-imaginou-se em já deixar implementadas determinadas funções-membro auxliares,
+imaginou-se em já deixar implementadas determinadas funções-membro auxiliares,
 preparadas para serem usadas pelo usuário. Essas funções-membro, embora já implementadas,
 são passíveis de sobreescrita, o que dá a possibilidade do desenvolvedor
 decidir criar as sua própria forma de coletar determinados elementos ou utilizar-se
@@ -238,4 +238,35 @@ da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objet
 \textsf{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
 classe cliente.
 
-\section{A Utilização do \scarefault}
+\section{A Utilização do \Scarefault}
+A utilização do \scarefault pode ser dividida em dois objetivos: a adaptação do \textit{framework} para atender uma nova linguagem e a geração de testes unitários.
+ 
+\subsection{Adaptação para uma Nova Linguagem}
+
+Para auxiliar na customização do \textit{framework}, criou-se um ambiente virtual de forma a garantir a instalação das dependências necessárias do \Scarefault. Para levantar esse ambiente é necessário que o usuário instale as versões mais recentes das seguintes ferramentas: 
+
+\begin{description}
+\item[Git:] ferramenta de controle de versão;
+\item[VirtualBox:] ferramenta de virtualização de máquinas virtuais;
+\item[Vagrant:] ferramenta de criação e configuração de ambientes virtuais de desenvolvimento.
+\end{description} 
+
+
+Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto e executar o comando responsável por criar o ambiente virtual com as configurações predefinidas. Nesse momento será instalado e configurado o flexc++, bisonc++ e demais dependências. Por fim, deve-se acessar essa máquina virtual e então iniciar a customização no código do \Scarefault. O Código \ref{ambientevirtual} apresenta as linhas de comando referentes aos passos citados:
+
+\begin{lstlisting}[language=make, label=ambientevirtual, caption=Levantamento do Ambiente de Desenvolvimento]
+git clone git@github.com:Scarefault/scarefault.git
+cd scarefault
+vagrant up
+#Aguarde instalação e configuração das dependências
+vagrant ssh
+\end{lstlisting}
+
+O \scarefault contempla a linguagem Grails até o momento. Para facilitar a compilação do \scarefault, criou-se um \textit{makefile} responsável por  
+% cria o parser/gramática usando guias (mai detlhes no cap de resultados)
+% Falar do make que automatiza o processo de build com make clean
+% 
+
+\subsection{Geração de Testes Unitários}
+
+
