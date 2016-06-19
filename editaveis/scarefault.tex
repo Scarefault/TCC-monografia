@@ -242,7 +242,9 @@ classe cliente.
 A utilização do \scarefault pode ser dividida em dois objetivos: a adaptação do \textit{framework} para atender uma nova linguagem e a geração de testes unitários.
  
 \subsection{Adaptação para uma Nova Linguagem}
+A adaptação do \scarefault para novas linguagens exige o uso de um ambiente específico de desenvolvimento, bem como o uso de janelas de extensibilidade do \textit{framework}, chamadas de \textit{hotspots}.
 
+\subsubsection{Usando o Ambiente de Desenvolvimento}
 Para auxiliar na customização do \textit{framework}, criou-se um ambiente virtual de forma a garantir a instalação das dependências necessárias do \Scarefault. Para levantar esse ambiente é necessário que o usuário instale as versões mais recentes das seguintes ferramentas: 
 
 \begin{description}
@@ -252,7 +254,7 @@ Para auxiliar na customização do \textit{framework}, criou-se um ambiente virt
 \end{description} 
 
 
-Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto e executar o comando responsável por criar o ambiente virtual com as configurações predefinidas. Nesse momento será instalado e configurado o flexc++, bisonc++ e demais dependências. Por fim, deve-se acessar essa máquina virtual e então iniciar a customização no código do \Scarefault. O Código \ref{ambientevirtual} apresenta as linhas de comando referentes aos passos citados:
+Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto e executar o comando responsável por criar o ambiente virtual com as configurações predefinidas. Nesse momento será instalado e configurado o \textsf{Flexc++}, \textsf{Bisonc++} e demais dependências. Por fim, deve-se acessar essa máquina virtual e então iniciar a customização no código do \Scarefault. O Código \ref{ambientevirtual} apresenta as linhas de comando referentes aos passos citados:
 
 \begin{lstlisting}[language=make, label=ambientevirtual, caption=Levantamento do Ambiente de Desenvolvimento]
 git clone git@github.com:Scarefault/scarefault.git
@@ -262,10 +264,14 @@ vagrant up
 vagrant ssh
 \end{lstlisting}
 
-O \scarefault contempla a linguagem Grails até o momento. Para facilitar a compilação do \scarefault, criou-se um \textit{makefile} responsável por  
-% cria o parser/gramática usando guias (mai detlhes no cap de resultados)
-% Falar do make que automatiza o processo de build com make clean
-% 
+O \scarefault contempla a linguagem de programação \grails até o momento. Para facilitar a compilação do \Scarefault, criou-se um \textsf{Makefile} responsável por fazer o \textit{build}. Isso se fez necessário porque a compilação dos arquivos-fonte exige um linha de comando extensa. Além disso, há algumas alterações fundamentais a serem feitas em determinados arquivos para que se faça a comunicação entre o \scanner e o \textsf{parser}.
+
+\subsubsection{Explorando a Extensibilidade do \Scarefault}
+O \scarefault por si só não é uma aplicação. Nesse sentido, ele precisa ter determinados pontos extendidos para que possa ser executado. Essencialmente, o \scarefault permite a acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que isso ocorra. São eles: adição de um \parser para a nova linguagem, criação do agente de coleta de dados e do agente de construção de casos de teste.
+
+O \parser é desenvolvido utilizando o \textsf{Flexc++} e o \textsf{Bisonc++}. Para uso dessas ferramentas, recomenda-se o uso da documentação oficial, disponível em \url{https://fbb-git.github.io/flexcpp/} e \url{https://fbb-git.github.io/bisoncpp/}, respectivamente. Após a gramática da nova linguagem ter sido criada
+
+
 
 \subsection{Geração de Testes Unitários}
 
