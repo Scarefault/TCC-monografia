@@ -202,6 +202,7 @@ construtor para o Parser.
 class Parser: public ParserBase
 {
   Scanner d_scanner;
+  Collector::CollectorFactory * factory; (*@\label{line:decl-factory}@*)
   Collector::CollectorBase * collector; (*@\label{parserh6}@*)
   LogSystem::Log log; (*@\label{parserh7}@*)
 
@@ -224,8 +225,10 @@ dados.
 Parser::Parser(Collector::Language language,
 			   std::istream &in, std::ostream &out)
 {
+   d_scanner.switchStreams( in );
 	 d_scanner.setSval(&d_val__);
-	 collector = Collector::CollectorBase::get_collector(language);
+	 factory = new Collector::CollectorFactory();
+   collector = factory->get_collector(language);
 }
 
 [...]

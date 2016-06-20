@@ -27,7 +27,7 @@ O \scarefault foi escrito em \cpp e está licenciado dentro das condições
 da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
 \url{https://github.com/Scarefault/scarefault}.
 
-\section{A Arquitetura do \scarefault}
+\section{A Arquitetura do \scarefault} \label{sec-arq-scarefault}
 Essa seção evidencia os elementos da arquitetura do \Scarefault. Como
 ele foi desenhado, quais conceitos foram utilizados e como ele funciona.
 Em um primeiro momento são exploradas visões estáticas da arquitetura.
@@ -239,13 +239,22 @@ da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objet
 classe cliente.
 
 \section{A Utilização do \Scarefault}
-A utilização do \scarefault pode ser dividida em dois objetivos: a adaptação do \textit{framework} para atender uma nova linguagem e a geração de testes unitários.
+A seção \ref{sec-arq-scarefault} apresentou a visão estática da arquitetura do
+\Scarefault. Nesta seção pretende-se mostrar a visão dinâmica, por meio
+de explicações a partir do uso do \textit{framework}. A utilização do
+\scarefault pode ser dividida em dois objetivos: a adaptação
+do \textit{framework} para atender uma nova linguagem e a geração de testes unitários.
  
 \subsection{Adaptação para uma Nova Linguagem}
-A adaptação do \scarefault para novas linguagens exige o uso de um ambiente específico de desenvolvimento, bem como o uso de janelas de extensibilidade do \textit{framework}, chamadas de \textit{hotspots}.
+A adaptação do \scarefault para novas linguagens exige o uso de um ambiente
+específico de desenvolvimento, bem como o uso de janelas de extensibilidade
+do \textit{framework}, chamadas de \textit{hotspots}.
 
 \subsubsection{Usando o Ambiente de Desenvolvimento}
-Para auxiliar na customização do \textit{framework}, criou-se um ambiente virtual de forma a garantir a instalação das dependências necessárias do \Scarefault. Para levantar esse ambiente é necessário que o usuário instale as versões mais recentes das seguintes ferramentas: 
+Para auxiliar na customização do \textit{framework}, criou-se um ambiente
+virtual de forma a garantir a instalação das dependências necessárias do
+\Scarefault. Para levantar esse ambiente é necessário que o usuário instale as
+versões mais recentes das seguintes ferramentas: 
 
 \begin{description}
 \item[Git:] ferramenta de controle de versão;
@@ -253,25 +262,135 @@ Para auxiliar na customização do \textit{framework}, criou-se um ambiente virt
 \item[Vagrant:] ferramenta de criação e configuração de ambientes virtuais de desenvolvimento.
 \end{description} 
 
+Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto
+e executar o comando responsável por criar o ambiente virtual com as configurações
+predefinidas. Nesse momento será instalado e configurado o \textsf{Flexc++},
+\textsf{Bisonc++} e demais dependências. Por fim, deve-se acessar essa máquina
+virtual e então iniciar a customização no código do \Scarefault. O Código
+\ref{ambiente-virtual} apresenta as linhas de comando referentes aos passos citados:
 
-Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto e executar o comando responsável por criar o ambiente virtual com as configurações predefinidas. Nesse momento será instalado e configurado o \textsf{Flexc++}, \textsf{Bisonc++} e demais dependências. Por fim, deve-se acessar essa máquina virtual e então iniciar a customização no código do \Scarefault. O Código \ref{ambientevirtual} apresenta as linhas de comando referentes aos passos citados:
-
-\begin{lstlisting}[language=make, label=ambientevirtual, caption=Levantamento do Ambiente de Desenvolvimento]
+\begin{lstlisting}[language=make, label=ambiente-virtual, caption=Levantamento do Ambiente de Desenvolvimento]
 git clone git@github.com:Scarefault/scarefault.git
 cd scarefault
 vagrant up
-#Aguarde instalação e configuração das dependências
+
+# Aguarde instalação e configuração das dependências
+
 vagrant ssh
 \end{lstlisting}
 
-O \scarefault contempla a linguagem de programação \grails até o momento. Para facilitar a compilação do \Scarefault, criou-se um \textsf{Makefile} responsável por fazer o \textit{build}. Isso se fez necessário porque a compilação dos arquivos-fonte exige um linha de comando extensa. Além disso, há algumas alterações fundamentais a serem feitas em determinados arquivos para que se faça a comunicação entre o \scanner e o \textsf{parser}.
+O \scarefault contempla a linguagem de programação \grails até o momento.
+Para facilitar a compilação do \Scarefault, criou-se um \textsf{Makefile}
+responsável por fazer o \textit{build}. Isso se fez necessário porque a
+compilação dos arquivos-fonte exige um linha de comando extensa. Além disso,
+há algumas alterações fundamentais a serem feitas em determinados arquivos
+para que se faça a comunicação entre o \scanner e o \textsf{parser}.
 
 \subsubsection{Explorando a Extensibilidade do \Scarefault}
-O \scarefault por si só não é uma aplicação. Nesse sentido, ele precisa ter determinados pontos extendidos para que possa ser executado. Essencialmente, o \scarefault permite a acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que isso ocorra. São eles: adição de um \parser para a nova linguagem, criação do agente de coleta de dados e do agente de construção de casos de teste.
+O \scarefault por si só não é uma aplicação. Ele precisa ter determinados pontos
+extendidos para que possa ser executado. Essencialmente, o \scarefault permite a
+acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que
+isso ocorra. São eles: adição de um \parser para a nova linguagem, criação do
+agente de coleta de dados e do agente de construção de casos de teste.
 
-O \parser é desenvolvido utilizando o \textsf{Flexc++} e o \textsf{Bisonc++}. Para uso dessas ferramentas, recomenda-se o uso da documentação oficial, disponível em \url{https://fbb-git.github.io/flexcpp/} e \url{https://fbb-git.github.io/bisoncpp/}, respectivamente. Após a gramática da nova linguagem ter sido criada
+\subsubsubsection{Adição de um \parser para a nova linguagem}
+O \parser é desenvolvido utilizando-se o \textsf{Flexc++} e o \textsf{Bisonc++}. Para
+uso dessas ferramentas, recomenda-se a utilização da documentação oficial, disponível
+em \url{https://fbb-git.github.io/flexcpp/} e \url{https://fbb-git.github.io/bisoncpp/},
+respectivamente. O Apêndice B é um guia básico para o uso dessas ferramentas.
 
+Após a gramática da nova linguagem ter sido criada há a necessidade de
+uma série de alterações nos arquivos de código fonte, tanto do \parser quanto do
+\textsf{scanner}. Algumas delas já são previstas no uso normal do \flexcpp e do
+\textsf{Bisonc++}, para a comunicação das duas ferramentas. As alterações com o
+objetivo de gerar a comunicação entre as ferramentas são descritas no Capítulo de
+Resultados.
 
+O Código \ref{changes-parser-scarefault} apresenta as alterações exigidas para
+o bom funcionamento do \scarefault efetuadas no arquivo \lstinline|Parser.h|.
+
+\begin{lstlisting}[language=C++, label=changes-parser-scarefault, caption=Alterações no \lstinline|Parser.h| para uso do \scarefault]
+class Parser: public ParserBase
+{
+   Scanner d_scanner; (*@\label{line:parser-decl-scanner}@*)
+	 Collector::CollectorFactory * factory; (*@\label{line:parser-decl-factory}@*)
+	 Collector::CollectorBase * collector; (*@\label{line:parser-decl-collector}@*)
+	 LogSystem::Log log; (*@\label{line:parser-decl-log}@*)
+        
+   public:
+	   explicit Parser(Collector::Language, (*@\label{line:parser-decl-constructor}@*)
+		                 std::istream &in = std::cin,
+		                 std::ostream &out = std::cout);
+[...]
+\end{lstlisting}
+
+No Código \ref{changes-parser-scarefault}, nas linhas
+\ref{line:parser-decl-factory} e \ref{line:parser-decl-collector}, observa-se
+a declaração de alguns objetos que serão usados pelo \textit{parser}. A linha
+\ref{line:parser-decl-constructor} mostra a adição de um construtor para a
+classe, cuja a diferença para o construtor gerado pelo \bisoncpp é o acréscimo
+de um parâmetro do tipo \lstinline|Collector::Language|.
+
+O Código \ref{changes-parser-impl-scarefault} apresenta as alterações exigidas
+no arquivo \lstinline|Parser.ih|.
+
+\begin{lstlisting}[language=C++, label=changes-parser-impl-scarefault, caption=Alterações no \lstinline|Parser.ih| para uso do \scarefault]
+#include "Parser.h"
+
+Parser::Parser(Collector::Language language,std::istream &in, std::ostream &out) (*@\label{line:parser-impl-constructor}@*)
+{
+	 d_scanner.switchStreams( in ); (*@\label{line:parser-impl-stream}@*)
+	 d_scanner.setSval(&d_val__); (*@\label{line:parser-impl-dval}@*)
+	 factory = new Collector::CollectorFactory(); (*@\label{line:parser-impl-factory}@*)
+	 collector = factory->get_collector(language); (*@\label{line:parser-impl-collector}@*)
+}
+[...]
+\end{lstlisting}
+
+No Código \ref{changes-parser-impl-scarefault} a linha \ref{line:parser-impl-constructor}
+inicia a implementação do construtor declarado no arquivo \lstinline|Parser.h|.
+A linha \ref{line:parser-impl-stream} altera o \textit{stream} de dados que
+o \parser deve utilizar (por \textit{default}, o \textit{stream} é a entrada
+padrão). Isso é necessário, na medida em que o \textit{stream} que se deseja
+ler não é a entrada padrão, mas sim o arquivo do código fonte, que será
+passado como argumento para o construtor. A linha
+\ref{line:parser-impl-dval} é um dos passos para implementar a comunicação
+entre o \scanner e o \textit{parser}. A linha \ref{line:parser-impl-factory}
+instancia um objeto \lstinline|CollectorFactory| que é usado na linha
+\ref{line:parser-impl-collector} para instanciar, conforme a linguagem de
+programação passada, um coletor de dados apropriado.
+
+Com as alterações efetuadas pode-se usar o \parser implementado. O Código
+\ref{parser-in-use} demonstra o \parser em uso.
+
+\begin{lstlisting}[language=C++, label=parser-in-use, caption=\textsf{Parser} em uso]
+[...]
+
+std::ifstream target; (*@\label{line:parser-use-ifstream}@*)
+target.open( argv[ SOURCE_FILE_NAME ], std::fstream::in ); (*@\label{line:parser-use-open}@*)
+
+[...]
+
+std::istream& stream = target; (*@\label{line:parser-use-istream}@*)
+
+Parser parser( GRAILS, stream ) (*@\label{line:parser-use-decl}@*);
+parser.parse(); (*@\label{line:parser-use-parser}@*)
+
+target.close(); (*@\label{line:parser-use-close}@*)
+
+[...]
+\end{lstlisting}
+
+No Código \ref{parser-in-use} a linha \ref{line:parser-use-open} instancia um
+objeto \lstinline|std::ifstream| para abrir o arquivo passado como argumento para
+a aplicação, representado como \lstinline|argv[ SOURCE_FILE_NAME ]|. O arquivo foi
+aberto apenas para leitura. A linha \ref{line:parser-use-istream} converte o
+objeto \lstinline|target| para o tipo \lstinline|std::istream| que pode ser tratado
+pelo \textit{parser}. A linha \ref{line:parser-use-decl} instancia um objeto do
+tipo \lstinline|Parser| passando como argumentos a linguagem a ser usada e o
+\textit{stream} aberto para o arquivo. A linha \ref{line:parser-use-parser} chama
+a função que faz o {parser} sobre o \textit{stream} passado como argumento, ou seja,
+o código fonte.
 
 \subsection{Geração de Testes Unitários}
 
