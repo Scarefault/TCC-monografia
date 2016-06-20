@@ -195,7 +195,7 @@ criação. Essa atividade é responsabilidade do \textsf{TesterDirector}. O
 método \lstinline|generate_testfile()| possui a definição do processo de
 construção, a partir dos passos estipulados pelo \textsf{TestfileBuilder}.
 
-\subsubsection{\textit{Factory Pattern}}
+\subsubsection{\textit{Factory Pattern}} \label{subsec-factory-pattern}
 \textit{Facotry pattern} é uma solução pensada com o propósito de deixar a
 instanciação de objetos de uma mesma família mais flexível. Através desse
 padrão  é possível instanciar um objeto sem expor a lógica dessa ação, bem
@@ -391,6 +391,109 @@ tipo \lstinline|Parser| passando como argumentos a linguagem a ser usada e o
 \textit{stream} aberto para o arquivo. A linha \ref{line:parser-use-parser} chama
 a função que faz o {parser} sobre o \textit{stream} passado como argumento, ou seja,
 o código fonte.
+
+\subsubsubsection{Criação do agente de coleta de dados}
+O \scarefault é um \framework que visa a geração de testes unitários, possibilitando
+o uso em diferentes linguagens de programação. Para que isso seja feito é necessário
+que haja a coleta dos dados a serem explorados para a criação dos testes unitários.
+Devido a essa necessidade criou-se a classe \lstinline|CollectorBase|. Essa classe,
+conforme exposto no Código \ref{changes-parser-scarefault}, é usada pelo \textit{parser}.
+A sua instanciação é feito segundo o Código \ref{changes-parser-impl-scarefault}. Por
+meio de um objeto \lstinline|CollectorFactory| a seleção do \textsf{collector} correto
+é feita. Para explicar o que ocorre a partir daí é preciso retomar a Figura
+\ref{collector-diagram}, que traz o diagrama de classes representando o
+\textit{Factory Pattern} desenhado para a selecionar o \textsf{collector} em tempo
+de execução.
+
+Para exemplificar o uso desse ponto de extensão foi utilizado o \textsf{Grails}, a linguagem
+alvo inicial do projeto, com o intuito de demonstrar o uso do \Scarefault. A Figura
+\ref{collector-grails-class-diagram} traz o diagrama de classes para o
+\textit{Factory Pattern} extendido.
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/collector-grails-class-diagram.png}
+    \caption{Diagrama de classes exemplificando a extensibilidade do \textit{Factory Pattern no \framework}}
+    \label{collector-grails-class-diagram}
+\end{figure}
+\FloatBarrier
+
+Na Figura \ref{collector-grails-class-diagram} observa-se que a classe
+\lstinline|CollectorBase|, em vermelho, é o ponto de extensão. Como já descrito
+na subseção \ref{subsec-factory-pattern}, há também uma classe, a \lstinline|CollectorMVC|,
+já disponível para extender-se, caso a linguagem alvo esteja presa
+arquiteturalmente ao padrão de projeto MVC. Dessa forma, cria-se uma classe
+derivada da \lstinline|CollectorMVC|, a \lstinline|CollectorGrails|.
+
+Devido a essa herança o \framework disponibiliza à nova classe derivada
+alguns benefícios. Pela Figura \ref{collector-grails-class-diagram} observa-se
+que há algumas funções marcadas como \textit{hospots} e outras como 
+\textit{frozenspots}. Cabe a definição desses termos:
+
+\begin{description}
+\item[\textit{Frozenspots}:] são partes fixas do \textit{framework}. São as funções já
+implementadas e que se mantem inalteradas. Podem ser usadas por quem estar
+utilizando-se do \textit{framework}.
+\item[	\textit{Hotspots}:] são as partes flexíveis do \textit{framework}. São nesses
+pontos que há a extensão das funções do \textit{framework} por da adição de
+código, especificando a funcionalidade.
+\end{description}
+
+Assim sendo, a \lstinline|CollectorGrails| possui a mesma interface que as
+suas classes mães. O \framework abre como \textit{hotspot} a função
+membro \lstinline|void collect_data(char *, ...)|, que é a única função membro
+com escopo público. Qualquer classe que derive da \lstinline|CollectorBase| deve
+implementar essa função. Não é diferente para a \lstinline|CollectorGrails|. No
+entanto, ela é derivada da \lstinline|CollectorMVC|, que já implementa essa
+função, de forma que a \lstinline|CollectorGrails| já está incenta de fazê-lo, mas
+não proibida. Caso o desenvolvedor queira criar sua própria versão da
+\lstinline|void collect_data(char *, ...)| ele pode cria-la. Para isso, ele conta
+com algumas funções auxiliares já implementadas (\textit{frozenspots}), como a
+\lstinline|void collect_methods(std::vector<std::string>)|.
+
+Com a \lstinline|CollectorGrails| já implementada pode-se utilizar outro
+\textit{hotspot} do contexto da família dos \textit{collectors}: a
+\lstinline|CollectorFactory|. A Figura \ref{collector-grails-class-diagram}
+apresenta essa classe também como ponto de extensão, pois fazendo ajustes no
+método \lstinline|CollectorBase * get_collector(Language)| extende-se sua
+capacidade de seleção de coletores de dados. Um ajuste nesse ponto influencia
+em qual coletor será escolhido dentro do \textit{parser}.
+
+O Código \ref{get-collector-function} apresenta a alteração feita para extender-se
+a \lstinline|CollectorBase * get_collector(Language)|.
+
+\begin{lstlisting}[language=C++, label=get-collector-function, caption=Implementação e extensão da \lstinline{get_collector(Language)}]
+CollectorBase * CollectorFactory::get_collector( Collector::Language language ) (*@\label{line:getcolletor-language}@*)
+  {
+    CollectorBase * instance;
+
+    switch( language ) (*@\label{line:getcolletor-switch}@*)
+    {
+      case GRAILS:
+        instance = new CollectorGrails(); (*@\label{line:getcollector-instancegrails}@*)
+        break;
+    }
+
+    return instance; (*@\label{line:getcollector-return}@*)
+  }
+\end{lstlisting}
+
+No Código \ref{get-collector-function} a linha \ref{line:getcolletor-language}
+mostra o cabeçalho da função. Nesse ponto é importante ressaltar o uso como
+parâmetro da enumeração \lstinline|Language|. Ela é definida no \lstinline|namespace|
+\lstinline|Collector| para auxiliar no desenvolvido. No caso exemplificado foi
+adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
+\ref{line:getcolletor-switch} usa-se um \lstinline|switch| para, a partir do parâmetro
+\lstinline|language| selecionar qual a linguagem. A linha
+\ref{line:getcollector-instancegrails} faz a instanciação de um objeto do tipo
+\lstinline|CollectorGrails| caso a linguagem seja o \textsf{Grails}. Para cada novo
+coletor adicionado um novo caso deve ser criado no \lstinline|switch|. Na linha
+\ref{line:getcollector-return} retorna-se a instância.
+
+A Figura \ref{collector-sequence-diagram} traz um diagrama de sequência para melhor
+visualização dos efeitos no \scarefault devido a extensão desses pontos.
+
+[IMAGEM AQUI]
+
 
 \subsection{Geração de Testes Unitários}
 
