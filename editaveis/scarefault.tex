@@ -290,8 +290,9 @@ para que se faça a comunicação entre o \scanner e o \textsf{parser}.
 O \scarefault por si só não é uma aplicação. Ele precisa ter determinados pontos
 extendidos para que possa ser executado. Essencialmente, o \scarefault permite a
 acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que
-isso ocorra. São eles: adição de um \parser para a nova linguagem, criação do
-agente de coleta de dados e do agente de construção de casos de teste.
+isso ocorra. São eles: criação do agente de coleta de dados e do agente de
+construção de casos de teste. No entanto, para que se faça uso do \scarefault é
+necessário a adição de um \parser para a nova linguagem.
 
 \subsubsubsection{Adição de um \parser para a nova linguagem}
 O \parser é desenvolvido utilizando-se o \textsf{Flexc++} e o \textsf{Bisonc++}. Para
@@ -480,7 +481,7 @@ CollectorBase * CollectorFactory::get_collector( Collector::Language language ) 
 No Código \ref{get-collector-function} a linha \ref{line:getcolletor-language}
 mostra o cabeçalho da função. Nesse ponto é importante ressaltar o uso como
 parâmetro da enumeração \lstinline|Language|. Ela é definida no \lstinline|namespace|
-\lstinline|Collector| para auxiliar no desenvolvedor. No caso exemplificado foi
+\lstinline|Collector| para auxiliar o desenvolvedor. No caso exemplificado foi
 adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
 \ref{line:getcolletor-switch} usa-se um \lstinline|switch| para, a partir do parâmetro
 \lstinline|language| selecionar qual a linguagem. A linha
@@ -497,7 +498,7 @@ Essa visão é interessante para observar o comportamento esperado da
 \begin{figure}[h]
   \centering
     \includegraphics[width=1.5\textwidth]{figuras/parser-instance-sequence-diagram.png}
-    \caption{Diagrama de sequência da instanciação de um \lstinline|Parser| os efeitos na \lstinline|CollectorFactory|}
+    \caption{Diagrama de sequência da instanciação de um \lstinline|Parser| e os efeitos na \lstinline|CollectorFactory|}
     \label{parser-instance-sequence-diagram}
 \end{figure}
 \FloatBarrier
@@ -507,10 +508,198 @@ A Figura \ref{parser-instance-sequence-diagram} mostra os objetos sendo
 instanciados após a instância de um objeto \lstinline|Parser| ser solicitada.
 A \lstinline|CollectorFactory|, recebendo como argumento a valor \textsf{Grails},
 faz a instanciação de um objeto \lstinline|CollectorGrails| que, por sua vez,
-traz consigo outros dois objetos importantes em sua formação: uma instancia de um
+traz consigo outros dois objetos importantes em sua formação: uma instância de um
 \lstinline|CollectorScarefault|, que será responsável por extrair informações
 dos comentátios de documentação, e um \lstinline|FileBase|, que mantém as informações
 coletadas a partir do código fonte.
+
+Agora o \lstinline|Parser| possui um agente de coleta de dados que atuará durante
+o processamento do arquivo com o código fonte a ser testado. Devido a sua instanciação
+no construtor do \lstinline|Parser| é possível usá-lo no arquivo que contém as regras
+gramaticais da linguagem alvo, nesse exemplo, o \textsf{Grails}. No Código
+\ref{collector-in-use} é possível observar como se dá esse processo.
+
+\begin{lstlisting}[language=C++, label=collector-in-use, caption=Agente coletor em uso no \parser]
+[...]
+untyped_method_stmt: (*@\label{line:collectoruse-noterminal}@*)
+  DEF IDENTIFIER '(' param_list ')' { (*@\label{line:collectoruse-rule}@*)
+    std::string identifier_token( (*@\textdollar@*)2 ); (*@\label{line:collectoruse-id-token}@*)
+    std::string params_token( (*@\textdollar@*)4 ); (*@\label{line:collectoruse-param-token}@*)
+
+    collector->collect_data( "mp", identifier_token.c_str(), params_token.c_str() ); (*@\label{line:collectoruse-collect-data}@*)
+  }
+;
+[...]
+\end{lstlisting}
+
+No Código \ref{collector-in-use} a linha \ref{line:collectoruse-noterminal}
+apresenta a declaração de um novo símbolo não terminal da gramática, que é
+definido pela regra gramatical ditada na linha \ref{line:collectoruse-rule}.
+Como pode-se observar a regra no exemplo é a regra que rege a definição de
+métodos sem um tipo de retorno. As linhas \ref{line:collectoruse-id-token} e
+\ref{line:collectoruse-param-token} atribuem a \textit{strings} os valores
+identificados na segunda e quarta posições da regra, identificadas pelos
+\textit{tokens} \lstinline|INDETIFIER| e \lstinline|param_list|.
+
+A linha \ref{line:collectoruse-collect-data} apresenta a uso do agente coletor
+na definição da gramática. O operador \lstinline|->| é usado pois o objeto
+\lstinline|collector| é um ponteiro ao agente coletor. A sintaxe de \cpp exige
+que a referência a membros pertencentes a um objeto a partir de um ponteiro seja
+feita por meio desse operador. A função \lstinline|void collect_data(char * format, ...)|
+recebe como parâmetro uma \str em \textit{c-style} e uma quantidade ilimitada de
+argumentos do tipo \str em \textit{c-style}. O primeiro parâmetro, \lstinline|format|, espera
+uma \str que indique os tipos de dados que estão sendo coletados. A Tabela
+\ref{reference-format-collect-data} apresenta uma referência ao tipo de dado e
+o código a ser usado no parâmetro \lstinline|format|. No caso exemplificado,
+o argumento é \lstinline|"mp"|, indicando a passagem do nome do método e a
+lista de parâmetros desse método. Em seguida, lista-se os dados a serem coletados.
+Isso é feito passando os itens declarados nas linhas
+\ref{line:collectoruse-id-token} e \ref{line:collectoruse-param-token}.
+
+\begin{table}[h]
+\centering
+\caption{Descrição das letras identificadoras e o respectivo tipo de dado a ser coletado}
+\label{reference-format-collect-data}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Letra Identificadora} & \textbf{Tipo de Dado}        \\ \hline
+P                             & Pacote                       \\ \hline
+c                             & Classe                       \\ \hline
+m                             & Método                       \\ \hline
+p                             & Lista de Parâmetros          \\ \hline
+\end{tabular}
+\end{table}
+
+É importante ressaltar que, embora já haja uma versão disponível da
+\lstinline|void collect_data(char *, ...)| para as classes derivadas da
+\lstinline|CollectorMVC|, pode-se sobreescrevê-la. A Tabela
+\ref{reference-format-collect-data} é relativa à versão já disponibilizada
+pelo \textit{framework}. No caso, preferiu-se utilizar a já disponível.
+
+Ao utilizar-se a função \lstinline|void collect_data(char *, ...)| uma série
+de chamadas a outras funções são feitas. A Figura \ref{collect-data-sequence-diagram}
+apresenta a dinâmica desse processo.
+\begin{landscape}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.5\textwidth]{figuras/collect-data-sequence-diagram.png}
+    \caption{Diagrama de sequência das chamadas de funções por trás da \lstinline|void collect_data(char *, ...)|}
+    \label{collect-data-sequence-diagram}
+\end{figure}
+\FloatBarrier
+\end{landscape}
+
+[PARÁGRAFOS EXPLICANDO O DIAGRAMA DE SEQUÊNCIA]
+
+Com isso, a primeira parte para o uso do \scarefault está pronta. Agora é
+necessário preparar a outra metade. A responsável pela produção dos casos
+de teste.
+
+\subsubsubsection{Criação do agente de construção de casos de teste}
+Com os dados essenciais para os testes já coletados por um
+\lstinline|CollectorBase| e armazenados em um \lstinline|FileBase|,
+faz-se necessário agora a criação de um agente responsável pela
+produção do arquivo de teste. Para isso, o \framework disponibiliza como
+ponto de extensão a classe \lstinline|TestfileBuilder|. Como já explicitado
+na Figura \ref{testfile-diagram}, ela faz parte de um conjunto de classes
+que seguem o \textit{Builder Pattern}. Esse padrão permite separar a criação
+de objetos complexos em dois elementos: a sua representação e o processo de
+criação. Arquivos de teste são elementos que tem sua estrutura diferente, conforme
+a linguagem de programação, mas o processo de construção é semelhante.
+
+Retomando a Figura \ref{testfile-diagram}, em que é apresentado como é a
+estrutura do \textit{Builder Pattern} no projeto, para o caso de exemplo
+com o \grails o diagrama de classes passa a ser o exposto na Figura
+\ref{testfile-grails-class-diagram}.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/testfile-grails-class-diagram.png}
+    \caption{Diagrama de classes exemplificando a extensibilidade do \textit{Builder Pattern} no \framework}
+    \label{testfile-grails-class-diagram}
+\end{figure}
+\FloatBarrier
+
+Na Figura \ref{testfile-grails-class-diagram} destaca-se em vermelho
+o ponto de extensão: a classe \lstinline|TestfileBuilder|. Essa classe é responsável
+pela construção do objeto \lstinline|tesfile|, pertencente à classe
+\lstinline|TestfileProduct|. Essa classe possui três \textit{hospots}, as funções
+\lstinline|void build_dependencies()|, \lstinline|void build_class()| e
+\lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
+obrigada a implementar a sua própria versão dessas funções. Isso permite a extensão
+do \framework e garante que o desenvolvedor seguirá as regras para a construção do
+\lstinline|TestfileProduct| pelo processo comum. No caso de exemplo com o
+\textsf{Grails}, criou-se a classe \lstinline|TestfileGrailsBuilder|. Com base
+nessa classe surgem outras duas: \lstinline|TestfileControllerBuilder| e
+\lstinline|TestfileDomainBuilder|. A classe \lstinline|TestfileGrailsBuilder|
+implementa a \lstinline|void build_dependencies()|, mas passa a responsabilidade
+para as suas classes derivadas de implementar outras duas funções: a
+\lstinline|void build_package()| e a \lstinline|void build_imports()|. Assim,
+as classes \lstinline|TestfileControllerBuilder| e \lstinline|TestfileDomainBuilder|
+são responsáveis por implementar as quatro funções exigidas no processo
+construção de arquivos de teste para \textsf{Grails}. A razão que haja essas
+duas classes é porque testes de \textit{controller} confuguram-se de forma
+distinta de testes feitos para \textit{models}. Assim, fazer duas classes
+diferentes para esses dois tipos de arquivo de teste parace correto, além
+de demonstrar a capacidade de extensão do \textit{framework}.
+
+Tendo o \textit{Builder Pattern} extendido pode-se usar o\textit{framework}.
+O Código \ref{testfile-in-use} apresenta um exemplo de \lstinline|main| para
+o uso do \Scarefault.
+
+\begin{lstlisting}[language=C++, label=testfile-in-use, caption=Agente testador sendo usado na função \lstinline|main|]
+#define ACCEPTABLE_QTD_ARGS 3 (*@\label{line:testfileuse-qtd-args}@*)
+#define SOURCE_FILE_NAME 2 (*@\label{line:testfileuse-filename}@*)
+#define OPTION 1 (*@\label{line:testfileuse-option}@*)
+#define TYPE_TEST 3 (*@\label{line:testfileuse-typetest}@*)
+[...]
+if( !strcmp( argv[ OPTION ], "generate" ) ) (*@\label{line:testfileuse-ifoption}@*)
+{
+  if( !strcmp( argv[ TYPE_TEST ], "controller" ) ) (*@\label{line:testfileuse-iftype}@*)
+  {
+    TesterDirector tester( new TestfileControllerBuilder( collector_ptr->get_data() ) ); (*@\label{line:testfileuse-directorcontroller}@*)
+    tester.generate_testfile(); (*@\label{line:testfileuse-generate-c-testfile}@*)
+
+    Writer writer( &tester, argv[ SOURCE_FILE_NAME ] ); (*@\label{line:testfileuse-writer-c}@*)
+    writer.write_testfile(); (*@\label{line:testfileuse-write-c-testfile}@*)
+  } else if( !strcmp( argv[ TYPE_TEST ], "domain" ) ) (*@\label{line:testfileuse-elsetype}@*)
+  {
+    TesterDirector tester( new TestfileDomainBuilder( collector_ptr->get_data() ) ); (*@\label{line:testfileuse-directordomain}@*)
+    tester.generate_testfile(); (*@\label{line:testfileuse-generate-d-testfile}@*)
+
+    Writer writer( &tester, argv[ SOURCE_FILE_NAME ] ); (*@\label{line:testfileuse-writer-d}@*)
+    writer.write_testfile(); (*@\label{line:testfileuse-write-d-testfile}@*)
+  }
+}
+[...]
+\end{lstlisting}
+
+No Código \ref{testfile-in-use} a linha \ref{line:testfileuse-ifoption}
+Faz a comparação da opção passada pela linha de comando. Sendo a palavra
+\textit{generate} entra no bloco de instruções. As linhas
+\ref{line:testfileuse-iftype} e \ref{line:testfileuse-elsetype} fazem a
+comparação da \str passada na linha de comando: caso seja igual a
+\textit{controller} entre em um caso. Se for \textit{domain} entra no
+outro. As linhas \ref{line:testfileuse-directorcontroller} e
+\ref{line:testfileuse-directordomain} explicitam a instanciação de um
+objeto da classe \lstinline|TestfileDirector|. Esse objeto exige no
+seu construtor a passagem de um objeto do tipo \lstinline|TestfileBuilder|,
+que por sua vez exige um \lstinline|FileBase| para trabalhar os dados. Essa
+é a forma de trabalho do \textit{Builder Pattern}: o \lstinline|TesterDirector|
+mantém o processo de construção do arquivo de teste, requisitando apenas o
+tipo de representação que deve ser construída. Isso é revelado por meio do
+tipo de \textit{builder} passado como argumento. As linhas
+\ref{line:testfileuse-generate-c-testfile} e \ref{line:testfileuse-generate-d-testfile}
+chamam a função que constrói o arquivo de teste.
+
+As linhas \ref{line:testfileuse-writer-c} e \ref{line:testfileuse-writer-d}
+instanciam um objeto do tipo \lstinline|Writer|. Ele é responsável por escrever
+o arquivo de teste gerado pelo \lstinline|TesterDirector|. Para isso, ele
+recebe o objeto \lstinline|TesterDirector| e o nome do arquivo fonte.
+
+Para melhor visualizar a dinâmica do funcionamento por trás do Código
+\ref{testfile-in-use} a Figura \ref{generate-testfile-sequence-diagram}
+reflete essa dinâmica.
 
 \subsection{Geração de Testes Unitários}
 
