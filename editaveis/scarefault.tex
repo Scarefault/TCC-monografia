@@ -31,7 +31,7 @@ da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
 Essa seção evidencia os elementos da arquitetura do \Scarefault. Como
 ele foi desenhado, quais conceitos foram utilizados e como ele funciona.
 Em um primeiro momento são exploradas visões estáticas da arquitetura.
-A visão dinâmica da arquitetura é melhor evidenciada pela seção seguinte.
+A visão dinâmica da arquitetura é melhor evidenciada pela seção \ref{sec-util-scarefault}.
 
 \subsection{Visão de Pacotes}
 Partindo-se de uma visão macroscópica, o \scarefault pode ser dividido em
@@ -238,7 +238,7 @@ da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objet
 \textsf{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
 classe cliente.
 
-\section{A Utilização do \Scarefault}
+\section{A Utilização do \Scarefault} \label{sec-util-scarefault}
 A seção \ref{sec-arq-scarefault} apresentou a visão estática da arquitetura do
 \Scarefault. Nesta seção pretende-se mostrar a visão dinâmica, por meio
 de explicações a partir do uso do \textit{framework}. A utilização do
@@ -412,7 +412,7 @@ alvo inicial do projeto, com o intuito de demonstrar o uso do \Scarefault. A Fig
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{figuras/collector-grails-class-diagram.png}
-    \caption{Diagrama de classes exemplificando a extensibilidade do \textit{Factory Pattern no \framework}}
+    \caption{Diagrama de classes exemplificando a extensibilidade do \textit{Factory Pattern} no \framework}
     \label{collector-grails-class-diagram}
 \end{figure}
 \FloatBarrier
@@ -480,7 +480,7 @@ CollectorBase * CollectorFactory::get_collector( Collector::Language language ) 
 No Código \ref{get-collector-function} a linha \ref{line:getcolletor-language}
 mostra o cabeçalho da função. Nesse ponto é importante ressaltar o uso como
 parâmetro da enumeração \lstinline|Language|. Ela é definida no \lstinline|namespace|
-\lstinline|Collector| para auxiliar no desenvolvido. No caso exemplificado foi
+\lstinline|Collector| para auxiliar no desenvolvedor. No caso exemplificado foi
 adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
 \ref{line:getcolletor-switch} usa-se um \lstinline|switch| para, a partir do parâmetro
 \lstinline|language| selecionar qual a linguagem. A linha
@@ -489,11 +489,28 @@ adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
 coletor adicionado um novo caso deve ser criado no \lstinline|switch|. Na linha
 \ref{line:getcollector-return} retorna-se a instância.
 
-A Figura \ref{collector-sequence-diagram} traz um diagrama de sequência para melhor
-visualização dos efeitos no \scarefault devido a extensão desses pontos.
+A Figura \ref{parser-instance-sequence-diagram} traz um diagrama de sequência para melhor
+visualização dos efeitos no \scarefault da instanciação de um objeto \lstinline|Parser|.
+Essa visão é interessante para observar o comportamento esperado da
+\lstinline|CollectorFactory|.
+\begin{landscape}
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=1.5\textwidth]{figuras/parser-instance-sequence-diagram.png}
+    \caption{Diagrama de sequência da instanciação de um \lstinline|Parser| os efeitos na \lstinline|CollectorFactory|}
+    \label{parser-instance-sequence-diagram}
+\end{figure}
+\FloatBarrier
+\end{landscape}
 
-[IMAGEM AQUI]
-
+A Figura \ref{parser-instance-sequence-diagram} mostra os objetos sendo
+instanciados após a instância de um objeto \lstinline|Parser| ser solicitada.
+A \lstinline|CollectorFactory|, recebendo como argumento a valor \textsf{Grails},
+faz a instanciação de um objeto \lstinline|CollectorGrails| que, por sua vez,
+traz consigo outros dois objetos importantes em sua formação: uma instancia de um
+\lstinline|CollectorScarefault|, que será responsável por extrair informações
+dos comentátios de documentação, e um \lstinline|FileBase|, que mantém as informações
+coletadas a partir do código fonte.
 
 \subsection{Geração de Testes Unitários}
 
