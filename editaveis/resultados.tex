@@ -296,8 +296,8 @@ A \lstinline|FeedbackController| possui os mesmos métodos citados anteriormente
 Assim, foi executada a linha de comando:
 \lstinline|./scarefault generate FeedbackController.groovy controller|. Com isso
 foram gerados os testes unitários. O Código \ref{test-controller-feedback}
-mostra um fragmento importante do arquivo de tese gerado.
-\begin{lstlisting}[language=java, label=test-controller-feeddback, caption=Fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
+mostra um fragmento importante do arquivo de teste gerado.
+\begin{lstlisting}[language=java, label=test-controller-feedback, caption=Fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
 package guestbook
 
 import org.junit.*
@@ -311,7 +311,7 @@ class FeedbackControllerTests {
     assert params != null
 
   params["title"] = "w2Z1AWVpZ8F3" (*@\label{line:testfeedback-param1}@*)
-  params["feedback"] = "aodijmweidjMN339E8MDW3EU3MDW83EMNnicushk1IrI3Tq3s3SoTLjOC9ID5uARHTxXcXIdrAxxgp1ZsVROrBm6K8JR3UsM0stcSFINRHL87O" (*@\label{line:testfeedback-param2}@*)
+  params["feedback"] = "aodijmweidjMN3TxXcXIdrAxxgp1ZsVROrBm6K8JR3UsM0stcSFINRHL87O" (*@\label{line:testfeedback-param2}@*)
   }
 [...]  
 \end{lstlisting}
@@ -367,6 +367,43 @@ de sua execução. Isso é apresentado na Figura \ref{result-test-controller-fee
 \FloatBarrier
 
 \section{Inclusão de outras linguagens para geração de testes unitários e extensibilidade do \framework}
+O terceiro objetivo específico deste trabalho é \textsf{Permitir inclusão de
+outras linguagens para geração de testes unitários}. Esta seção demonstra que
+o \scarefault atende esse objetivo.
+
+Como \textit{framework}, o \scarefault deve permitir ao desenvolvedor que o utiliza
+fazer adaptações por meio de extensões de seu código. O \scarefault provê
+essas janelas de extensibilidade, como já demonstrado no decorrer do
+Capítulo 4. Esse capítulo evidencia as partes extensíveis e os pontos de
+adaptação do \framework. Para a inclusão de novas linguagens de programação
+para a geração de testes unitários foi demonstrado também, no decorrer do
+Capítulo 4, utilizando como exemplo o \grails como incluir uma nova linguagem
+no \scarefault.
+
+Uma recapitulação breve para resumir como o \scarefault atende a esse objetivo:
+\begin{itemize}
+\item Ao definir a gramática e um \parser para uma linguagem de programação,
+utilizando-se do \flexcpp e do \textsf{Bisonc++}, pode-se utilizar os coletores
+de dados e os contrutores de arquivos de teste do \scarefault, com as devidas
+adaptações, para que haja a inclusão da nova linguagem.
+\item O \framework possui diferentes pontos de extensão, como a classe
+\lstinline|CollectorBase| e a \lstinline|TestfileBuilder|. A partir dessas
+classes pode-se derivar outras com o objetivo de gerar testes para arquivos
+de código fonte de uma determinada linguagem.
+\item O uso de \textit{design pattern}, como o \textit{Builder Pattern} e o
+\textit{Factory Pattern}, apontam a capacidade de extensão do \framework. Por
+meio deles é possível criar \textit{hotspot} e \textit{frozenspots}. Pelos
+\textit{hotspots} o desenvolvedor pode extender ou adaptar o \scarefault à
+suas necessidades, desde que respeite as necessidades do \framework. Isso
+é bem evidenciado no uso do \textit{Builder Pattern}. Ele abre espaço para
+que o desenvolvedor adapte a construção de \lstinline|testfiles| à linguagem
+incluída, mas mantém rígido o processo de construção.
+\end{itemize}
+
+Tendo isso em vista, pode-se concluir que o \Scarefault, em seu estado atual,
+atende a esse objetivo específico.
+
+
 
 
 

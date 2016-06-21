@@ -618,11 +618,7 @@ com o \grails o diagrama de classes passa a ser o exposto na Figura
 
 Na Figura \ref{testfile-grails-class-diagram} destaca-se em vermelho
 o ponto de extensão: a classe \lstinline|TestfileBuilder|. Essa classe é responsável
-<<<<<<< HEAD
 pela construção do objeto \lstinline|testfile|, pertencente à classe
-=======
-pela construção do objeto \lstinline|tesfile|, pertencente à classe
->>>>>>> Escrevendo resultados
 \lstinline|TestfileProduct|. Essa classe possui três \textit{hotspots}, as funções
 \lstinline|void build_dependencies()|, \lstinline|void build_class()| e
 \lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
@@ -740,11 +736,11 @@ O argumento referenciado como \lstinline|<opção>| indica qual a opção que o
 usuário escolheu. Essa \lstinline|<opção>| pode variar entre \lstinline|create|
 e \lstinline|generate|.
 \begin{description}
-\item[\lstinline|create|:] opção que solicita ao \scarefault a criação de
+\item[\textsf{create}:] opção que solicita ao \scarefault a criação de
 casos de teste. Isso é efetuado através da leitura de alguns dados
 diponibilizados pelo usuário dentro dos comentários de documentação dos
 métodos.
-\item[\lstinline|generate|:] opção que requisita ao \scarefault a geração
+\item[\textsf{generate}:] opção que requisita ao \scarefault a geração
 dos testes, baseando nos casos de teste criados anteriormente. Os casos de
 teste criados pela opção \lstinline|create| devem ser completados com o
 valor esperado pelo teste. O usuário também pode acrescentar casos de teste
