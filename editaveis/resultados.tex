@@ -270,3 +270,66 @@ para o \textsf{Grails}.
 Como evidenciado na Figura \ref{identification-test} o \parser passou numa
 bateria de mais de 500 tentativas de identificação de regras em diversas
 combinações.
+
+\section{Geração de testes unitários que cubram o CRUD}
+O segundo objetivo específico deste trabalho é \textsf{Gerar testes unitários por meio
+do framework que cubram os métodos criar, recuperar, atualizar e apagar
+entidades de negócio}. Esta seção demonstra que o \scarefault atende
+esse objetivo.
+
+Utilizou-se os resultados do primeiro objetivo específico como insumo
+para o segundo objetivo específico. Dessa forma, tendo uma gramática e
+um \parser disponíveis para o \grails foram feitas as adaptações necessárias
+no \framework para que podessem ser gerados testes nesse contexto.
+Assim, foi possível fazer a geração de testes unitários que cobrissem
+métodos relacionados ao CRUD. Os métodos de \lstinline|controller| foram
+escolhidos para essa demonstração, pois evidenciam melhor os métodos
+do CRUD dentro do \textsf{Grails}.
+
+Uma \lstinline|controller| típica do \grails possui os seguintes métodos:
+\lstinline|create()|, \lstinline|save()|, \lstinline|show()|, \lstinline|edit()|,
+\lstinline|update()| e \lstinline|delete()|. Esses métodos representam
+o CRUD dentro da aplicação. Foi a aplicação mais simples possível em
+\grails para a demonstração. É um pequeno projeto chamado de \textit{guestbook}.
+A entidade alvo para esse teste do \framework foi a \lstinline|Feedback|.
+A \lstinline|FeedbackController| possui os mesmos métodos citados anteriormente.
+Assim, foi executada a linha de comando:
+\lstinline|./scarefault generate FeedbackController.groovy controller|. Com isso
+foram gerados os testes unitários. O Código \ref{test-controller-feedback}
+mostra um fragmento importante do arquivo de tese gerado.
+\begin{lstlisting}[language=java, label=test-controller-feeddback, caption=fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
+
+\end{lstlisting}
+
+Entre as linhas \ref{AQUI} e \ref{AQUI} popula-se os parâmetros que o
+objeto do tipo \lstinline|Feedback| irá receber durante o processo de testes.
+Observa-se que os argumentos passados para os parâmetros são inteiramente
+\textbf{randômicos}. Esses valores são produzidos pela classe auxiliar do
+\framework chamada de \lstinline|ValueGenerator|. Ela faz a análise das
+restrições do objeto, buscando essa restrições na classe de domínio
+\lstinline|Feedback|, gera um valor aleatório respeitando essas restrições
+e insere como argumento para os parâmetros. É importante ressaltar que nesse
+trabalho não foi possível a geração de valores para todos os tipos de
+restrições. Foi focado as retrições que limitavam o argumento por meio de
+intervalos de valores. Outros tipos de restrições não foram cobertas dentro
+desse trabalho. Outro fator limitante desse projeto, para esse trabalho de
+conclusão de curso, é que os valores gerados são para testes de valores
+válidos. Valores inválidos ainda não foram cobertos.
+
+Com o arquivo de teste gerado foi 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

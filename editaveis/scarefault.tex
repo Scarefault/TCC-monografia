@@ -269,14 +269,14 @@ predefinidas. Nesse momento será instalado e configurado o \textsf{Flexc++},
 virtual e então iniciar a customização no código do \Scarefault. O Código
 \ref{ambiente-virtual} apresenta as linhas de comando referentes aos passos citados:
 
-\begin{lstlisting}[language=make, label=ambiente-virtual, caption=Levantamento do Ambiente de Desenvolvimento]
-git clone git@github.com:Scarefault/scarefault.git
-cd scarefault
-vagrant up
+\begin{lstlisting}[language=bash, label=ambiente-virtual, caption=Levantamento do Ambiente de Desenvolvimento]
+(*@\textdollar@*) git clone git@github.com:Scarefault/scarefault.git
+(*@\textdollar@*) cd scarefault
+(*@\textdollar@*) vagrant up
 
 # Aguarde instalação e configuração das dependências
 
-vagrant ssh
+(*@\textdollar@*) vagrant ssh
 \end{lstlisting}
 
 O \scarefault contempla a linguagem de programação \grails até o momento.
@@ -618,7 +618,11 @@ com o \grails o diagrama de classes passa a ser o exposto na Figura
 
 Na Figura \ref{testfile-grails-class-diagram} destaca-se em vermelho
 o ponto de extensão: a classe \lstinline|TestfileBuilder|. Essa classe é responsável
+<<<<<<< HEAD
 pela construção do objeto \lstinline|testfile|, pertencente à classe
+=======
+pela construção do objeto \lstinline|tesfile|, pertencente à classe
+>>>>>>> Escrevendo resultados
 \lstinline|TestfileProduct|. Essa classe possui três \textit{hotspots}, as funções
 \lstinline|void build_dependencies()|, \lstinline|void build_class()| e
 \lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
@@ -710,5 +714,126 @@ traz um diagrama de sequência que reflete esse funcionamento.
 [PARÁGRAFOS EXPLICANDO O DIAGRAMA DE SEQUÊNCIA]
 
 \subsection{Geração de Testes Unitários}
+Além da utilização do \scarefault como \textit{framework}, pode-se usá-lo como
+aplicação, após as devidas adaptações por parte dos desenvolvedores. Supondo
+que o \scarefault já tenha sido adaptado para  \textsf{Grails}, o alvo inicial
+desse projeto, segue um exemplo de como utilizar o \scarefault como uma
+aplicação.
 
+A geração de testes unitários feita pelo \scarefault é dada em duas etapas:
+a primeira é solicitada a criação de casos de teste ao \Scarefault. Isso
+quer dizer que o \scarefault vai gerar, a partir de determinados parâmetros
+expostos pelo usuário, casos de teste. Na segunda etapa é requisitada a
+geração dos testes definidos como casos de teste, completados com informações
+adicionais pelo usuário.
 
+Para a demonstração foi criado uma função \lstinline|main|. Por meio dessa
+função é possível a chamada do \scarefault e seus benefícios por linha
+de comando. Segue o Código \ref{generic-call-scarefault} que traz um
+\textit{template} de chamada do \Scarefault.
+
+\begin{lstlisting}[language=bash, label=generic-call-scarefault, caption=Template para chamada do \scarefault pela linha de comando]
+(*@\textdollar@*) ./scarefault <opção> <caminho ao arquivo a ser testado> [categoria do padrão MVC]
+\end{lstlisting}
+
+O argumento referenciado como \lstinline|<opção>| indica qual a opção que o
+usuário escolheu. Essa \lstinline|<opção>| pode variar entre \lstinline|create|
+e \lstinline|generate|.
+\begin{description}
+\item[\lstinline|create|:] opção que solicita ao \scarefault a criação de
+casos de teste. Isso é efetuado através da leitura de alguns dados
+diponibilizados pelo usuário dentro dos comentários de documentação dos
+métodos.
+\item[\lstinline|generate|:] opção que requisita ao \scarefault a geração
+dos testes, baseando nos casos de teste criados anteriormente. Os casos de
+teste criados pela opção \lstinline|create| devem ser completados com o
+valor esperado pelo teste. O usuário também pode acrescentar casos de teste
+que ache necessários, seguindo o padrão proposto pelo \Scarefault.
+\end{description}
+
+O argumento referenciado como \lstinline|<caminho ao arquivo a ser testado>|
+deve ser preenchido com o caminho que leva até o arquivo com o código fonte
+a ser testado. O argumento referenciado como \lstinline|[categoria do padrão MVC]|
+deve ser preenchido ou com \lstinline|controller| ou com \lstinline|domain|.
+
+Considerando-se o que foi dito, toma-se o arquivo \textsf{domain.groovy} como
+exemplo. Ele contém o Código \ref{domain-groovy}.
+\begin{lstlisting}[language=C++, label=domain-groovy, caption=Código do arquivo domain.groovy]
+package math
+
+class Math {
+  def sumTwoNumbers(int parcel1, int parcel2) {
+    def total = parcel1 + parcel2
+    return total
+  }
+}
+\end{lstlisting}
+
+O usuário do \scarefault deve adicionar ao Código \ref{domain-groovy} comentários
+de documentação contendo algumas marcações próprias do \Scarefault.
+Essas marcações são referenciadas pela Tabela \ref{scarefault-marks}.
+
+\begin{table}[h]
+\centering
+\caption{Marcações de comentários para uso do \scarefault}
+\label{scarefault-marks}
+\begin{tabular}{|c|c|}
+\hline
+Marcação           & Descrição                                                                                                                                                                \\ \hline
+\textsf{@param}  & Indica para o \textsf{Scarefault} o nome do parâmetro                                                                                                                  \\ \hline
+\textsf{@range}  & Indica para o \textsf{Scarefault} os valores limites relativos ao parâmetro                                                                                            \\ \hline
+\textsf{@test}   & \begin{tabular}[c]{@{}c@{}}Indica para o \textsf{Scarefault} os argumentos que devem ser passados\\ ao método durante o teste. Evidência um caso de teste\end{tabular} \\ \hline
+\textsf{@expect} & Indica para o \textsf{Scarefault} o valor esperado no caso de teste                                                                                                    \\ \hline
+\end{tabular}
+\end{table}
+
+Assim, com a adição do comentário de documentação, o Código \ref{domain-groovy}
+passa a ficar como o Código \ref{domain-groovy-doc}.
+\begin{lstlisting}[language=C++, label=domain-groovy-doc, caption=Código do arquivo domain.groovy com as marcações do \scarefault]
+package math
+
+class Math {
+  /**
+    @param parcel1 @range 0..100 (*@\label{line:domaingroovy-param1}@*)
+    @param parcel2 @range 0..100 (*@\label{line:domaingroovy-param2}@*)
+  */
+  def sumTwoNumbers(int parcel1, int parcel2) {
+    def total = parcel1 + parcel2
+    return total
+  }
+}
+\end{lstlisting}
+
+O usuário então solicita ao \scarefault a criação dos casos de teste.
+Isso se dá pela linha de comando:
+\lstinline|./scareafault create domain.groovy|. Assim,
+o código passa a ficar como o Código \ref{domain-groovy-testcase}.
+\begin{lstlisting}[language=C++, label=domain-groovy-testcase, caption=Código do arquivo domain.groovy com os casos de teste]
+package math
+
+class Math {
+  /**
+    @param parcel1 @range 0..100 (*@\label{line:domaingroovy-param1}@*)
+    @param parcel2 @range 0..100 (*@\label{line:domaingroovy-param2}@*)
+    @test (0, 50) @expect INSERT_HERE
+    @test (1, 50) @expect INSERT_HERE
+    @test (99, 50) @expect INSERT_HERE
+    @test (100, 50) @expect INSERT_HERE
+    @test (50, 0) @expect INSERT_HERE
+    @test (0, 1) @expect INSERT_HERE
+    @test (0, 99) @expect INSERT_HERE
+    @test (0, 100) @expect INSERT_HERE
+  */
+  def sumTwoNumbers(int parcel1, int parcel2) {
+    def total = parcel1 + parcel2
+    return total
+  }
+}
+\end{lstlisting}
+
+O usuário então deve inserir as expectativas dele para cada caso
+de teste e, em seguida, executar a linha de comando:
+\lstinline|./scareafault generate domain.groovy domain|.
+Dessa forma, o \scarefault gera os testes especificados em um outro
+arquivo, chamado de \lstinline|domainTests.groovy| no mesmo diretório
+do \lstinline|domain.groovy|.
