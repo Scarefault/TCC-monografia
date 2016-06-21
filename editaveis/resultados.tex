@@ -287,9 +287,9 @@ escolhidos para essa demonstração, pois evidenciam melhor os métodos
 do CRUD dentro do \textsf{Grails}.
 
 Uma \lstinline|controller| típica do \grails possui os seguintes métodos:
-\lstinline|create()|, \lstinline|save()|, \lstinline|show()|, \lstinline|edit()|,
+\lstinline|create()|, \lstinline|save(),| \lstinline|show()|, \lstinline|edit()|,
 \lstinline|update()| e \lstinline|delete()|. Esses métodos representam
-o CRUD dentro da aplicação. Foi a aplicação mais simples possível em
+o CRUD dentro da aplicação. Foi desenvolvida uma aplicação simples em
 \grails para a demonstração. É um pequeno projeto chamado de \textit{guestbook}.
 A entidade alvo para esse teste do \framework foi a \lstinline|Feedback|.
 A \lstinline|FeedbackController| possui os mesmos métodos citados anteriormente.
@@ -297,29 +297,76 @@ Assim, foi executada a linha de comando:
 \lstinline|./scarefault generate FeedbackController.groovy controller|. Com isso
 foram gerados os testes unitários. O Código \ref{test-controller-feedback}
 mostra um fragmento importante do arquivo de tese gerado.
-\begin{lstlisting}[language=java, label=test-controller-feeddback, caption=fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
+\begin{lstlisting}[language=java, label=test-controller-feeddback, caption=Fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
+package guestbook
+
+import org.junit.*
+import grails.test.mixin.*
+
+@TestFor(FeedbackController)
+@Mock(Feedback)
+class FeedbackControllerTests {
+
+  def populateValidParams(params) {
+    assert params != null
+
+  params["title"] = "w2Z1AWVpZ8F3" (*@\label{line:testfeedback-param1}@*)
+  params["feedback"] = "aodijmweidjMN339E8MDW3EU3MDW83EMNnicushk1IrI3Tq3s3SoTLjOC9ID5uARHTxXcXIdrAxxgp1ZsVROrBm6K8JR3UsM0stcSFINRHL87O" (*@\label{line:testfeedback-param2}@*)
+  }
+[...]  
+\end{lstlisting}
+
+Nas linhas \ref{line:testfeedback-param1} e \ref{line:testfeedback-param2}
+popula-se os parâmetros que o objeto do tipo \lstinline|Feedback| 
+irá receber durante o processo de testes. Observa-se que os argumentos 
+passados para os parâmetros são inteiramente \textbf{randômicos}.
+Esses valores são produzidos pela classe auxiliar do \framework chamada
+de \lstinline|ValueGenerator|. Ela faz a análise das restrições do objeto,
+buscando essa restrições na classe de domínio \lstinline|Feedback|, gera
+um valor aleatório respeitando essas restrições e insere como argumento
+para os parâmetros. O Código \ref{domain-feedback} apresenta a entidade
+\lstinline|Feedback| e as suas restrições \textit{constraints}.
+
+\begin{lstlisting}[language=java, label=domain-feedback, caption=Arquivo de \lstinline|Feedback|]
+package guestbook
+
+class Feedback {
+  String title
+  String feedback
+  Date dateCreated
+  Date lastUpdated
+
+  User user
+  static hasMany=[ comments:Comment ]
+
+  static constraints = {
+    title( blank: false, nullable: false, size: 3..80 )
+    feedback( blank: false, nullable: false, size: 3..500 )
+    user( nullable: false )
+  }
+}
 
 \end{lstlisting}
 
-Entre as linhas \ref{AQUI} e \ref{AQUI} popula-se os parâmetros que o
-objeto do tipo \lstinline|Feedback| irá receber durante o processo de testes.
-Observa-se que os argumentos passados para os parâmetros são inteiramente
-\textbf{randômicos}. Esses valores são produzidos pela classe auxiliar do
-\framework chamada de \lstinline|ValueGenerator|. Ela faz a análise das
-restrições do objeto, buscando essa restrições na classe de domínio
-\lstinline|Feedback|, gera um valor aleatório respeitando essas restrições
-e insere como argumento para os parâmetros. É importante ressaltar que nesse
-trabalho não foi possível a geração de valores para todos os tipos de
-restrições. Foi focado as retrições que limitavam o argumento por meio de
-intervalos de valores. Outros tipos de restrições não foram cobertas dentro
-desse trabalho. Outro fator limitante desse projeto, para esse trabalho de
-conclusão de curso, é que os valores gerados são para testes de valores
-válidos. Valores inválidos ainda não foram cobertos.
+É importante ressaltar que nesse trabalho não foi possível a geração de valores
+para todos os tipos de restrições. Foi focado as retrições que limitavam o
+argumento por meio de intervalos de valores. Outros tipos de restrições não foram
+cobertas dentro desse trabalho. Outro fator limitante desse projeto, para esse
+trabalho de conclusão de curso, é que os valores gerados são para testes de
+valores válidos. Valores inválidos ainda não foram cobertos.
 
-Com o arquivo de teste gerado foi 
+Com o arquivo de teste gerado foram executados os testes e verificado o resultado
+de sua execução. Isso é apresentado na Figura \ref{result-test-controller-feedback}.
 
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=\textwidth]{figuras/result-test-controller-feedback.png}
+    \caption{Resultado da execução dos teses gerados para a \lstinline|FeedbackController|}
+    \label{result-test-controller-feedback}
+\end{figure}
+\FloatBarrier
 
-
+\section{Inclusão de outras linguagens para geração de testes unitários e extensibilidade do \framework}
 
 
 
