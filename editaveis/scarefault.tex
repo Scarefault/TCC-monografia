@@ -707,7 +707,25 @@ traz um diagrama de sequência que reflete esse funcionamento.
 \FloatBarrier
 \end{landscape}
 
-[PARÁGRAFOS EXPLICANDO O DIAGRAMA DE SEQUÊNCIA]
+O diagrama na Figura \ref{generate-testfile-sequence-diagram} mostra a instanciação
+de um objeto do tipo \lstinline|TesterDirector|. Para o exemplo foi selecionado
+o caso em que a representação para o \lstinline|testfile| é de uma
+\textit{domain}. Assim sendo, é passado como argumento para o construtor do
+\lstinline|testerDirector| uma nova instância de \lstinline|TesterDomainBuilder|,
+que por sua vez exige no seu construtor um objeto do tipo \lstinline|FileBase|.
+Este é passado através da chamada da função \lstinline|get_data()| do
+\lstinline|CollectorBase|. Assim, o \lstinline|TesterDirector| é instanciado.
+
+Na segunda parte do diagrama de sequência observa-se a chamada da função
+\lstinline|void generate_testfile()|. A cor azul indica que ela é um
+\textit{frozenspot}. Ela carrega o processo de construção de um
+arquivo de teste. Para isso, ele faz a chamada dos passos de construção,
+implementados pelo \lstinline|TestfileDomainBuilder|. Vale lembrar que
+todas as funções chamadas após a \lstinline|void generate_testfile()| são
+hotspots, em vermelho. O diagrama da Figura \ref{generate-testfile-sequence-diagram}
+é interessante pois evidencia bem o \textit{hollywood principle}: o
+desenvolvedor não faz a chamada ao \framework. É o \framework que chama
+as funções criadas pelo desenvolvedor.
 
 \subsection{Geração de Testes Unitários}
 Além da utilização do \scarefault como \textit{framework}, pode-se usá-lo como
