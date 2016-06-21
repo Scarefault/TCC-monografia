@@ -300,15 +300,15 @@ uso dessas ferramentas, recomenda-se a utilização da documentação oficial, d
 em \url{https://fbb-git.github.io/flexcpp/} e \url{https://fbb-git.github.io/bisoncpp/},
 respectivamente. O Apêndice B é um guia básico para o uso dessas ferramentas.
 
-Após a gramática da nova linguagem ter sido criada há a necessidade de
-uma série de alterações nos arquivos de código fonte, tanto do \parser quanto do
-\textsf{scanner}. Algumas delas já são previstas no uso normal do \flexcpp e do
-\textsf{Bisonc++}, para a comunicação das duas ferramentas. As alterações com o
+Após a gramática da nova linguagem ter sido criada e compilada utilizando as ferramentas \textsf{Flexc++} e o \textsf{Bisonc++}, é gerado o \parser e \scanner em C++. Para prosseguimento do uso do \textit{framework} com a nova gramática, há a necessidade de
+uma série de alterações nos arquivos de código-fonte, tanto do \parser quanto do
+\scanner gerados. Algumas delas já são previstas no uso normal do \flexcpp e do
+\textsf{Bisonc++} para a comunicação das duas ferramentas. A seguir serão apresentados as alterações que objetivam o uso da gramática criada no \textit{framework}. Salienta-se a importância de replicar essas alterações no \parser e \scanner gerados para a nova linguagem. As alterações com o
 objetivo de gerar a comunicação entre as ferramentas são descritas no Capítulo de
-Resultados.
+Resultados.  
 
 O Código \ref{changes-parser-scarefault} apresenta as alterações exigidas para
-o bom funcionamento do \scarefault efetuadas no arquivo \lstinline|Parser.h|.
+o bom funcionamento do \scarefault efetuadas no arquivo \lstinline|Parser.h|. 
 
 \begin{lstlisting}[language=C++, label=changes-parser-scarefault, caption=Alterações no \lstinline|Parser.h| para uso do \scarefault]
 class Parser: public ParserBase
@@ -348,7 +348,7 @@ Parser::Parser(Collector::Language language,std::istream &in, std::ostream &out)
 [...]
 \end{lstlisting}
 
-No Código \ref{changes-parser-impl-scarefault} a linha \ref{line:parser-impl-constructor}
+No Código \ref{changes-parser-impl-scarefault}, a linha \ref{line:parser-impl-constructor}
 inicia a implementação do construtor declarado no arquivo \lstinline|Parser.h|.
 A linha \ref{line:parser-impl-stream} altera o \textit{stream} de dados que
 o \parser deve utilizar (por \textit{default}, o \textit{stream} é a entrada
@@ -382,7 +382,7 @@ target.close(); (*@\label{line:parser-use-close}@*)
 [...]
 \end{lstlisting}
 
-No Código \ref{parser-in-use} a linha \ref{line:parser-use-open} instancia um
+No Código \ref{parser-in-use}, a linha \ref{line:parser-use-open} instancia um
 objeto \lstinline|std::ifstream| para abrir o arquivo passado como argumento para
 a aplicação, representado como \lstinline|argv[ SOURCE_FILE_NAME ]|. O arquivo foi
 aberto apenas para leitura. A linha \ref{line:parser-use-istream} converte o
@@ -399,9 +399,7 @@ o uso em diferentes linguagens de programação. Para que isso seja feito é nec
 que haja a coleta dos dados a serem explorados para a criação dos testes unitários.
 Devido a essa necessidade criou-se a classe \lstinline|CollectorBase|. Essa classe,
 conforme exposto no Código \ref{changes-parser-scarefault}, é usada pelo \textit{parser}.
-A sua instanciação é feito segundo o Código \ref{changes-parser-impl-scarefault}. Por
-meio de um objeto \lstinline|CollectorFactory| a seleção do \textsf{collector} correto
-é feita. Para explicar o que ocorre a partir daí é preciso retomar a Figura
+A sua instanciação é feito segundo o Código \ref{changes-parser-impl-scarefault}. A seleção do \textsf{collector} ideal é realizada por meio de um objeto \lstinline|CollectorFactory|. Para explicar o que ocorre a partir desse ponto é preciso retomar a Figura
 \ref{collector-diagram}, que traz o diagrama de classes representando o
 \textit{Factory Pattern} desenhado para a selecionar o \textsf{collector} em tempo
 de execução.
@@ -427,13 +425,12 @@ derivada da \lstinline|CollectorMVC|, a \lstinline|CollectorGrails|.
 
 Devido a essa herança o \framework disponibiliza à nova classe derivada
 alguns benefícios. Pela Figura \ref{collector-grails-class-diagram} observa-se
-que há algumas funções marcadas como \textit{hospots} e outras como 
+que há algumas funções marcadas como \textit{hotspots} e outras como 
 \textit{frozenspots}. Cabe a definição desses termos:
 
 \begin{description}
 \item[\textit{Frozenspots}:] são partes fixas do \textit{framework}. São as funções já
-implementadas e que se mantem inalteradas. Podem ser usadas por quem estar
-utilizando-se do \textit{framework}.
+implementadas e que se devem percamencer inalteradas. São comuns para qualquer linguagem alvo e auxiliam na adaptação do \textit{framework} para novas linguagens.
 \item[	\textit{Hotspots}:] são as partes flexíveis do \textit{framework}. São nesses
 pontos que há a extensão das funções do \textit{framework} por da adição de
 código, especificando a funcionalidade.
@@ -483,8 +480,8 @@ mostra o cabeçalho da função. Nesse ponto é importante ressaltar o uso como
 parâmetro da enumeração \lstinline|Language|. Ela é definida no \lstinline|namespace|
 \lstinline|Collector| para auxiliar o desenvolvedor. No caso exemplificado foi
 adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
-\ref{line:getcolletor-switch} usa-se um \lstinline|switch| para, a partir do parâmetro
-\lstinline|language| selecionar qual a linguagem. A linha
+\ref{line:getcolletor-switch}, usa-se um \lstinline|switch| para, a partir do parâmetro
+\lstinline|language|, selecionar qual a linguagem. A linha
 \ref{line:getcollector-instancegrails} faz a instanciação de um objeto do tipo
 \lstinline|CollectorGrails| caso a linguagem seja o \textsf{Grails}. Para cada novo
 coletor adicionado um novo caso deve ser criado no \lstinline|switch|. Na linha
@@ -513,11 +510,11 @@ traz consigo outros dois objetos importantes em sua formação: uma instância d
 dos comentátios de documentação, e um \lstinline|FileBase|, que mantém as informações
 coletadas a partir do código fonte.
 
-Agora o \lstinline|Parser| possui um agente de coleta de dados que atuará durante
+Nesse momento o \lstinline|Parser| possui um agente de coleta de dados que atuará durante
 o processamento do arquivo com o código fonte a ser testado. Devido a sua instanciação
-no construtor do \lstinline|Parser| é possível usá-lo no arquivo que contém as regras
+no construtor do \lstinline|Parser|, é possível usá-lo no arquivo que contém as regras
 gramaticais da linguagem alvo, nesse exemplo, o \textsf{Grails}. No Código
-\ref{collector-in-use} é possível observar como se dá esse processo.
+\ref{collector-in-use} é possível observar como ocorre esse processo.
 
 \begin{lstlisting}[language=C++, label=collector-in-use, caption=Agente coletor em uso no \parser]
 [...]
@@ -532,7 +529,7 @@ untyped_method_stmt: (*@\label{line:collectoruse-noterminal}@*)
 [...]
 \end{lstlisting}
 
-No Código \ref{collector-in-use} a linha \ref{line:collectoruse-noterminal}
+No Código \ref{collector-in-use}, a linha \ref{line:collectoruse-noterminal}
 apresenta a declaração de um novo símbolo não terminal da gramática, que é
 definido pela regra gramatical ditada na linha \ref{line:collectoruse-rule}.
 Como pode-se observar a regra no exemplo é a regra que rege a definição de
@@ -589,11 +586,10 @@ apresenta a dinâmica desse processo.
 \FloatBarrier
 \end{landscape}
 
-[PARÁGRAFOS EXPLICANDO O DIAGRAMA DE SEQUÊNCIA]
+%REVISAR PARAGRAFO
+Nesse diagrama houve a diferenciação da ação tomada por um \textit{hotspots}, em vermelho, e um \textit{frozenspots}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, é definido parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. É criado, então, os casos de testes baseado nas informações coletadas e relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC| e ocorre a conclusão da coleta dos dados desse método.
 
-Com isso, a primeira parte para o uso do \scarefault está pronta. Agora é
-necessário preparar a outra metade. A responsável pela produção dos casos
-de teste.
+Com isso, a primeira parte para o uso do \scarefault está finalizada, ou seja, o \textit{framework} está preparado para coleta de dados. A segunda etapa é responsável pela produção dos casos de teste.
 
 \subsubsubsection{Criação do agente de construção de casos de teste}
 Com os dados essenciais para os testes já coletados por um
@@ -622,8 +618,8 @@ com o \grails o diagrama de classes passa a ser o exposto na Figura
 
 Na Figura \ref{testfile-grails-class-diagram} destaca-se em vermelho
 o ponto de extensão: a classe \lstinline|TestfileBuilder|. Essa classe é responsável
-pela construção do objeto \lstinline|tesfile|, pertencente à classe
-\lstinline|TestfileProduct|. Essa classe possui três \textit{hospots}, as funções
+pela construção do objeto \lstinline|testfile|, pertencente à classe
+\lstinline|TestfileProduct|. Essa classe possui três \textit{hotspots}, as funções
 \lstinline|void build_dependencies()|, \lstinline|void build_class()| e
 \lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
 obrigada a implementar a sua própria versão dessas funções. Isso permite a extensão
@@ -639,9 +635,8 @@ as classes \lstinline|TestfileControllerBuilder| e \lstinline|TestfileDomainBuil
 são responsáveis por implementar as quatro funções exigidas no processo
 construção de arquivos de teste para \textsf{Grails}. A razão que haja essas
 duas classes é porque testes de \textit{controller} confuguram-se de forma
-distinta de testes feitos para \textit{models}. Assim, fazer duas classes
-diferentes para esses dois tipos de arquivo de teste parace correto, além
-de demonstrar a capacidade de extensão do \textit{framework}.
+distinta de testes feitos para \textit{models}. Assim, escolheu-se fazer duas classes
+diferentes para esses dois tipos de arquivo.
 
 Tendo o \textit{Builder Pattern} extendido pode-se usar o\textit{framework}.
 O Código \ref{testfile-in-use} apresenta um exemplo de \lstinline|main| para
@@ -674,8 +669,8 @@ if( !strcmp( argv[ OPTION ], "generate" ) ) (*@\label{line:testfileuse-ifoption}
 [...]
 \end{lstlisting}
 
-No Código \ref{testfile-in-use} a linha \ref{line:testfileuse-ifoption}
-Faz a comparação da opção passada pela linha de comando. Sendo a palavra
+No Código \ref{testfile-in-use}, a linha \ref{line:testfileuse-ifoption}
+faz a comparação da opção passada pela linha de comando, sendo que a palavra
 \textit{generate} entra no bloco de instruções. As linhas
 \ref{line:testfileuse-iftype} e \ref{line:testfileuse-elsetype} fazem a
 comparação da \str passada na linha de comando: caso seja igual a
@@ -691,6 +686,7 @@ tipo de representação que deve ser construída. Isso é revelado por meio do
 tipo de \textit{builder} passado como argumento. As linhas
 \ref{line:testfileuse-generate-c-testfile} e \ref{line:testfileuse-generate-d-testfile}
 chamam a função que constrói o arquivo de teste.
+
 
 As linhas \ref{line:testfileuse-writer-c} e \ref{line:testfileuse-writer-d}
 instanciam um objeto do tipo \lstinline|Writer|. Ele é responsável por escrever
