@@ -1,1 +1,59 @@
 \chapter[Considerações Finais]{Considerações Finais}
+O trabalho aponta a necessidade e as exigências do mercado de software
+sobre a qualidade dos produtos e serviços na área. Demonstra os problemas
+e alguns dos motivos da falta da produção de testes unitários, uma técnica
+fundamental para evitar \textit{bugs} e dificuldades no desenvolvimento
+de software.
+
+O \framework desenvolvido nesse trabalho foi proposto com o objetivo de
+facilitar a geração de testes unitários para diversas linguagens de programação.
+A questão que buscou-se responder foi: \textit{há como propiciar ao desenvolvedor
+um suporte que forneça a geração de testes unitários, de forma
+semiautomatizada, e que permita adaptações, com o intuito de ajustar-se ao
+código-fonte?}. Para resolver esse questionamento foi planeado um 
+sistema extensível capaz de gerar testes unitários com uma intervenção breve
+do desenvolvedor. Por meio da análise dos resultados atingidos para cada objetivo
+específico é possível concluir que o projeto, de modo geral, obteve sucesso. 
+
+%% Sobre o Curso
+O desenvolvimento desse projeto permitiu aplicar diversos conceitos e conhecimentos
+adquiridos durante o curso de Engenharia de Software. Entre eles, destacam-se a
+Arquitetura de Software, Requisitos de Software, Gerência e Configuração de Software
+e Testes de Software. No que diz respeito aos conceitos relativos à Arqtuitetura de
+Software estão presentes o uso de padrões de projeto (\textit{design patterns}), e
+conceitos de orientação a objetos, como herança e polimorfismo. O entendimento desses
+conceitos permitiu o avanço e desenvolvimento da arquitetura do \scarefault a ponto de
+produzi-lo para que tivesse o suficiente de extensibilidade para que pudesse ser classificado
+como \textit{framework}.
+
+Os conceitos aprendidos sobre  requisitos de software tiveram papel importante no início
+do projeto, na medida em que por meio deles foram estabelecidas metas para os
+ciclos de desenvolvimento. A Gerência e Configuração de Software permitiu a
+automatização de diversos elementos que exigiam tempo durante a produção,
+como a compilação do código e o levantamento do ambiente de desenvolvimento.
+
+
+%%Os Próximos passos
+Os autores observam que ainda há melhorias a serem feitas no \Scarefault. Algumas
+sugetões para trabalhos futuros são:
+
+\begin{description}
+\item[Desenvolver um interpretador próprio:] a seleção do \flexcpp e do \bisoncpp para
+auxílio desse trabalho se tornou correta. Isso porque o foco do trabalho foi o
+desenvolvimento do \framework voltado para geração de testes. Os autores decidiram
+por usar ferramentas que já forneceriam meios de interpretar a linguagem alvo para,
+assim, não terem que produzir esse interpretador. No entanto, o uso dessas
+dependências prova-se inviável no futuro, pois engessa o \framework no que diz
+respeito a interpretação de linguagens. Exige uma burocracia que deve ser evitada
+para que o \scarefault possa evoluir mais. Assim, é visto com bons olhos o
+desenvolvimento de um interpretador próprio que seja flexível e extensível, como
+parte do \textit{framework}.
+\item[Desenvolver \textit{hotspots} para geração de testes inválidos:] atualmente
+o \scarefault cobre testes com valores válidos. É interessante que haja também a
+possibilidade de gerar testes para valores inválidos também.
+\item[Produzir outras estratégias para geração de testes:] o \scarefault gera
+testes de caixa preta. Para isso, utiliza-se da estratégia de valores limites. A
+adição da possiblidade do uso de outras técnicas de derivação de testes caixa preta
+seria bem vinda. Além disso, seria bom que houve a possibilidade da geração
+de testes de caixa branca.
+\end{description}

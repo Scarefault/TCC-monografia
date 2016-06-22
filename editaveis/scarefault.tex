@@ -93,7 +93,7 @@ a cada caso de teste especificado pelo desenvolvedor, a partir dos
 comentários no código fonte.
 \item[	\textit{value\_generator}:] responsável por gerar valores randômicos
 para o desenvolvimento dos testes.
-\item[\textit{writer}:] responsável por escrever as informações da arquivo de
+\item[\textit{writer}:] responsável por escrever as informações do arquivo de
 teste, enviadas pelo \textsf{tester}. Para isso, ele cria o arquivo e
 escreve todas as informações a ele solicitadas.
 \end{description}
@@ -284,7 +284,7 @@ Para facilitar a compilação do \Scarefault, criou-se um \textsf{Makefile}
 responsável por fazer o \textit{build}. Isso se fez necessário porque a
 compilação dos arquivos-fonte exige um linha de comando extensa. Além disso,
 há algumas alterações fundamentais a serem feitas em determinados arquivos
-para que se faça a comunicação entre o \scanner e o \textsf{parser}.
+para que se faça a comunicação entre o \scanner e o \textit{parser}.
 
 \subsubsection{Explorando a Extensibilidade do \Scarefault}
 O \scarefault por si só não é uma aplicação. Ele precisa ter determinados pontos
@@ -364,7 +364,7 @@ programação passada, um coletor de dados apropriado.
 Com as alterações efetuadas pode-se usar o \parser implementado. O Código
 \ref{parser-in-use} demonstra o \parser em uso.
 
-\begin{lstlisting}[language=C++, label=parser-in-use, caption=\textsf{Parser} em uso]
+\begin{lstlisting}[language=C++, label=parser-in-use, caption=\textit{Parser} em uso]
 [...]
 
 std::ifstream target; (*@\label{line:parser-use-ifstream}@*)
@@ -436,8 +436,8 @@ pontos que há a extensão das funções do \textit{framework} por da adição d
 código, especificando a funcionalidade.
 \end{description}
 
-Assim sendo, a \lstinline|CollectorGrails| possui a mesma interface que as
-suas classes mães. O \framework abre como \textit{hotspot} a função
+Assim sendo, a \lstinline|CollectorGrails| possui a mesma interface que a
+sua classe mãe. O \framework abre como \textit{hotspot} a função
 membro \lstinline|void collect_data(char *, ...)|, que é a única função membro
 com escopo público. Qualquer classe que derive da \lstinline|CollectorBase| deve
 implementar essa função. Não é diferente para a \lstinline|CollectorGrails|. No
@@ -586,7 +586,6 @@ apresenta a dinâmica desse processo.
 \FloatBarrier
 \end{landscape}
 
-%REVISAR PARAGRAFO
 Nesse diagrama houve a diferenciação da ação tomada por um \textit{hotspots}, em vermelho, e um \textit{frozenspots}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, é definido parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. É criado, então, os casos de testes baseado nas informações coletadas e relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC| e ocorre a conclusão da coleta dos dados desse método.
 
 Com isso, a primeira parte para o uso do \scarefault está finalizada, ou seja, o \textit{framework} está preparado para coleta de dados. A segunda etapa é responsável pela produção dos casos de teste.
