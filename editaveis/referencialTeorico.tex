@@ -79,12 +79,12 @@ não sendo desejado - a inserção de defeitos no produto final \cite{trodo2009}
 Além disso, há o risco de se produzir algo que não foi solicitado, devido ao
 mau entendimento dos requisitos\cite{barbosaEtAl2009}. Esse conjunto de
 fatores fez surgir uma maior preocupação em relação à qualidade de software e,
-inclusive nesse contexto, é que há o advento da Engenharia de Software, com o
+inclusive nesse contexto, é que há o advento da engenharia de software, com o
 objetivo de produzir software com qualidade \cite{buenoCampelo2013}.
 
 Testes de software representam uma atividade que compõe o processo de
 verificação e validação de software. É uma das técnicas mais utilizadas no
-âmbito de garantia de confiabilidade de software. Em linhas gerais, é um
+âmbito de garantia de confiabilidade de software \cite{barbosaEtAl2009}. Em linhas gerais, é um
 trabalho de abordagem dinâmica sobre o código-fonte. Isso significa que há a
 exigência do funcionamento do software para que possa ser realizada essa
 atividade \cite{barbosaEtAl2009}. Essa análise dinâmica abre a possiblidade de
@@ -96,7 +96,7 @@ atividades de refatoração, manutenção e medição do software
 \indent Os testes podem ser classificados em \textbf{níveis}. Essa divisão
 refere-se ao nível de abstração dos testes. Quanto mais próximo do código,
 menos abstrato o nível do teste \cite{sommerville2007}. Os testes de software
-são divididos da seguinte forma, em ordem descrescente de abstração: testes de aceitação, testes de sistema, teste de integração e testes de unidade \cite{sommerville2007}. O \textit{framework} proposto auxiliará na criação de testes de unidade cuja finalidade é verificar o funcionamento de partes específicas e do código-fonte. Essa análise possibilita a verificação do código, de forma a identificar defeitos e mitigá-los \cite{sommerville2007}.
+são divididos da seguinte forma, em ordem descrescente de abstração: testes de aceitação, testes de sistema, teste de integração e testes de unidade \cite{sommerville2007}. O \textit{framework} proposto auxiliará na criação de testes de unidade, cuja finalidade é verificar o funcionamento de partes específicas e do código-fonte. Essa análise possibilita a verificação do código, de forma a identificar defeitos e mitigá-los \cite{sommerville2007}.
 
 %\begin{description}
 %\item[Testes de aceitação:] são testes cuja finalidade é garantir que as
@@ -131,17 +131,17 @@ necessidade de averiguação do código-fonte \cite{barbosaEtAl2009}.
 \begin{figure}[h]
   \centering
     \includegraphics[width=0.8\textwidth]{figuras/test_black_box.png}
-    \caption{Diagrama Representativo de testes de caixa-preta}
+    \caption{Diagrama representativo de testes de caixa-preta}
     \label{test_black_box}
 \end{figure}
 
 A Figura \ref{test_black_box} representa um esquemático do funcionamento de um
-teste de caixa-preta: utiliza-se de dados de entrada no software e observa-se a
+teste de caixa-preta: utiliza-se de dados de entrada no software, e observa-se a
 correspondência, ou não, com as expectativas.
 \par
 \indent Ao fazer uso de testes de caixa-preta, os testes sob o ponto de vista
 do usuário são desenvolvidos, o que auxilia na observação de falhas nas
-especificações. Além disso, permite que os casos de teste possam ser produzidos
+especificações. Além disso, permite que os casos de teste possam ser produzidos,
 assim que as especificações estiverem prontas \cite{stf2010}. Essa abordagem de
 testes também possui pontos negativos, como a pequena quantidade de entradas
 que podem ser inseridas para testar o produto. Sem especificações claras,
@@ -166,11 +166,11 @@ técnica de classes de equivalência divide as entradas do domínio do software 
 classes. Essas classes devem ser derivadas a partir de um valor significativo
 para o domínio \cite{williams2006}.
 \item[Análise de valores limite:] um ponto crítico, e já observado por
-especialistas, é que grande parte dos defeitos no código são inseridos nos
+especialistas, é que grande parte dos defeitos no código é inserido nos
 limites de uma classe de equivalência. Isso permite a conclusão de que o
 principal foco no caso de teste deve ser sobre os valores limites. Entende-se
 como \textbf{limite} um valor que esteja imediatamente próximo ao valor de
-entrada significativo que divide o domínio em classes de equivalência. Sendo
+entrada significativo, que divide o domínio em classes de equivalência. Sendo
 assim, num contexto onde o valor significativo, para separar duas classes de
 equivalência, seja 50, possíveis valores limites seriam 49 e 51
 \cite{williams2006}.
@@ -233,12 +233,12 @@ valores significativos relativos a uma condição no fluxo \cite{myers2004}.
 vantagens da cobertura de decisão e de condição \cite{myers2004}.
 \end{description}
 \par
-\indent Utilizando-se de um grafo de fluxo de controle fica mais fácil a
+\indent Utilizando-se de um grafo de fluxo de controle, fica mais fácil a
 visualização e identificação dos caminhos a serem testados \cite{copeland2003}.
 \par
 \section{Reutilização de Software}
 O conceito de reutilização é antigo dentro do domínio da engenharia. Foi
-utilizado a bastante tempo por culturas antigas, como os egípios
+utilizado há bastante tempo por culturas antigas, como os egípios
 (\textit{design} das pirâmides) e os romanos (arcos na construção civil).
 A engenharia civil utiliza-se do conceito de reutilização de soluções e de
 componentes \cite{sutcliffe2002}. O uso do desenvolvimento baseado em
@@ -277,7 +277,7 @@ reutilização de software.
   \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{figuras/bibFrameworkDesignPattern.png}
-    \caption{Diferença entre Formas de Reutilização de Software}
+    \caption{Diferença entre formas de reutilização de software}
     \label{fig:bibFrameworkPattern}
   \end{figure}
 \par
@@ -288,18 +288,18 @@ componentes, classes e/ou funções, já prontos, da mesma forma que
 \textit{frameworks}. Entretanto, não há conexão entre eles. São independentes.
 Em \textit{frameworks}, as classes que o compõe possuem dependências já
 encravadas por seu projetista, de forma que o modelo de colaboração entre elas
-já está embutido. Enquanto que ao se utilizar de uma biblioteca o desenvolvedor
-deve criar por si só esse modelo de colaboração, caso necessário
+já está embutido. Enquanto que ao se utilizar de uma biblioteca, o desenvolvedor
+deve criar, por si só, esse modelo de colaboração, caso necessário
 \cite{barretoJunior2006}.
 \par
 \indent \textit{Frameworks}, em contra ponto às bibliotecas de classe, são
 responsáveis por fazer chamadas ao código da aplicação a qual está vinculado.
-A esse tipo de relação dá-se o nome de \textit{Hollywood Principle}
+A esse tipo de relação, dá-se o nome de \textit{Hollywood Principle}
 (\textit{"don't call us, we'll call you"}) \cite{sauve2006}.
 \par
 \indent Outra diferença entre \textit{frameworks}, bibliotecas e
-\textit{design patterns} é que no  primeiro caso é prevista a justaposição de
-conhecimento de domínio, são mais especilizados. Enquanto que nos demais casos,
+\textit{design patterns} é que, no  primeiro caso, é prevista a justaposição de
+conhecimento de domínio, são mais especilizados. Enquanto que, nos demais casos,
 não é previsto isso \cite{sauve2006}.
 \par
 \indent A Figura  \ref{fig:bibFrameworkPattern} também evidencia algumas
@@ -310,7 +310,7 @@ característica de reusabilidade a nível de código, os \textit{design patterns
 fazem-no exclusivamente a nível de abstração. \textit{Design pattern} é uma
 ideia, um conceito capaz de abstrair uma solução padrão para um problema já
 conhecido. \textit{Frameworks} são abstrações de uma solução para um domínio de
-problema materializadas a nível de código \cite{sauve2006}. Outra diferença a
+problema, materializadas a nível de código \cite{sauve2006}. Outra diferença a
 ser citada é que \textit{design pattern} são elementos de software menores que
 \textit{frameworks}. Normalmente, há uma relação de parte e todo, onde o todo é
 o \textit{framework} e as partes são os \textit{design patterns}, e essa
@@ -331,7 +331,7 @@ auto-suficientes e abstraem um conjunto de funções comuns a um conceito, como
 por exemplo, bibliotecas de \textit{strings}, funções matemáticas, manipulação
 de imagens, algoritmos de ordenação e manipulação de estruturas de dados. Essas
 características concedem ao programador a facilidade de escrever códigos
-menores e modularizados, garantindo maior legibilidade e manutenabilidade do
+menores e modularizados, garantindo maior legibilidade e manutenibilidade do
 código \cite{simsek2004}.
 \par
 \indent As Bibliotecas podem ser classificadas como \textbf{bibliotecas estáticas}
@@ -353,7 +353,7 @@ O conceito de \textit{Design patterns} está relacionado ao de arquitetura de
 software. Por esse motivo, é importante entender o que é arquitetura de software
 e qual sua importância no desenvolvimento de aplicações. Há muitas formas de
 definir arquitetura de software. Em uma discussão de alto nível, pode-se dizer
-que arquitetura de software são os formatos e estruturas de uma aplicação de
+que arquitetura de software são os formatos e as estruturas de uma aplicação de
 software. Já em uma visão de mais baixo nível, pode-se afirmar que arquitetura
 de software diz respeito aos módulos da aplicação e suas interconexões, como se
 relacionam \cite{martin2000}. Um cuidado que projetistas procuram ter com a
@@ -391,12 +391,12 @@ elegante para um problema específico. São formados por quatro elementos: \text
 \textbf{problema associado}, \textbf{a solução} e as \textbf{consequências}.
 \begin{description}
 \item[Nome:] normalmente é fomado por uma ou duas palavras capazes de invocar
-tanto o problema a ser atacado e sua solução, bem como as consenquências relativas
+tanto o problema a ser tratado e sua solução, bem como as consenquências relativas
 ao \textit{desgin pattern}. Nomear um \textit{design pattern}, de maneira correta,
 é importante, na medida em que permite a comunicação fácil entre os desenvolvedores.
 Permite a referência a um arcabouço de conhecimento e o entendimento entre as
 partes da conversa de forma simples \cite{martin2000}.
-\item[Problema:] é a descrição de quando deve-se aplicar o \textit{design pattern}.
+\item[Problema:] é a descrição de quando se deve aplicar o \textit{design pattern}.
 Portanto, em qual circunstância deve-se utilizá-lo, explicando o problema e o contexto.
 É possível ainda listar condições que devem ser observadas para que faça sentido a
 aplicação do \textit{design pattern} \cite{martin2000}.
@@ -405,7 +405,7 @@ apontando suas responsabilidades, estruturas e relacionamentos. É importante
 ressaltar que a solução não deve descrever em detalhes a implementação, e sim a
 abstração, o conceito por trás da solução. Isso se deve ao fato de que a solução
 pode ser aplicada a diferentes situações, variando inclusive a linguagem de
-programação a ser utilizada \cite{martin2000}.
+programação utilizada \cite{martin2000}.
 \item[Consequência:] são os resultados da aplicação do \textit{design pattern}
 ao projeto. Isso envolve a descrição dos benefícios e e os custos do uso do padrão.
 Demonstra os impactos à flexibilidade, extensibilidade do sistema e tantas outras
@@ -416,9 +416,7 @@ padrão \cite{martin2000}.
 \subsubsection{Classificação dos \textit{Design Patterns}}
 A classificação dos \textit{design patterns} vem da necessidade de organizá-los.
 Além disso, o entendimento do contexto associado a cada uma deles torna-se mais
-evidente a partir da classificação \cite{gammaEtAl1994}. Como este tema não é escopo
-desse trabalho, será abordada uma visão geral sobre a classificação dos
-\textit{design patterns}, sem muitos detalhes. Os \textit{design patterns}
+evidente a partir da classificação \cite{gammaEtAl1994}. Os \textit{design patterns}
 podem ser classificados entre: \textbf{padrões criacionais},
 \textbf{padrões estruturais} e \textbf{padrões comportamentais}:
 \subsubsubsection{Padrões Criacionais}
@@ -467,8 +465,8 @@ problema dentro do domínio englobado pelo \textit{framework} \cite{barretoJunio
 \indent Dentre as características de um \textit{framework}, podem ser destacadas
 \cite{sauve2006}:
 \begin{itemize}
-\item Provê solução para problemas com um mesmo domínio.
-\item Possui arquitetura baseada em classes e interfaces que abstraem o domínio.
+\item Provê solução para problemas com um mesmo domínio;
+\item Possui arquitetura baseada em classes e interfaces que abstraem o domínio;
 \item É flexível e extensível.
 \end{itemize}
 \par
@@ -478,9 +476,9 @@ As vantagens que podem ser citadas para o \textbf{uso} de \textit{frameworks} s�
 \begin{itemize}
 \item Redução de custos e tempo, na medida em que desenvolvedores passam a
 agregar valor, ao invés de "reinventar a roda". Além disso, há redução em termos
-de manutenção de código, pois o \textit{framework} é uma peça confiável.
+de manutenção de código, pois o \textit{framework} é uma peça confiável;
 \item Há um aumento da consistência entre as aplicações e compatibilidade, caso o
-\textit{framework} seja usado.
+\textit{framework} seja usado;
 \item O conhecimento dos especialistas no domínio relativo ao \textit{framework}
 fica empacotado, dessa forma, não há o risco de perda de conhecimento em uma eventual
 saída de profissionais. A isso dá-se o nome de \textit{Strategic Asset Building},
@@ -492,20 +490,20 @@ As desvantagens em um \textit{framework} concentram-se no período de
 \cite{sauve2006}:
 \begin{itemize}
 \item A construção de \textit{framewoks} exige planejamento e esforço. São
-elementos complexos.
-\item Os benefícios advindos de um \textit{framework} são sentidos a longo prazo.
+elementos complexos;
+\item Os benefícios advindos de um \textit{framework} são sentidos a longo prazo;
 \item O uso de \textit{frameworks} em empresas exige modificação nos processos de
 desenvolvimento, o que custa dinheiro e tempo.
 \end{itemize}
 \par
 
 \subsubsection{Categorias de \textit{Frameworks}}
-As formas comumente utilizadas para classificar-se \textit{frameworks} são pelo
+As formas comumente utilizadas para,se classificar \textit{frameworks} são pelo
 modo como eles foram projetados para serem utilizados e pelo tipo de conhecimento
 encapsulado por eles.
 
 \subsubsubsection{Classificação por Modo de Uso}
-Essa classificação é utilizada com o intuito de evidenciar a forma com que o
+Essa classificação é utilizada com o intuito de evidenciar a forma como o
 \textit{framework} é utilizado.
 \begin{description}
 \item[\textit{Inheritance-focused}:] conhecido também como \textit{white-box} ou
@@ -515,7 +513,7 @@ do recurso de \textbf{herança}. Assim, pode-se utilizar sub-classes e
 sobreescrita de métodos (ou funções-membro) para aplicar as alterações necessárias
 \cite{sauve2006}.
 \item[\textit{Composition-focused}:] chamada de \textit{black-box} ou \textit{data-driven}.
-Nesse tipo de \textit{framework}  não é possível a alteração, apenas o uso das
+Nesse tipo de \textit{framework}, não é possível a alteração, apenas o uso das
 funcionalidades já fornecidas. Como não há acesso ao código do \textit{framework},
 utiliza-se de interfaces, as quais são providas pelo \textit{framework} \cite{sauve2006}.
 \item[Híbridos:] a maioria dos \textit{frameworks} é híbrida, contendo uma
@@ -529,7 +527,7 @@ encapsulado, e de que forma o \textit{framework} pode auxiliar o desenvolvedor.
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{figuras/frameworkhorizontalvertical.png}
-    \caption{Comparativo entre \textit{Framework} Horizontal e Vertical}
+    \caption{Comparativo entre \textit{framework} horizontal e vertical}
     \label{fig:frameworkhorizontalvertical}
   \end{figure}
 \par
@@ -559,7 +557,7 @@ e de código-fonte do software \cite{fantinatoEtAl2004}. Essa falta de sincronia
 ocorre por diversos fatores, dentre eles a falta de tempo e de qualificação
 técnica dos envolvidos \cite{fantinatoEtAl2004}.
 \par
-\indent Nesse contexto, o uso de ferramentas, e outras abordagens de automação
+\indent Nesse contexto, o uso de ferramentas e outras abordagens de automação
 de testes de software vêm se tornando medidas bem vistas para amenizar o problema
 \cite{fantinatoEtAl2004}. Em essência, a automação de testes de software é a prática
 de criar, normalmente via \textit{scripts}, meios do computador executar a tarefa
@@ -575,7 +573,7 @@ são: \textbf{\textit{Record/Playback}}, \textbf{\textit{script programming}},
 Em essência, a técnica de \textit{Record/Playback} consiste em repetir, de forma
 automática, um teste executado sobre a interface gráfica. As ações produzidas
 são gravadas pelo usuário e transcritas para um \textit{script}. A partir desse
-\textit{script} pode-se repetir as ações do usuário sempre que necessário. Assim,
+\textit{script}, pode-se repetir as ações do usuário sempre que necessário. Assim,
 testa-se a aplicação utilizando-se das ações anteriormente bem sucedidas. Caso
 alguma das ações tenha insucesso, significa que algo foi quebrado. Os \textit{scripts}
 armazenam não apenas o procedimento de teste, mas também os dados utilizados pelo
@@ -600,10 +598,10 @@ diversas cópias que contemplem ações não executadas \cite{kent2007}.
 de gerar grandes quantidades de \textit{scripts} \cite{fantinatoEtAl2004}.
 \subsubsection{\textit{Data-driven}}
 Também conhecida como técnica orientada a dados. Nessa abordagem, que é um
-aprimoramento da técnica de \textit{script programming}, dá-se foco maior ao
+aprimoramento da técnica de \textit{script programming}, dá-se foco maior aos
 dados de teste utilizados em cada \textit{script}. Faz-se a extração desses
 dados dos \textit{scripts}, mantendo-os armazenados em outro arquivo. Assim,
-apenas os procedimentos - lógica de execução - e as ações de teste escritos nos
+apenas os procedimentos - lógica de execução - e as ações de testes escritos nos
 \textit{scripts} permanecem. Dessa maneira, os \textit{scripts} devem acessar
 os arquivos contendo os dados de teste para que haja a execução correta dos
 testes \cite{kent2007}.
@@ -611,22 +609,22 @@ testes \cite{kent2007}.
 \indent Isto posto, observam-se algumas vantagens do uso dessa técnica: maior
 abstração dos testes, permitindo que haja o trabalho tanto do projetista de
 testes quanto do implementador, sem que haja preocupação de um nível de abstração
-com o outro. Enquanto o projetista visa a seleção dos melhores dados para o teste
+com o outro. Enquanto o projetista visa a seleção dos melhores dados para o teste,
  o implementador prepara os \textit{scripts}. A facilidade em generalizar os
  \textit{scripts} e alterar os dados de teste pode ser vista como outra vantagem
- dessa técnica. Permite maior reutilização e manutenabilidade dos \textit{scripts}
+ dessa técnica. Permite maior reutilização e manutenibilidade dos \textit{scripts}
  \cite{fantinatoEtAl2004}.
 \subsubsection{\textit{Keyword-driven}}
 Por meio dessa técnica, pretende-se realizar a extração da lógica
-(os procedimentos), de teste dos \textit{scripts}, e mantendo-os armazenados em
-outro arquivo. A partir do arquivo de procedimentos é que os \textit{scripts}
+(os procedimentos), de teste dos \textit{scripts}, mantendo-os armazenados em
+outro arquivo. A partir do arquivo de procedimentos, os \textit{scripts}
 retiram a lógica para efetuar as ações determinadas \cite{kent2007}.
 \par
 \indent Essa abordagem facilita a adição, a remoção ou a alteração dos passos de
 execução de algum teste \cite{fantinatoEtAl2004}.
 \section{Resumo do Capítulo}
 O capítulo abordou temas relevantes para o aprofundamento do conhecimento
-relativo a este trabalho de conclusão de curso. Foi tratado os níveis e classificação dos testes de software, citando técnicas de derivação de casos de testes. Abordou-se também sobre a reutilização de software, abrangendo
+relativo ao presente trabalho de conclusão de curso. Foram tratados os níveis e classificação dos testes de software, citando técnicas de derivação de casos de testes. Abordou-se também sobre a reutilização de software, abrangendo
 algumas das maneiras mais comuns de alcançar isso, como o uso de bibliotecas de
 classes, \textit{design patterns} e \textit{frameworks}. Por fim, há uma seção sobre
 a Geração de Testes, que observa contemporaneidade do assunto, na medida em que
