@@ -90,7 +90,7 @@ Flexc++ é um analisador léxico escrito por Frank B. Brokken, gerente de segura
 \subsection{Como Executar o Flexc++}
 
 Sua execução se dá pelo comando:
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex1, caption=Comando para Execução do Flexc++]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex1, caption=Comando para execução do flexc++]
  flexc++ [opções] rules-file
 \end{lstlisting}
 
@@ -112,7 +112,7 @@ O arquivo pode ser chamado de qualquer forma, no entanto, sua extensão deve ser
 
 O arquivo deve possuir duas seções: \textbf{seção de definições} e \textbf{seção de regras}. Essas seções devem estar estruturadas da seguinte forma:
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex2, caption=Corpo do Arquivo do Flec++]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex2, caption=Corpo do arquivo do flexc++]
 seção de definições
 %%
 seção de regras
@@ -124,7 +124,7 @@ seção de regras
 
 A seção de definições é onde deve-se definir, por meio de expressões regulares, o que será avaliado e como será identificado pelo analisador léxico. A seção deve seguir o padrão sendo o nome do identificador seguido da \textit{regex}. Segue o exemplo de como ficaria:
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex3, caption=Seção de Definições]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex3, caption=Seção de definições]
 
 DIGIT      [0-9]
 INTEGER    {DIGIT}
@@ -139,7 +139,7 @@ LITERAL    \"[a-zA-Z0-9][a-zA-Z0-9].*\"
 
 A seção de regras é onde deve-se explicitar o que deve ser feito pelo analisador após a identificação dos padrões no texto. A seção deve seguir o seguinte padrão: \textit{padrão    ação}. Ficaria conforme exemplo abaixo:
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex4, caption=Seção de Regras]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex4, caption=Seção de regras]
 %%
 LITERAL    { cout << "Hello World!"; }
 \end{lstlisting}
@@ -151,26 +151,26 @@ Para executar a compilação utilizando o Flexc++, supondo possuir um arquivo de
 \item Compilar o arquivo de entrada com o Flexc++
 
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex5, caption=Comando para Compilar Flexc++]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex5, caption=Comando para compilar flexc++]
  flexc++ flexcpp.l
 \end{lstlisting}
 
 \item Com isso, serão gerados alguns arquivos. Deve-se alterar a extensão do arquivo lex.ccpara lex.cpp
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex6, caption=Comando para Alterar Extensão dos Arquivos]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex6, caption=Comando para alterar extensão dos arquivos]
 mv lex.cc lex.cpp
 \end{lstlisting}
 
 \item Agora, supondo que o arquivo que utilizará o analisador léxico chama-se analizer.cpp. Assim, para compilar o programa deve-se:
 
-\begin{lstlisting}[language=c, label=apendiceCodigoFlex7, caption=Compilar o Programa]
+\begin{lstlisting}[language=c, label=apendiceCodigoFlex7, caption=Compilar o programa]
 g++ -o [nome_arquivo_saida] analizer.cpp lex.cpp
 \end{lstlisting}
 \end{enumerate}
 
 \par 
 \indent Pronto! Agora você possui um programa analisador léxico chamado analizer. Para executar use:
-\begin{lstlisting}[language=make, label=apendiceCodigoFlex8, caption=Executanto o Programa]
+\begin{lstlisting}[language=make, label=apendiceCodigoFlex8, caption=Executanto o programa]
 ./analizer
 \end{lstlisting}
 
@@ -187,7 +187,7 @@ Bisonc++ é um gerador de parsers capaz de converter uma gramática de context l
 \subsection{Como Executar o Bisonc++}
 Sua execução se dá pelo comando:
 
-\begin{lstlisting}[language=c, caption=Comando para Executar Bisonc++]
+\begin{lstlisting}[language=c, caption=Comando para executar bisonc++]
 bisonc++ [opções] file
 \end{lstlisting}
 
@@ -205,7 +205,7 @@ A seguir, algumas informações sobre a estrutura do Arquivo de entrada para o B
 
 É formado por duas seções: \textbf{seção de diretivas} e \textbf{seção de regras gramaticais}. Essas seções devem estar estruturadas da seguinte forma:
 
-\begin{lstlisting}[language=c, caption=Corpo do Arquivo do Bisonc++]
+\begin{lstlisting}[language=c, caption=Corpo do arquivo do bisonc++]
 seção de diretivas
 %%
 seção de regras gramaticais
@@ -234,7 +234,7 @@ A opção \textit{<type>} é usada quando deseja-se especificar o tipo que será
 \subsubsubsection{Seção de Regras Gramaticas}
 De forma geral, uma regra gramatical é definida da seguinte forma:
 
-\begin{lstlisting}[language=c,  caption=Definição de Regra Gramatical]
+\begin{lstlisting}[language=c,  caption=Definição de regra gramatical]
 result:
   components
 ;
@@ -242,7 +242,7 @@ result:
 
 \par
 \indent Onde \textit{result} é o símbolo não-terminal que a regra descreve. Por sua vez,  \textit{components} são vários símbolos terminais e não-terminais que são postos em conjunto, formando a regra. Um exemplo:
-\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical]
+\begin{lstlisting}[language=c,  caption=Exemplo de regra gramatical]
 expression:
   expression '+' expression
 ;
@@ -250,7 +250,7 @@ expression:
 
 \par 
 \indent Pode-se também determinar ações para cada símbolo, terminal ou não-terminal, por meio de código em C++:
-\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando C++]
+\begin{lstlisting}[language=c,  caption=Exemplo de regra gramatical utilizando C++]
 expression:
   expression '+' expression {
     C++ statements
@@ -261,7 +261,7 @@ expression:
 \par 
 \indent Pode-se criar múltiplas regras para o mesmo\textit{result}:
 
-\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando Múltiplas Regras]
+\begin{lstlisting}[language=c,  caption=Exemplo de regra gramatical utilizando múltiplas regras]
 result:
   rule1-components {
     C++ statements
@@ -278,7 +278,7 @@ result:
 \par 
 \indent \textit{Regras Recursivas:} é quando o result não-terminal aparece também do lado direto de um componente desse mesmo \textit{result}. Praticamente, todas as regras no Bisonc++ precisam ser recursivas. Há também como utilizar a recursão pelo lado esquerdo. Inclusive é a forma correta. Outra forme possível é fazer a recursividade indireta. Essa pode ocorrer da seguinte forma:
 
-\begin{lstlisting}[language=c,  caption=Exemplo de Regra Gramatical Utilizando Recursividade]
+\begin{lstlisting}[language=c,  caption=Exemplo de regra gramatical utilizando recursividade]
 expr:     
   primary '+' primary
 |
@@ -294,7 +294,7 @@ primary:
 
 \subsection{Compilando o Bisonc++}
 Para executar a compilação utilizando o Bisonc++, supondo possuir um arquivo de entrada bisoncpp.y, deve-se compilar o arquivo de entrada com o Bisonc++. Para isso, utiliza-se o seguinte comando:
-\begin{lstlisting}[language=c,  caption=Comando para Compilação do Bisonc++]
+\begin{lstlisting}[language=c,  caption=Comando para compilação do bisonc++]
 bisonc++ bisoncpp.y
 \end{lstlisting}
 
