@@ -1,22 +1,21 @@
 \chapter[Resultados]{Resultados}
-Este capítulo apresenta os resultados obtidos. Eles serão apresentados sendo
+Este capítulo apresenta os resultados obtidos. Eles serão apresentados, sendo
 correlacionando aos objetivos específicos, indicados na Seção \ref{objspec}.
-Para cada objetivo foi gerado uma seção neste capítulo.
+Para cada objetivo, foi gerado uma seção neste capítulo.
 
 \section{Identificação de Regras Gramaticais da Linguagem Alvo Inicial}
 A linguagem escolhida como alvo inicial do \textit{framework} desenvolvido
-neste trabalho foi o \textsf{Grails}. \textsf{Grails}, antigamente conhecido
-como \textsf{Groovy on Rails}, é um \textit{web framework} para plataforma Java
+neste trabalho foi a linguagem que orienta à programação na plataforma \textsf{Grails}. \textit{Grails} é um \textit{webframework} para plataforma Java
 \cite{grails2015}. Para melhor entender a sintaxe da linguagem de programação
 alvo, partiu-se da documentação oficial do \textsf{Groovy}, com o intuito de
-aprofundar-se o conhecimento sobre as regras gramaticais do alvo inicial do
+aprofundar o conhecimento sobre as regras gramaticais do alvo inicial do
 \textit{framework}.
 
-Para a identificação das regras gramaticias foram selecionadas duas ferramentas,
+Para a identificação das regras gramaticias, foram selecionadas duas ferramentas,
 bastante utilizadas em contextos de desenvolvimento de compiladores e
-\textit{parsers}: \textsf{Flexc++} e \textsf{Bisonc++}. Ambas as ferramentas, \textsf{Flexc++} e \textsf{Bisonc++} foram desenvolvidas por Frank B. Brokken, gerente de segurança em TI e conferencista na \textit{University of Groningen}, Holanda.
+\textit{parsers}: \textsf{Flexc++} e \textsf{Bisonc++}. Ambas as ferramentas, \textsf{Flexc++} e \textsf{Bisonc++}, foram desenvolvidas por Frank B. Brokken, gerente de segurança em TI e conferencista na \textit{University of Groningen}, Holanda.
 
-A primeira ferramenta foi utilizada para definir \textit{scanners}, cujo propósito é a identificação de padrões léxicos em um arquivo de texto. Esses padrões foram definidos a partir de \textit{regex}, na primeira seção do arquivo fonte do Flexc++. Na próxima seção definiu-se o que acontece quando um dos padrões é identificado. No Código \ref{fragflexcpp} demonstra-se um fragmento do arquivo produzido para a execução do \textsf{Flexc++}.
+A primeira ferramenta foi utilizada para definir \textit{scanners}, cujo propósito é a identificação de padrões léxicos em um arquivo de texto. Esses padrões foram definidos a partir de \textit{regex}, na primeira seção do arquivo fonte do Flexc++. Na próxima seção, definiu-se o que acontece quando um dos padrões é identificado. No Código \ref{fragflexcpp}, demonstra-se um fragmento do arquivo produzido para a execução do \textsf{Flexc++}.
 
 \begin{lstlisting}[language=C++, label=fragflexcpp, caption=Fragmento do código fonte para o \flexcpp]
 TRUE    true (*@\label{fragflexcpp1}@*)
@@ -40,7 +39,7 @@ Observa-se no Código \ref{fragflexcpp}, entre as linhas \ref{fragflexcpp12} e \
 define-se um padrão léxico a ser encontrado no texto linha (\ref{fragflexcpp12}) e
 a ação a ser executada para aquele padrão. No caso exemplificado, o
 padrão a ser encontrado é a palavra \textsf{class}. Assim, quando o Flexc++
-identifica essa palavra ele armazena o resutado da comparação entre a palavra em
+identifica essa palavra, ele armazena o resutado da comparação entre a palavra em
 análise e o padrão definido (linha \ref{fragflexcpp13}). Caso haja correspondência o
 Flexc++ retorna um \textit{token} definido no arquivo gerado pelo
 \textsf{Bisonc++} (linha \ref{fragflexcpp14}).
@@ -54,7 +53,7 @@ definir os padrões de identificação de \textit{strings} e comentários do alv
 O Código \ref{miniscanner} apresenta o \textit{mini scanner} definido para
 identificação de \textit{strings}.
 
-\begin{lstlisting}[language=C++, label=miniscanner, caption=Implementação do Mini scanner de Strings]
+\begin{lstlisting}[language=C++, label=miniscanner, caption=Implementação do mini scanner de strings]
 // Condição inicial para o mini scanner
 "\'\'\'" |
 "\"\"\"" {
@@ -130,14 +129,14 @@ class_definition: (*@\label{fragbisoncpp14}@*)
 ;
 \end{lstlisting}
 
-Como dito anteriormente, na primeira parte do arquivo foram utilizadas algumas
+Como dito anteriormente, na primeira parte do arquivo, foram utilizadas algumas
 diretivas do \bisoncpp que forneceram opções úteis para o desenvolvimento do
 \parser e, consequentemente, da identificação das regras gramaticais. Das
-diretivas apresentas entre as linhas \ref{fragbisoncpp1} e
+diretivas apresentas, entre as linhas \ref{fragbisoncpp1} e
 \ref{fragbisoncpp8}, as que merecem menção são a da linha
-\ref{fragbisoncpp1}, que indica o \scanner que foi utilizado,
+\ref{fragbisoncpp1}, que indica o \scanner que foi utilizado;
 a \ref{fragbisoncpp2}, que indica de onde serão lidas as palavras identificadas
-pelo \textit{scanner}, e a linha \ref{fragbisoncpp8}, que inclui um outro
+pelo \textit{scanner}, e a linha \ref{fragbisoncpp8}, que inclui outro
 arquivo contendo os \tokens utilizados na construção da gramática.
 
 Entre as linhas \ref{fragbisoncpp14} e \ref{fragbisoncpp19} do Código
@@ -147,12 +146,11 @@ gera a adição de um novo símbolo não terminal, chamado
 \lstinline|class_definition|. Essa nova regra possui três definições possíveis,
 listadas nas linhas \ref{fragbisoncpp15}, \ref{fragbisoncpp18} e
 \ref{fragbisoncpp19}. É importante observar que as definições de regras no
-\bisoncpp são recursivas. Dessa forma, definiu-se uma definição base para a
+\bisoncpp são recursivas. Dessa forma, estabeleceu-se uma definição base para a
 \lstinline|class_definition| que foi reutilizada nas outras duas possibilidades.
 As linhas \ref{fragbisoncpp16} e \ref{fragbisoncpp17} são as ações que foram
 implementandas para serem executadas quando essa regra for identificada.
-No caso, a linha \ref{fragbisoncpp16} captura o token e o atribui a uma \str,
-enquanto que a linha \ref{fragbisoncpp17} faz a coleta da
+No caso, a linha \ref{fragbisoncpp16} captura o \textit{token} e o atribui a uma \textit{string}, enquanto que a linha \ref{fragbisoncpp17} faz a coleta da
 palavra encontrada na segunda posição da regra. A coleta de dados foi explicada na
 seção anterior, sobre o \Scarefault.
 
@@ -160,16 +158,16 @@ seção anterior, sobre o \Scarefault.
 em C++.
 É necessário fazer a comunicação entre o analisador léxico, produzido pelo
 \textsf{Flexc++}, com o analisador sintático gerado pelo \textsf{Bisonc++}.
-Para isso, foi necessário a criação de um ponteiro dentro do analisador
+Para isso, foi necessária a criação de um ponteiro dentro do analisador
 léxico que apontasse para um atributo especial no analisador sintático.
 Assim, a comunicação entre ambos os módulos foi possível.
 
-No Código \ref{talk-FB-scannerh} apresentam-se as alterações feitas no
-arquivo \lstinline|Scanner.h|. Na linha \ref{scannerh11} foi adicionado um atributo,
+No Código \ref{talk-FB-scannerh}, apresentam-se as alterações feitas no
+arquivo \lstinline|Scanner.h|. Na linha \ref{scannerh11}, foi adicionado um atributo,
 do tipo ponteiro, com a finalidade de receber a localização de um atributo especial
-do \textit{parser}. Para atribuir valores a esse atributo foi definida uma
+do \textit{parser}. Para atribuir valores a esse atributo, foi definida uma
 função membro, linha \ref{scannerh7}, e sua implementação, linha \ref{scannerh14}.
-\begin{lstlisting}[language=C++, label=talk-FB-scannerh, caption=Alterações no Scanner.h para comunicação entre Analisador Léxico e Sintático]
+\begin{lstlisting}[language=C++, label=talk-FB-scannerh, caption=Alterações no Scanner.h para comunicação entre analisadores léxico e sintático]
 #include "../parser/Parserbase.h"
 
 class Scanner: public ScannerBase
@@ -189,14 +187,14 @@ inline void Scanner::setSval(Parser::STYPE__* d_val__) (*@\label{scannerh14}@*)
 }
 \end{lstlisting}
 
-No Código \ref{talk-FB-parserh} obseva-se as alterações feitas no arquivo
+No Código \ref{talk-FB-parserh}, são obsevadas as alterações feitas no arquivo
 \lstinline|Parser.h| para que houvesse a comunicação com o \lstinline|Scanner.h|.
-Na linha \ref{parserh6} declarou-se um objeto do tipo
+Na linha \ref{parserh6}, declarou-se um objeto do tipo
 \lstinline|Collector::CollectorBase *|, cuja função é explicada mais adiante.
-Na linha \ref{parserh7} é declarado o objeto responsável pelas mensagens de
-\textit{log}, enquanto que na linha \ref{parserh10} declarou-se um novo
+Na linha \ref{parserh7}, é declarado o objeto responsável pelas mensagens de
+\textit{log}, enquanto que na linha \ref{parserh10}, declarou-se um novo
 construtor para o Parser.
-\begin{lstlisting}[language=C++, label=talk-FB-parserh, caption=Alterações no Parser.h para comunicação entre Analisador Léxico e Sintático]
+\begin{lstlisting}[language=C++, label=talk-FB-parserh, caption=Alterações no Parser.h para comunicação entre analisadores léxico e sintático]
 #include "../scanner/Scanner.h"
 
 class Parser: public ParserBase
@@ -214,12 +212,12 @@ class Parser: public ParserBase
 };
 \end{lstlisting}
 
-No Código \ref{talk-FB-parserih} mostra-se a implementação do construtor.
+No Código \ref{talk-FB-parserih}, encontra-se a implementação do construtor.
 Permite-se, assim, ao objeto \lstinline|d_scanner| conhecer o endereço
-de \lstinline|d_val__|, garantindo a comunicação entre o analisador léxico e
+de \lstinline|d_val__|, garantindo a comunicação entre os analisadores léxico e
 sintático. Além disso, é nesse construtor que se instanciou o coletor de
 dados.
-\begin{lstlisting}[language=C++, label=talk-FB-parserih, caption=Alterações no Parser.ih para comunicação entre Analisador Léxico e Sintático]
+\begin{lstlisting}[language=C++, label=talk-FB-parserih, caption=Alterações no Parser.ih para comunicação entre analisadores léxico e sintático]
 #include "Parser.h"
 
 Parser::Parser(Collector::Language language,
@@ -234,22 +232,22 @@ Parser::Parser(Collector::Language language,
 [...]
 \end{lstlisting}
 
-Tendo as regras gramaticais sido analisadas e construídas fazendo-se uso
+Tendo as regras gramaticais analisadas e construídas, fazendo-se uso
 do \flexcpp e do \textsf{Bisonc++}, foram feitos diversos testes manuais
-de identificação da linguagem \grails como uso do \parser e do \scanner
+de identificação da linguagem base do \textit{Grails}, como uso do \parser e do \scanner
 gerados. Esses testes deram-se por meio da execução do \parser sobre um
-arquivo fonte escrito em \textsf{Grails}. Quando a execução finalizava
-observava-se se algum erro de sintaxe era encontrado. Para tornar esse
+arquivo fonte escrito em \textsf{Grails}. Quando a execução finalizava,
+observava-se algum erro de sintaxe era encontrado. Para tornar esse
 tipo de teste de identificação das regras gramaticais melhores, foi
 implementado um \textit{script} que faz a comparação entre o arquivo de
 \textit{log} gerado e um arquivo contendo as mensagens esperadas após
-a execução do \parser utilizando três código fonte.
+a execução do \parser utilizando três códigos fonte.
 
 Mesmo sendo capaz de identificar grande porção das regras gramaticais da
-linguagem \textsf{Grails}, o \parser ainda não é capaz de identificar todas
+linguagem base \textsf{Grails}, o \parser ainda não é capaz de identificar todas
 as regras definidas para essa linguagem. Algumas especificidades, como alguns
 operadores, exemplo o \textsf{elvis}, e cadeias de expressões contidas
-em parênteses. Ao adicionar essas regras alguns conflitos do tipo
+em parênteses. Ao adicionar essas regras, alguns conflitos do tipo
 \lstinline|reduce/reduce| eram reportados, o que inviabilizava o
 prosseguimento da implementação. Foram efetuadas diversas pesquisas
 sobre como resolver esse tipo de conflito numa gramática, mas não foi
@@ -267,7 +265,7 @@ para o \textsf{Grails}.
 \end{figure}
 \FloatBarrier
 
-Como evidenciado na Figura \ref{identification-test} o \parser passou numa
+Como evidenciado na Figura \ref{identification-test} o \parser passou em uma
 bateria de mais de 500 tentativas de identificação de regras em diversas
 combinações.
 
