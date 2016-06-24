@@ -1,41 +1,41 @@
 \chapter[Scarefault]{Scarefault}
-Neste capítulo será abordado o \Scarefault, o produto final desse
+Neste capítulo, será abordado o \Scarefault, o produto final desse
 trabalho. Este capítulo está dividido em seções. A primeira seção aborda
 uma visão geral do \Scarefault. A segunda seção faz uma análise da
-arquitetura do \framework e suas dependências. Na seção seguinte explana-se
+arquitetura do \framework e suas dependências. Na seção seguinte, explana-se
 a respeito da utilização do \Scarefault.
 
 \section{\Scarefault: Visão Geral}
 O \scarefault é um \framework que tem a intenção de gerar testes unitários
 de forma semiautomatizada. Para isso, ele necessita da intervenção do
 desenvolvedor que o utiliza por meio de breves especificações nos
-comentários de documentação. A partir dessas especificações o \scarefault
+comentários de documentação. A partir dessas especificações, o \scarefault
 coleta informações necessárias para a produção dos casos de teste e gera
 um arquivo contendo os testes solicitados. É importante ressaltar que,
 para esse trabalho, os testes gerados são apenas testes caixa preta.
 
-O \framework se propõe em permitir a acoplagem de diferentes linguagens
+O \framework propõe-se em permitir a acoplagem de diferentes linguagens
 de programação. Para isso, há a necessidade da construção de um \parser
 que identifique a sintaxe da linguagem alvo por meio de duas
 ferramentas: \flexcpp e \textsf{Bisonc++}. Essas duas ferramentas são
 comuns em contextos de produção de compiladores. Com o \parser
-implementando o desenvolvedor poderá implementar as especificidades
+implementando, o desenvolvedor pode implementar as especificidades
 relacionadas aos testes da linguagem alvo, tendo como base o código
 oferecido pelo \Scarefault.
 
-O \scarefault foi escrito em \cpp e está licenciado dentro das condições
-da \textsf{GPLv3}. Todo o seu código fonte encontra-se em:
+O \scarefault foi escrito em \cpp, e está licenciado dentro das condições
+da \textsf{GPLv3}. Todo o código fonte desse framework encontra-se em:
 \url{https://github.com/Scarefault/scarefault}.
 
 \section{A Arquitetura do \scarefault} \label{sec-arq-scarefault}
 Essa seção evidencia os elementos da arquitetura do \Scarefault. Como
-ele foi desenhado, quais conceitos foram utilizados e como ele funciona.
-Em um primeiro momento são exploradas visões estáticas da arquitetura.
-A visão dinâmica da arquitetura é melhor evidenciada pela seção \ref{sec-util-scarefault}.
+ele foi desenhado, quais conceitos foram utilizados, e como ele funciona.
+Em um primeiro momento, são exploradas visões estáticas da arquitetura.
+A visão dinâmica da arquitetura é evidenciada pela seção \ref{sec-util-scarefault}.
 
 \subsection{Visão de Pacotes}
 Partindo-se de uma visão macroscópica, o \scarefault pode ser dividido em
-dois módulos básicos: o \textsf{identifier} e o \textsf{generator}. A Figura
+dois módulos básicos: o \textit{identifier} e o \textit{generator}. A Figura
 \ref{modules-scarefault} ilustra esses módulos básicos.
 
 \begin{figure}[h]
@@ -47,15 +47,15 @@ dois módulos básicos: o \textsf{identifier} e o \textsf{generator}. A Figura
 \FloatBarrier
 
 \begin{description}
-\item[identifier:] é responsável pela identificação das regras que regem
-a gramática da linguagem de programação alvo, bem como da coleta dos dados
+\item[\textit{identifier}:] é responsável pela identificação das regras que regem
+a gramática da linguagem de programação alvo, bem como pela coleta dos dados
 necessários para a produção dos casos de teste.
-\item[generator:] responsável pela geração dos casos de teste. A partir dos dados
+\item[\textit{generator}:] responsável pela geração dos casos de teste. A partir dos dados
 coletados das especificações do desenvolvedor e do próprio código fonte, esse
 módulo é capaz de gerar casos de teste.
 \end{description}
 
-Expandindo-se os módulos pode-se observar os pacotes associados a cada um deles
+Expandindo-se os módulos, podem ser observados os pacotes associados a cada um deles,
 e o relacionamento entre esses pacotes, como mostra a Figura
 \ref{expand-modules-scarefault-1}.
 
@@ -67,7 +67,7 @@ e o relacionamento entre esses pacotes, como mostra a Figura
 \end{figure}
 
 Como indicado na Figura \ref{expand-modules-scarefault-1}, os pacotes associados ao
-módulo \textsf{identifier} são:
+módulo \textit{identifier} são:
 \begin{description}
 \item[\textit{scanner}:] responsável pela análise léxica do arquivo contendo o código
 fonte em avaliação. As classes contidas nesse pacote são geradas pelo \flexcpp durante
@@ -78,12 +78,12 @@ encontrada são, essencialmente, ações de coleta de dados. As classes associad
 a esse pacote são geradas pelo \bisoncpp durante a compilação.
 \item[\textit{collector}:] responsável pela coleta de dados necessários para a
 criação de testes unitários.
-\item[\textit{file}:] responsável por guardar os dado coletados do código fonte.
-Dados como as dependências (\textit{libraries} importadas), métodos e classe
+\item[\textit{file}:] responsável por guardar os dados coletados do código fonte.
+Dados esses, tais como as dependências (\textit{libraries} importadas), métodos e classe
 do arquivo em análise.
 \end{description}
 
-Os pacotes associados ao módulo \textsf{generator}, como mostra a Figura
+Os pacotes associados ao módulo \textit{generator}, como mostra a Figura
 \ref{expand-modules-scarefault-1}, são:
 \begin{description}
 \item[	\textit{tester}:] responsável pela construção dos arquivos de teste. A partir
@@ -94,7 +94,7 @@ comentários no código fonte.
 \item[	\textit{value\_generator}:] responsável por gerar valores randômicos
 para o desenvolvimento dos testes.
 \item[\textit{writer}:] responsável por escrever as informações do arquivo de
-teste, enviadas pelo \textsf{tester}. Para isso, ele cria o arquivo e
+teste, enviadas pelo \textit{tester}. Para isso, ele cria o arquivo e
 escreve todas as informações a ele solicitadas.
 \end{description}
 
@@ -103,8 +103,8 @@ As Figuras \ref{modules-scarefault} e \ref{expand-modules-scarefault-1} mostram
 a visão de pacotes do \scarefault e como eles se relacionam, bem como a
 responsabilidade que cabe a cada um deles. Aprofundando-se mais, chega-se a uma
 visão das entidades associadas a cada pacote. A visão de quais são essas
-entidades e como elas se relacionam pode ser verificada pelo diagrama de 
-domínio, mostrado na Figura \ref{domain-diagram}.
+entidades e como elas se relacionam pode ser verificada pelo Modelo de 
+Domínio, mostrado na Figura \ref{domain-diagram}.
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{figuras/domain-diagram.png}
@@ -113,22 +113,22 @@ domínio, mostrado na Figura \ref{domain-diagram}.
 \end{figure}
 \FloatBarrier
 
-O diagrama de domínio na Figura \ref{domain-diagram} demonstra a relação
-entre as principais entidades que o \framework trabalha. O \textsf{Collector}
+O modelo de domínio na Figura \ref{domain-diagram} demonstra a relação
+entre as principais entidades que o \framework trabalha. O \textit{Collector}
 recolhe as  informações essencias para os testes a partir do
-\textsf{Parser} que, por sua vez, recebe um \textit{stream} de dados a partir
-do \textsf{Scanner}. Como dados importantes para a produção de testes pelo
-\scarefault tem-se métodos (\textsf{Method}) e seus parâmetros (\textsf{Param})
-e, para arquiteturas voltadas ao MVC, tem-se propriedades (\textsf{Propriety})
-e suas restrições (\textsf{Constraint}). Esses dados estão intimamente ligados
-ao arquivo em análise, portanto, são armazenados na entidade arquivo (\textsf{FileBase}).
-Há também a entidade \textsf{TestCase} que tem papel fundamental na produção
+\textit{Parser} que, por sua vez, recebe um \textit{stream} de dados a partir
+do \textit{Scanner}. Como dados importantes para a produção de testes pelo
+\scarefault, tem-se métodos (\textit{Method}) e seus parâmetros (\textit{Param})
+e, para arquiteturas voltadas ao MVC, tem-se propriedades (\textit{Propriety})
+e suas restrições (\textit{Constraint}). Esses dados estão intimamente ligados
+ao arquivo em análise, portanto, são armazenados na entidade arquivo (\textit{FileBase}).
+Há também a entidade \textit{TestCase} que tem papel fundamental na produção
 dos testes, pois carrega as informações dispostas pelo desenvolvedor sobre os
 testes a serem criados. Uma parte importante dos casos de teste são os
-argumentos (\textsf{Arg}) que devem ser passados ao método em avaliação durante o
+argumentos (\textit{Arg}) que devem ser passados ao método em avaliação durante o
 teste.
 
-Partindo-se do diagrama de domínio exposto na Figura \ref{domain-diagram}, pode-se
+Partindo-se do modelo de domínio exposto na Figura \ref{domain-diagram}, pode-se
 visualizar o diagrama de classe, mostrado na Figura \ref{class-diagram}.
 %\begin{landscape}
 \begin{figure}[h]
@@ -146,24 +146,23 @@ entidades do \textit{framework}, apresentadas na Figura \ref{domain-diagram},
 estão presentes e muitas delas passaram a ter um conjunto auxiliar de classes,
 de forma a permitir a sua adaptação ao contexto em que será inserida.
 
-Por meio da Figura \ref{class-diagram} pode-se identificar o uso de alguns
+Por meio da Figura \ref{class-diagram}, pode-se identificar o uso de alguns
 \textit{design patterns} de criação, com o intuito de permitir a
 extensibilidade do \framework e a sua facilidade de uso. Para esse fim,
 foram usados os conceitos do \textbf{\textit{builder pattern}} e
 \textbf{\textit{factory pattern}}.
 
 \subsubsection{\textit{Builder Pattern}}
-O uso do \textit{builder pattern} vem para solucionar um problema
-na criação de objetos complexos. Seu intuito é a separação do processo
+O uso do \textit{builder pattern} procurou colaborar com a criação de objetos complexos. Seu intuito é a separação do processo
 de construção da representação em si. Desse modo, é possível que o
 mesmo processo de construção sirva para diferentes representações
 \cite{gammaEtAl1994}.
 
-No desenvolvimento do \framework observou-se essa necessidade na
-criação de objetos \textsf{Testfile}. Essa entidade é diferente para
+No desenvolvimento do \textit{framework}, observou-se essa necessidade na
+criação de objetos \textit{Testfile}. Essa entidade é diferente para
 cada linguagem associada a ele. Não é possível manter uma mesma
 representação desse objeto, no entanto, o processo de criação de um
-\textsf{Testfile} é igual em todos os casos: escreve-se as
+\textit{Testfile} é igual em todos os casos: escreve-se as
 dependências da classe de teste, o cabeçalho da classe de teste,
 as ações iniciais para os testes (\textit{setup}),
 os casos de teste, as ações para depois de cada teste
@@ -173,6 +172,8 @@ Nesse sentido, viu-se a solução proposta pelo \textit{builder pattern}
 como saída para o problema dentro do contexto do desenvolvimento do
 \Scarefault. A Figura \ref{testfile-diagram} mostra como a solução
 foi desenhada.
+
+%Ver comentário
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{figuras/testfile-diagram.png}
@@ -181,35 +182,38 @@ foi desenhada.
 \end{figure}
 \FloatBarrier
 
-O objeto a ser construído é da classe \textsf{TestfileProduct}. Há
+O objeto a ser construído é da classe \textit{TestfileProduct}. Há
 diversas representações que esse objeto pode tomar, conforme a linguagem.
 No entanto, o processo de construção é o mesmo. Os passos desse processo são definidos
-pela classe \textsf{TestfileBuilder}. Essa classe é uma classe
-\textsf{virtual} (abstrata). Ela define uma interface que deve ser
+pela classe \textit{TestfileBuilder}. Essa classe é uma classe
+\textit{virtual} (abstrata). Ela define uma interface que deve ser
 implementada pelas suas classes filhas, afim de construir o objeto
-\textsf{TestfileProduct}. Dessa forma, garante-se que qualquer
-classe com a responsabilidade de construir um \textsf{TestfileProduct}
+\textit{TestfileProduct}. Dessa forma, garante-se que qualquer
+classe com a responsabilidade de construir um \textit{TestfileProduct}
 terá funções-membro que criem os elementos essenciais do produto. Com a garantia
 que os passos de construção estão implementados, pode-se fazer o processo de
-criação. Essa atividade é responsabilidade do \textsf{TesterDirector}. O
+criação. Essa atividade é responsabilidade do \textit{TesterDirector}. O
 método \lstinline|generate_testfile()| possui a definição do processo de
-construção, a partir dos passos estipulados pelo \textsf{TestfileBuilder}.
+construção, a partir dos passos estipulados pelo \textit{TestfileBuilder}.
 
 \subsubsection{\textit{Factory Pattern}} \label{subsec-factory-pattern}
-\textit{Facotry pattern} é uma solução pensada com o propósito de deixar a
+\textit{Factory pattern} é uma solução pensada com o propósito de deixar a
 instanciação de objetos de uma mesma família mais flexível. Através desse
-padrão  é possível instanciar um objeto sem expor a lógica dessa ação, bem
+padrão,  é possível instanciar um objeto sem expor a lógica dessa ação, bem
 como ser capaz de referenciar-se a novos objetos por uma interface comum
 \cite{gammaEtAl1994}.
 
-No construção do \scarefault deparou-se com a necessidade de flexibilizar
+No construção do \scarefault, deparou-se com a necessidade de flexibilizar
 a instanciação de objetos de coleta de dados. Isso fornece maior liberdade
 ao desenvolvedor usuário do \framework para criar suas próprias classes de
 coleta, que estarão relacionadas a uma determinada linguagem de programação
 e suas peculiaridades.
 
-Por esse motivo foi pensado no \textit{Factory pattern} como solução. A Figura
+Por esse motivo, foi pensado no \textit{Factory pattern} como solução. A Figura
 \ref{collector-diagram} mostra a solução desenhada para o \textit{framework}.
+
+%%ver comentário
+
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{figuras/collector-diagram.png}
@@ -219,28 +223,28 @@ Por esse motivo foi pensado no \textit{Factory pattern} como solução. A Figura
 \FloatBarrier
 
 A solução de \textit{factory pattern} desenvolvida utiliza-se de uma classe
-\textsf{virtual} denominada \textsf{CollectorBase}. Optou-se por uma classe
-desse tipo, ao invés de uma \textsf{virtual} pura (\textsf{interface}), pois
+\textsf{virtual} denominada \textit{CollectorBase}. Optou-se por uma classe
+desse tipo, ao invés de uma \textit{virtual} pura (\textit{interface}), pois
 imaginou-se em já deixar implementadas determinadas funções-membro auxiliares,
 preparadas para serem usadas pelo usuário. Essas funções-membro, embora já implementadas,
 são passíveis de sobreescrita, o que dá a possibilidade do desenvolvedor
 decidir criar as sua própria forma de coletar determinados elementos ou utilizar-se
-da já disponível.
+de uma já disponível.
 
 A única função-membro obrigatória de implementação para as classes derivadas da
-\textsf{CollectorBase} é a \lstinline|collect_data(char *, ...)|. Além disso, já
+\textit{CollectorBase} é a \lstinline|collect_data(char *, ...)|. Além disso, já
 há uma outra classe de coleta preparada para linguagens que se utilizem do padrão
-de projeto MVC: a \textsf{CollectorMVC}. Ela também extende a \textsf{CollectorBase},
+de projeto MVC: a \textit{CollectorMVC}. Ela também estende a \textit{CollectorBase},
 mas traz outras funções-membro auxiliares.
 
-A classe \textsf{CollectorFactory} é reponsável por esconder a lógica de instanciação
+A classe \textit{CollectorFactory} é reponsável por esconder a lógica de instanciação
 da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objeto
-\textsf{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
+\textit{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
 classe cliente.
 
 \section{A Utilização do \Scarefault} \label{sec-util-scarefault}
 A seção \ref{sec-arq-scarefault} apresentou a visão estática da arquitetura do
-\Scarefault. Nesta seção pretende-se mostrar a visão dinâmica, por meio
+\Scarefault. Nesta seção, pretende-se mostrar a visão dinâmica, por meio
 de explicações a partir do uso do \textit{framework}. A utilização do
 \scarefault pode ser dividida em dois objetivos: a adaptação
 do \textit{framework} para atender uma nova linguagem e a geração de testes unitários.
@@ -250,12 +254,14 @@ A adaptação do \scarefault para novas linguagens exige o uso de um ambiente
 específico de desenvolvimento, bem como o uso de janelas de extensibilidade
 do \textit{framework}, chamadas de \textit{hotspots}.
 
+
 \subsubsection{Usando o Ambiente de Desenvolvimento}
 Para auxiliar na customização do \textit{framework}, criou-se um ambiente
 virtual de forma a garantir a instalação das dependências necessárias do
-\Scarefault. Para levantar esse ambiente é necessário que o usuário instale as
+\Scarefault. Para levantar esse ambiente, é necessário que o usuário instale as
 versões mais recentes das seguintes ferramentas: 
 
+%%Especificar as versões
 \begin{description}
 \item[Git:] ferramenta de controle de versão;
 \item[VirtualBox:] ferramenta de virtualização de máquinas virtuais;
@@ -264,9 +270,9 @@ versões mais recentes das seguintes ferramentas:
 
 Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto
 e executar o comando responsável por criar o ambiente virtual com as configurações
-predefinidas. Nesse momento será instalado e configurado o \textsf{Flexc++},
+predefinidas. Nesse momento, será instalado e configurado o \textsf{Flexc++},
 \textsf{Bisonc++} e demais dependências. Por fim, deve-se acessar essa máquina
-virtual e então iniciar a customização no código do \Scarefault. O Código
+virtual, e então iniciar a customização no código do \Scarefault. O Código
 \ref{ambiente-virtual} apresenta as linhas de comando referentes aos passos citados:
 
 \begin{lstlisting}[language=bash, label=ambiente-virtual, caption=Levantamento do ambiente de desenvolvimento]
@@ -288,11 +294,13 @@ para que se faça a comunicação entre o \scanner e o \textit{parser}.
 
 \subsubsection{Explorando a Extensibilidade do \Scarefault}
 O \scarefault por si só não é uma aplicação. Ele precisa ter determinados pontos
-extendidos para que possa ser executado. Essencialmente, o \scarefault permite a
+estendidos para que possa ser executado. Essencialmente, o \scarefault permite a
 acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que
 isso ocorra. São eles: criação do agente de coleta de dados e do agente de
-construção de casos de teste. No entanto, para que se faça uso do \scarefault é
-necessário a adição de um \parser para a nova linguagem.
+construção de casos de teste. No entanto, para que se faça uso do \scarefault, é
+necessária a adição de um \parser para a nova linguagem.
+
+%Colocar versão do flex e bison 
 
 \subsubsubsection{Adição de um \parser para a nova linguagem}
 O \parser é desenvolvido utilizando-se o \textsf{Flexc++} e o \textsf{Bisonc++}. Para
@@ -303,14 +311,14 @@ respectivamente. O Apêndice B é um guia básico para o uso dessas ferramentas.
 Após a gramática da nova linguagem ter sido criada e compilada utilizando as ferramentas \textsf{Flexc++} e o \textsf{Bisonc++}, é gerado o \parser e \scanner em C++. Para prosseguimento do uso do \textit{framework} com a nova gramática, há a necessidade de
 uma série de alterações nos arquivos de código-fonte, tanto do \parser quanto do
 \scanner gerados. Algumas delas já são previstas no uso normal do \flexcpp e do
-\textsf{Bisonc++} para a comunicação das duas ferramentas. A seguir serão apresentados as alterações que objetivam o uso da gramática criada no \textit{framework}. Salienta-se a importância de replicar essas alterações no \parser e \scanner gerados para a nova linguagem. As alterações com o
+\textsf{Bisonc++} para a comunicação das duas ferramentas. A seguir, são apresentadas as alterações que objetivam o uso da gramática criada no \textit{framework}. Salienta-se a importância de replicar essas alterações no \parser e \scanner gerados para a nova linguagem. As alterações com o
 objetivo de gerar a comunicação entre as ferramentas são descritas no Capítulo de
 Resultados.  
 
 O Código \ref{changes-parser-scarefault} apresenta as alterações exigidas para
-o bom funcionamento do \scarefault efetuadas no arquivo \lstinline|Parser.h|. 
+o bom funcionamento do \scarefault, efetuadas no arquivo \lstinline|Parser.h|. 
 
-\begin{lstlisting}[language=C++, label=changes-parser-scarefault, caption=Alterações no \lstinline|Parser.h| para uso do \scarefault]
+\begin{lstlisting}[language=C++, label=changes-parser-scarefault, caption=Alterações no arquivo \lstinline|Parser.h| para uso do scarefault]
 class Parser: public ParserBase
 {
    Scanner d_scanner; (*@\label{line:parser-decl-scanner}@*)
@@ -361,7 +369,7 @@ instancia um objeto \lstinline|CollectorFactory| que é usado na linha
 \ref{line:parser-impl-collector} para instanciar, conforme a linguagem de
 programação passada, um coletor de dados apropriado.
 
-Com as alterações efetuadas pode-se usar o \parser implementado. O Código
+Com as alterações efetuadas, pode-se usar o \parser implementado. O Código
 \ref{parser-in-use} demonstra o \parser em uso.
 
 \begin{lstlisting}[language=C++, label=parser-in-use, caption=\textit{Parser} em uso]
@@ -395,19 +403,18 @@ o código fonte.
 
 \subsubsubsection{Criação do agente de coleta de dados}
 O \scarefault é um \framework que visa a geração de testes unitários, possibilitando
-o uso em diferentes linguagens de programação. Para que isso seja feito é necessário
+o uso em diferentes linguagens de programação. Para que isso seja feito, é necessário
 que haja a coleta dos dados a serem explorados para a criação dos testes unitários.
-Devido a essa necessidade criou-se a classe \lstinline|CollectorBase|. Essa classe,
+Devido a essa necessidade, criou-se a classe \lstinline|CollectorBase|. Essa classe,
 conforme exposto no Código \ref{changes-parser-scarefault}, é usada pelo \textit{parser}.
-A sua instanciação é feito segundo o Código \ref{changes-parser-impl-scarefault}. A seleção do \textsf{collector} ideal é realizada por meio de um objeto \lstinline|CollectorFactory|. Para explicar o que ocorre a partir desse ponto é preciso retomar a Figura
+Sua instanciação é feito segundo o Código \ref{changes-parser-impl-scarefault}. A seleção do \textsf{collector} ideal é realizada por meio de um objeto \lstinline|CollectorFactory|. Para explicar o que ocorre a partir desse ponto, é preciso retomar a Figura
 \ref{collector-diagram}, que traz o diagrama de classes representando o
-\textit{Factory Pattern} desenhado para a selecionar o \textsf{collector} em tempo
+\textit{Factory Pattern}, desenhado para a selecionar o \textit{collector} em tempo
 de execução.
 
-Para exemplificar o uso desse ponto de extensão foi utilizado o \textsf{Grails}, a linguagem
-alvo inicial do projeto, com o intuito de demonstrar o uso do \Scarefault. A Figura
+Para exemplificar o uso desse ponto de extensão, foi utilizado o \textsf{Grails}, com o intuito de demonstrar o uso do \Scarefault. A Figura
 \ref{collector-grails-class-diagram} traz o diagrama de classes para o
-\textit{Factory Pattern} extendido.
+\textit{Factory Pattern} estendido.
 \begin{figure}[h]
   \centering
     \includegraphics[width=\textwidth]{figuras/collector-grails-class-diagram.png}
@@ -419,20 +426,20 @@ alvo inicial do projeto, com o intuito de demonstrar o uso do \Scarefault. A Fig
 Na Figura \ref{collector-grails-class-diagram} observa-se que a classe
 \lstinline|CollectorBase|, em vermelho, é o ponto de extensão. Como já descrito
 na subseção \ref{subsec-factory-pattern}, há também uma classe, a \lstinline|CollectorMVC|,
-já disponível para extender-se, caso a linguagem alvo esteja presa
+já disponível para se estender, caso a linguagem alvo esteja acoplada
 arquiteturalmente ao padrão de projeto MVC. Dessa forma, cria-se uma classe
 derivada da \lstinline|CollectorMVC|, a \lstinline|CollectorGrails|.
 
-Devido a essa herança o \framework disponibiliza à nova classe derivada
-alguns benefícios. Pela Figura \ref{collector-grails-class-diagram} observa-se
+Devido a essa herança, o \framework disponibiliza, à nova classe derivada,
+alguns benefícios. Pela Figura \ref{collector-grails-class-diagram}, observa-se
 que há algumas funções marcadas como \textit{hotspots} e outras como 
 \textit{frozenspots}. Cabe a definição desses termos:
 
 \begin{description}
 \item[\textit{Frozenspots}:] são partes fixas do \textit{framework}. São as funções já
-implementadas e que se devem percamencer inalteradas. São comuns para qualquer linguagem alvo e auxiliam na adaptação do \textit{framework} para novas linguagens.
+implementadas e que devem percamencer inalteradas. São comuns para qualquer linguagem alvo e auxiliam na adaptação do \textit{framework} para novas linguagens.
 \item[	\textit{Hotspots}:] são as partes flexíveis do \textit{framework}. São nesses
-pontos que há a extensão das funções do \textit{framework} por da adição de
+pontos que há a extensão das funções do \textit{framework} por adição de
 código, especificando a funcionalidade.
 \end{description}
 
@@ -442,21 +449,21 @@ membro \lstinline|void collect_data(char *, ...)|, que é a única função memb
 com escopo público. Qualquer classe que derive da \lstinline|CollectorBase| deve
 implementar essa função. Não é diferente para a \lstinline|CollectorGrails|. No
 entanto, ela é derivada da \lstinline|CollectorMVC|, que já implementa essa
-função, de forma que a \lstinline|CollectorGrails| já está incenta de fazê-lo, mas
+função, de forma que a \lstinline|CollectorGrails| já está isenta de fazê-lo, mas
 não proibida. Caso o desenvolvedor queira criar sua própria versão da
-\lstinline|void collect_data(char *, ...)| ele pode cria-la. Para isso, ele conta
+\lstinline|void collect_data(char *, ...)| ele pode criá-la. Para isso, ele conta
 com algumas funções auxiliares já implementadas (\textit{frozenspots}), como a
 \lstinline|void collect_methods(std::vector<std::string>)|.
 
-Com a \lstinline|CollectorGrails| já implementada pode-se utilizar outro
+Com a \lstinline|CollectorGrails| já implementada, pode-se utilizar outro
 \textit{hotspot} do contexto da família dos \textit{collectors}: a
 \lstinline|CollectorFactory|. A Figura \ref{collector-grails-class-diagram}
 apresenta essa classe também como ponto de extensão, pois fazendo ajustes no
-método \lstinline|CollectorBase * get_collector(Language)| extende-se sua
-capacidade de seleção de coletores de dados. Um ajuste nesse ponto influencia
+método \lstinline|CollectorBase * get_collector(Language)| estende-se sua
+capacidade de seleção de coletores de dados. Um ajuste, nesse ponto, influencia
 em qual coletor será escolhido dentro do \textit{parser}.
 
-O Código \ref{get-collector-function} apresenta a alteração feita para extender-se
+O Código \ref{get-collector-function} apresenta a alteração feita para estender
 a \lstinline|CollectorBase * get_collector(Language)|.
 
 \begin{lstlisting}[language=C++, label=get-collector-function, caption=Implementação e extensão da \lstinline{get_collector(Language)}]
@@ -475,20 +482,20 @@ CollectorBase * CollectorFactory::get_collector( Collector::Language language ) 
   }
 \end{lstlisting}
 
-No Código \ref{get-collector-function} a linha \ref{line:getcolletor-language}
-mostra o cabeçalho da função. Nesse ponto é importante ressaltar o uso como
+No Código \ref{get-collector-function}, a linha \ref{line:getcolletor-language}
+mostra o cabeçalho da função. Nesse ponto, é importante ressaltar o uso como
 parâmetro da enumeração \lstinline|Language|. Ela é definida no \lstinline|namespace|
-\lstinline|Collector| para auxiliar o desenvolvedor. No caso exemplificado foi
-adicionado a essa enumeração a linguagem \textsf{Grails}. Na linha
+\lstinline|Collector| para auxiliar o desenvolvedor. No caso exemplificado, foi
+adicionado à enumeração a linguagem \textsf{Grails}. Na linha
 \ref{line:getcolletor-switch}, usa-se um \lstinline|switch| para, a partir do parâmetro
 \lstinline|language|, selecionar qual a linguagem. A linha
 \ref{line:getcollector-instancegrails} faz a instanciação de um objeto do tipo
-\lstinline|CollectorGrails| caso a linguagem seja o \textsf{Grails}. Para cada novo
-coletor adicionado um novo caso deve ser criado no \lstinline|switch|. Na linha
-\ref{line:getcollector-return} retorna-se a instância.
+\lstinline|CollectorGrails| caso a linguagem seja orientada pela linguagem base do \textsf{Grails}. Para cada novo
+coletor adicionado, um novo caso deve ser criado no \lstinline|switch|. Na linha
+\ref{line:getcollector-return}, retorna-se a instância.
 
-A Figura \ref{parser-instance-sequence-diagram} traz um diagrama de sequência para melhor
-visualização dos efeitos no \scarefault da instanciação de um objeto \lstinline|Parser|.
+A Figura \ref{parser-instance-sequence-diagram} traz um diagrama de sequência para melhorar
+visualização dos efeitos no \scarefault quando da instanciação de um objeto \lstinline|Parser|.
 Essa visão é interessante para observar o comportamento esperado da
 \lstinline|CollectorFactory|.
 \begin{landscape}
@@ -510,11 +517,11 @@ traz consigo outros dois objetos importantes em sua formação: uma instância d
 dos comentátios de documentação, e um \lstinline|FileBase|, que mantém as informações
 coletadas a partir do código fonte.
 
-Nesse momento o \lstinline|Parser| possui um agente de coleta de dados que atuará durante
-o processamento do arquivo com o código fonte a ser testado. Devido a sua instanciação
+Nesse momento, o \lstinline|Parser| possui um agente de coleta de dados que atuará durante
+o processamento do arquivo com o código fonte a ser testado. Devido à instanciação
 no construtor do \lstinline|Parser|, é possível usá-lo no arquivo que contém as regras
-gramaticais da linguagem alvo, nesse exemplo, o \textsf{Grails}. No Código
-\ref{collector-in-use} é possível observar como ocorre esse processo.
+gramaticais da linguagem alvo, nesse exemplo, a linguagem que orienta a programação na plataforma \textsf{Grails}. No Código
+\ref{collector-in-use}, é possível observar como ocorre esse processo.
 
 \begin{lstlisting}[language=C++, label=collector-in-use, caption=Agente coletor em uso no \parser]
 [...]
@@ -532,16 +539,15 @@ untyped_method_stmt: (*@\label{line:collectoruse-noterminal}@*)
 No Código \ref{collector-in-use}, a linha \ref{line:collectoruse-noterminal}
 apresenta a declaração de um novo símbolo não terminal da gramática, que é
 definido pela regra gramatical ditada na linha \ref{line:collectoruse-rule}.
-Como pode-se observar a regra no exemplo é a regra que rege a definição de
-métodos sem um tipo de retorno. As linhas \ref{line:collectoruse-id-token} e
+ Como pode ser observado, a regra ilustrada no exemplo, é a regra que rege a definição de métodos sem um tipo de retorno. As linhas \ref{line:collectoruse-id-token} e
 \ref{line:collectoruse-param-token} atribuem a \textit{strings} os valores
-identificados na segunda e quarta posições da regra, identificadas pelos
+identificados na segunda e na quarta posições da regra, identificadas pelos
 \textit{tokens} \lstinline|INDETIFIER| e \lstinline|param_list|.
 
-A linha \ref{line:collectoruse-collect-data} apresenta a uso do agente coletor
+A linha \ref{line:collectoruse-collect-data} apresenta o uso do agente coletor
 na definição da gramática. O operador \lstinline|->| é usado pois o objeto
 \lstinline|collector| é um ponteiro ao agente coletor. A sintaxe de \cpp exige
-que a referência a membros pertencentes a um objeto a partir de um ponteiro seja
+que a referência a membros pertencentes a um objeto, a partir de um ponteiro, seja
 feita por meio desse operador. A função \lstinline|void collect_data(char * format, ...)|
 recebe como parâmetro uma \str em \textit{c-style} e uma quantidade ilimitada de
 argumentos do tipo \str em \textit{c-style}. O primeiro parâmetro, \lstinline|format|, espera
@@ -549,10 +555,11 @@ uma \str que indique os tipos de dados que estão sendo coletados. A Tabela
 \ref{reference-format-collect-data} apresenta uma referência ao tipo de dado e
 o código a ser usado no parâmetro \lstinline|format|. No caso exemplificado,
 o argumento é \lstinline|"mp"|, indicando a passagem do nome do método e a
-lista de parâmetros desse método. Em seguida, lista-se os dados a serem coletados.
+lista de parâmetros desse método. Em seguida, são listados os dados a serem coletados.
 Isso é feito passando os itens declarados nas linhas
 \ref{line:collectoruse-id-token} e \ref{line:collectoruse-param-token}.
 
+%Quadro?
 \begin{table}[h]
 \centering
 \caption{Descrição das letras identificadoras e o respectivo tipo de dado a ser coletado}
@@ -568,13 +575,13 @@ p                             & Lista de Parâmetros          \\ \hline
 \end{table}
 
 É importante ressaltar que, embora já haja uma versão disponível da
-\lstinline|void collect_data(char *, ...)| para as classes derivadas da
+\lstinline|collect_data(char *, ...)| para as classes derivadas da
 \lstinline|CollectorMVC|, pode-se sobreescrevê-la. A Tabela
 \ref{reference-format-collect-data} é relativa à versão já disponibilizada
 pelo \textit{framework}. No caso, preferiu-se utilizar a já disponível.
 
-Ao utilizar-se a função \lstinline|void collect_data(char *, ...)| uma série
-de chamadas a outras funções são feitas. A Figura \ref{collect-data-sequence-diagram}
+Ao utilizar a função \lstinline|void collect_data(char *, ...)|, uma série,
+de chamadas a outras funções é feita. A Figura \ref{collect-data-sequence-diagram}
 apresenta a dinâmica desse processo.
 \begin{landscape}
 \begin{figure}[h]
@@ -586,7 +593,7 @@ apresenta a dinâmica desse processo.
 \FloatBarrier
 \end{landscape}
 
-Nesse diagrama houve a diferenciação da ação tomada por um \textit{hotspots}, em vermelho, e um \textit{frozenspots}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, é definido parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. É criado, então, os casos de testes baseado nas informações coletadas e relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC| e ocorre a conclusão da coleta dos dados desse método.
+Nesse diagrama, houve a diferenciação da ação tomada por um \textit{hotspots}, em vermelho, e um \textit{frozenspots}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, é definido parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. É criado, então, os casos de testes baseado nas informações coletadas e relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC| e ocorre a conclusão da coleta dos dados desse método.
 
 Com isso, a primeira parte para o uso do \scarefault está finalizada, ou seja, o \textit{framework} está preparado para coleta de dados. A segunda etapa é responsável pela produção dos casos de teste.
 
