@@ -130,15 +130,16 @@ teste.
 
 Partindo-se do modelo de domínio exposto na Figura \ref{domain-diagram}, pode-se
 visualizar o diagrama de classe, mostrado na Figura \ref{class-diagram}.
-%\begin{landscape}
+
+\begin{landscape}
 \begin{figure}[h]
   \centering
-    \includegraphics[width=\textwidth]{figuras/class-diagram.png}
+    \includegraphics[width=1.5\textwidth]{figuras/class-diagram.png}
     \caption{Diagrama de classe completo do \scarefault}
     \label{class-diagram}
 \end{figure}
 \FloatBarrier
-%\end{landscape}
+\end{landscape}
 
 O diagrama de classes permite obter uma visualização mais apurada dos
 relacionamentos entre as classes contidas no \textit{framework}. As principais
@@ -559,14 +560,13 @@ lista de parâmetros desse método. Em seguida, são listados os dados a serem c
 Isso é feito passando os itens declarados nas linhas
 \ref{line:collectoruse-id-token} e \ref{line:collectoruse-param-token}.
 
-%Quadro?
 \begin{table}[h]
 \centering
 \caption{Descrição das letras identificadoras e o respectivo tipo de dado a ser coletado}
 \label{reference-format-collect-data}
-\begin{tabular}{|c|c|}
-\hline
-\textbf{Letra Identificadora} & \textbf{Tipo de Dado}        \\ \hline
+\begin{tabular}{@{}cc@{}}
+\toprule
+\textbf{Letra Identificadora} & \textbf{Tipo de Dado}        \\ \toprule
 P                             & Pacote                       \\ \hline
 c                             & Classe                       \\ \hline
 m                             & Método                       \\ \hline
@@ -797,9 +797,9 @@ Essas marcações são referenciadas pela Tabela \ref{scarefault-marks}.
 \centering
 \caption{Marcações de comentários para uso do \scarefault}
 \label{scarefault-marks}
-\begin{tabular}{|c|c|}
-\hline
-Marcação           & Descrição                                                                                                                                                                \\ \hline
+\begin{tabular}{@{}cc@{}}
+\toprule
+Marcação           & Descrição                                                                                                                                                                \\ \toprule
 \textsf{@param}  & Indica para o \textsf{Scarefault} o nome do parâmetro                                                                                                                  \\ \hline
 \textsf{@range}  & Indica para o \textsf{Scarefault} os valores limites relativos ao parâmetro                                                                                            \\ \hline
 \textsf{@test}   & \begin{tabular}[c]{@{}c@{}}Indica para o \textsf{Scarefault} os argumentos que devem ser passados\\ ao método durante o teste. Evidência um caso de teste\end{tabular} \\ \hline
