@@ -580,7 +580,7 @@ p                             & Lista de Parâmetros          \\ \hline
 \ref{reference-format-collect-data} é relativa à versão já disponibilizada
 pelo \textit{framework}. No caso, preferiu-se utilizar a já disponível.
 
-Ao utilizar a função \lstinline|void collect_data(char *, ...)|, uma série,
+Ao utilizar a função \lstinline|void collect_data(char *, ...)|, uma série
 de chamadas a outras funções é feita. A Figura \ref{collect-data-sequence-diagram}
 apresenta a dinâmica desse processo.
 \begin{landscape}
@@ -593,23 +593,23 @@ apresenta a dinâmica desse processo.
 \FloatBarrier
 \end{landscape}
 
-Nesse diagrama, houve a diferenciação da ação tomada por um \textit{hotspots}, em vermelho, e um \textit{frozenspots}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, é definido parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. É criado, então, os casos de testes baseado nas informações coletadas e relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC| e ocorre a conclusão da coleta dos dados desse método.
+Nesse diagrama, houve a diferenciação da ação tomada por um \textit{hotspot}, em vermelho, e um \textit{frozenspot}, em azul. É possível verificar que o \lstinline|void collect_data(char *, ...)| realiza a coleta dos dados em etapas. Inicialmente, é coletado as informações do método, sendo elas o nome do método e nome e tipo da lista de parâmetros. Em seguida, são definidos parâmetros de teste conforme o intervalo solicitado no código-fonte, caso haja. São criados, então, os casos de testes baseado nas informações coletadas, relaciona-os com o método identificado. Por fim, os casos de testes são inseridos no \lstinline|FileMVC|, e ocorre a conclusão da coleta dos dados desse método.
 
 Com isso, a primeira parte para o uso do \scarefault está finalizada, ou seja, o \textit{framework} está preparado para coleta de dados. A segunda etapa é responsável pela produção dos casos de teste.
 
 \subsubsubsection{Criação do agente de construção de casos de teste}
 Com os dados essenciais para os testes já coletados por um
 \lstinline|CollectorBase| e armazenados em um \lstinline|FileBase|,
-faz-se necessário agora a criação de um agente responsável pela
+faz-se necessária a criação de um agente responsável pela
 produção do arquivo de teste. Para isso, o \framework disponibiliza como
 ponto de extensão a classe \lstinline|TestfileBuilder|. Como já explicitado
 na Figura \ref{testfile-diagram}, ela faz parte de um conjunto de classes
 que seguem o \textit{Builder Pattern}. Esse padrão permite separar a criação
 de objetos complexos em dois elementos: a sua representação e o processo de
-criação. Arquivos de teste são elementos que tem sua estrutura diferente, conforme
+criação. Arquivos de teste são elementos, que têm estruturas diferentes, conforme
 a linguagem de programação, mas o processo de construção é semelhante.
 
-Retomando a Figura \ref{testfile-diagram}, em que é apresentado como é a
+Retomando a Figura \ref{testfile-diagram}, na qual é apresentada a
 estrutura do \textit{Builder Pattern} no projeto, para o caso de exemplo
 com o \grails o diagrama de classes passa a ser o exposto na Figura
 \ref{testfile-grails-class-diagram}.
@@ -622,27 +622,26 @@ com o \grails o diagrama de classes passa a ser o exposto na Figura
 \end{figure}
 \FloatBarrier
 
-Na Figura \ref{testfile-grails-class-diagram} destaca-se em vermelho
-o ponto de extensão: a classe \lstinline|TestfileBuilder|. Essa classe é responsável
+Na Figura \ref{testfile-grails-class-diagram}, destaca-se em vermelho
+o ponto de extensão: a classe \lstinline|testfileBuilder|. Essa classe é responsável
 pela construção do objeto \lstinline|testfile|, pertencente à classe
-\lstinline|TestfileProduct|. Essa classe possui três \textit{hotspots}, as funções
+\lstinline|testfileProduct|. Essa classe possui três \textit{hotspots}, as funções
 \lstinline|void build_dependencies()|, \lstinline|void build_class()| e
 \lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
-obrigada a implementar a sua própria versão dessas funções. Isso permite a extensão
+obrigada a implementar sua própria versão dessas funções. Isso permite a extensão
 do \framework e garante que o desenvolvedor seguirá as regras para a construção do
 \lstinline|TestfileProduct| pelo processo comum. No caso de exemplo com o
 \textsf{Grails}, criou-se a classe \lstinline|TestfileGrailsBuilder|. Com base
-nessa classe surgem outras duas: \lstinline|TestfileControllerBuilder| e
+nessa classe, surgem outras duas: \lstinline|TestfileControllerBuilder| e
 \lstinline|TestfileDomainBuilder|. A classe \lstinline|TestfileGrailsBuilder|
 implementa a \lstinline|void build_dependencies()|, mas passa a responsabilidade
 para as suas classes derivadas de implementar outras duas funções: a
 \lstinline|void build_package()| e a \lstinline|void build_imports()|. Assim,
 as classes \lstinline|TestfileControllerBuilder| e \lstinline|TestfileDomainBuilder|
 são responsáveis por implementar as quatro funções exigidas no processo
-construção de arquivos de teste para \textsf{Grails}. A razão que haja essas
-duas classes é porque testes de \textit{controller} confuguram-se de forma
-distinta de testes feitos para \textit{models}. Assim, escolheu-se fazer duas classes
-diferentes para esses dois tipos de arquivo.
+construção de arquivos de teste para \textsf{Grails}. Essas duas classes exigem, pois testes de controller configuram-se de forma
+distinta de testes feitos para \textit{models}. Assim, optou-se por realizar duas classes
+diferentes para esses dois tipos de arquivos.
 
 Tendo o \textit{Builder Pattern} extendido pode-se usar o\textit{framework}.
 O Código \ref{testfile-in-use} apresenta um exemplo de \lstinline|main| para
@@ -680,8 +679,7 @@ faz a comparação da opção passada pela linha de comando, sendo que a palavra
 \textit{generate} entra no bloco de instruções. As linhas
 \ref{line:testfileuse-iftype} e \ref{line:testfileuse-elsetype} fazem a
 comparação da \str passada na linha de comando: caso seja igual a
-\textit{controller} entre em um caso. Se for \textit{domain} entra no
-outro. As linhas \ref{line:testfileuse-directorcontroller} e
+\textit{controller}, executa um trecho de código específico. Se for \textit{domain}, executa outro trecho de código. As linhas \ref{line:testfileuse-directorcontroller} e
 \ref{line:testfileuse-directordomain} explicitam a instanciação de um
 objeto da classe \lstinline|TestfileDirector|. Esse objeto exige no
 seu construtor a passagem de um objeto do tipo \lstinline|TestfileBuilder|,
@@ -700,7 +698,7 @@ o arquivo de teste gerado pelo \lstinline|TesterDirector|. Para isso, ele
 recebe o objeto \lstinline|TesterDirector| e o nome do arquivo fonte.
 
 Para melhor visualizar a dinâmica do funcionamento por trás do Código
-\ref{testfile-in-use} a Figura \ref{generate-testfile-sequence-diagram}
+\ref{testfile-in-use}, a Figura \ref{generate-testfile-sequence-diagram}
 traz um diagrama de sequência que reflete esse funcionamento.
 
 \begin{landscape}
@@ -714,7 +712,7 @@ traz um diagrama de sequência que reflete esse funcionamento.
 \end{landscape}
 
 O diagrama na Figura \ref{generate-testfile-sequence-diagram} mostra a instanciação
-de um objeto do tipo \lstinline|TesterDirector|. Para o exemplo foi selecionado
+de um objeto do tipo \lstinline|TesterDirector|. Para o exemplo, foi selecionado
 o caso em que a representação para o \lstinline|testfile| é de uma
 \textit{domain}. Assim sendo, é passado como argumento para o construtor do
 \lstinline|testerDirector| uma nova instância de \lstinline|TesterDomainBuilder|,
@@ -722,33 +720,33 @@ que por sua vez exige no seu construtor um objeto do tipo \lstinline|FileBase|.
 Este é passado através da chamada da função \lstinline|get_data()| do
 \lstinline|CollectorBase|. Assim, o \lstinline|TesterDirector| é instanciado.
 
-Na segunda parte do diagrama de sequência observa-se a chamada da função
+Na segunda parte do diagrama de sequência, observa-se a chamada da função
 \lstinline|void generate_testfile()|. A cor azul indica que ela é um
 \textit{frozenspot}. Ela carrega o processo de construção de um
 arquivo de teste. Para isso, ele faz a chamada dos passos de construção,
 implementados pelo \lstinline|TestfileDomainBuilder|. Vale lembrar que
 todas as funções chamadas após a \lstinline|void generate_testfile()| são
 hotspots, em vermelho. O diagrama da Figura \ref{generate-testfile-sequence-diagram}
-é interessante pois evidencia bem o \textit{hollywood principle}: o
-desenvolvedor não faz a chamada ao \framework. É o \framework que chama
+é interessante, pois evidencia bem o \textit{hollywood principle}: o
+desenvolvedor não faz a chamada ao \textit{framework}. É o \framework que chama
 as funções criadas pelo desenvolvedor.
 
 \subsection{Geração de Testes Unitários}
 Além da utilização do \scarefault como \textit{framework}, pode-se usá-lo como
-aplicação, após as devidas adaptações por parte dos desenvolvedores. Supondo
+aplicação, após às devidas adaptações por parte dos desenvolvedores. Supondo
 que o \scarefault já tenha sido adaptado para  \textsf{Grails}, o alvo inicial
 desse projeto, segue um exemplo de como utilizar o \scarefault como uma
 aplicação.
 
 A geração de testes unitários feita pelo \scarefault é dada em duas etapas:
-a primeira é solicitada a criação de casos de teste ao \Scarefault. Isso
+na primeira é solicitada a criação de casos de teste ao \Scarefault. Isso
 quer dizer que o \scarefault vai gerar, a partir de determinados parâmetros
-expostos pelo usuário, casos de teste. Na segunda etapa é requisitada a
+expostos pelo usuário, casos de teste. Na segunda etapa, é requisitada a
 geração dos testes definidos como casos de teste, completados com informações
 adicionais pelo usuário.
 
-Para a demonstração foi criado uma função \lstinline|main|. Por meio dessa
-função é possível a chamada do \scarefault e seus benefícios por linha
+Para a demonstração, foi criado uma função \lstinline|main|. Por meio dessa
+função, é possível a chamada do \scarefault e seus benefícios por linha
 de comando. Segue o Código \ref{generic-call-scarefault} que traz um
 \textit{template} de chamada do \Scarefault.
 
@@ -767,8 +765,7 @@ métodos.
 \item[\textsf{generate}:] opção que requisita ao \scarefault a geração
 dos testes, baseando nos casos de teste criados anteriormente. Os casos de
 teste criados pela opção \lstinline|create| devem ser completados com o
-valor esperado pelo teste. O usuário também pode acrescentar casos de teste
-que ache necessários, seguindo o padrão proposto pelo \Scarefault.
+valor esperado pelo teste. O usuário também pode acrescentar casos de testes, caso sejam necessários, seguindo, seguindo o padrão proposto pelo \Scarefault.
 \end{description}
 
 O argumento referenciado como \lstinline|<caminho ao arquivo a ser testado>|
@@ -857,3 +854,6 @@ de teste e, em seguida, executar a linha de comando:
 Dessa forma, o \scarefault gera os testes especificados em um outro
 arquivo, chamado de \lstinline|domainTests.groovy| no mesmo diretório
 do \lstinline|domain.groovy|.
+
+\section{Resumo do Capítulo}
+  Este capítulo detalho o produto final desse trabalho: o \scarefault. Abordou-se incialmente uma visão geral, seguindo da análise da arquitetura e, por fim, a utilização do \textit{framework}.
