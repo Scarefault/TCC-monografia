@@ -23,7 +23,7 @@ implementando, o desenvolvedor pode implementar as especificidades
 relacionadas aos testes da linguagem alvo, tendo como base o código
 oferecido pelo \Scarefault.
 
-O \scarefault foi escrito em \cpp, e está licenciado dentro das condições
+O \scarefault foi escrito em \textsf{C++}, e está licenciado dentro das condições
 da \textsf{GPLv3}. Todo o código fonte desse framework encontra-se em:
 \url{https://github.com/Scarefault/scarefault}.
 
@@ -118,7 +118,7 @@ entre as principais entidades que o \framework trabalha. O \textit{Collector}
 recolhe as  informações essencias para os testes a partir do
 \textit{Parser} que, por sua vez, recebe um \textit{stream} de dados a partir
 do \textit{Scanner}. Como dados importantes para a produção de testes pelo
-\scarefault, tem-se métodos (\textit{Method}) e seus parâmetros (\textit{Param})
+\Scarefault, tem-se métodos (\textit{Method}) e seus parâmetros (\textit{Param})
 e, para arquiteturas voltadas ao MVC, tem-se propriedades (\textit{Propriety})
 e suas restrições (\textit{Constraint}). Esses dados estão intimamente ligados
 ao arquivo em análise, portanto, são armazenados na entidade arquivo (\textit{FileBase}).
@@ -160,10 +160,10 @@ mesmo processo de construção sirva para diferentes representações
 \cite{gammaEtAl1994}.
 
 No desenvolvimento do \textit{framework}, observou-se essa necessidade na
-criação de objetos \textit{Testfile}. Essa entidade é diferente para
+criação de objetos \lstinline|Testfile|. Essa entidade é diferente para
 cada linguagem associada a ele. Não é possível manter uma mesma
 representação desse objeto, no entanto, o processo de criação de um
-\textit{Testfile} é igual em todos os casos: escreve-se as
+\lstinline|Testfile| é igual em todos os casos: escreve-se as
 dependências da classe de teste, o cabeçalho da classe de teste,
 as ações iniciais para os testes (\textit{setup}),
 os casos de teste, as ações para depois de cada teste
@@ -183,19 +183,19 @@ foi desenhada.
 \end{figure}
 \FloatBarrier
 
-O objeto a ser construído é da classe \textit{TestfileProduct}. Há
+O objeto a ser construído é da classe \lstinline|TestfileProduct|. Há
 diversas representações que esse objeto pode tomar, conforme a linguagem.
 No entanto, o processo de construção é o mesmo. Os passos desse processo são definidos
-pela classe \textit{TestfileBuilder}. Essa classe é uma classe
-\textit{virtual} (abstrata). Ela define uma interface que deve ser
+pela classe \lstinline|TestfileBuilder|. Essa classe é uma classe
+\lstinline|virtual| (abstrata). Ela define uma interface que deve ser
 implementada pelas suas classes filhas, afim de construir o objeto
-\textit{TestfileProduct}. Dessa forma, garante-se que qualquer
-classe com a responsabilidade de construir um \textit{TestfileProduct}
+\lstinline|TestfileProduct|. Dessa forma, garante-se que qualquer
+classe com a responsabilidade de construir um \lstinline|TestfileProduct|
 terá funções-membro que criem os elementos essenciais do produto. Com a garantia
 que os passos de construção estão implementados, pode-se fazer o processo de
-criação. Essa atividade é responsabilidade do \textit{TesterDirector}. O
+criação. Essa atividade é responsabilidade do \lstinline|TestfileDirector|. O
 método \lstinline|generate_testfile()| possui a definição do processo de
-construção, a partir dos passos estipulados pelo \textit{TestfileBuilder}.
+construção, a partir dos passos estipulados pelo \lstinline|TestfileBuilder|.
 
 \subsubsection{\textit{Factory Pattern}} \label{subsec-factory-pattern}
 \textit{Factory pattern} é uma solução pensada com o propósito de deixar a
@@ -223,9 +223,9 @@ Por esse motivo, foi pensado no \textit{Factory pattern} como solução. A Figur
 \end{figure}
 \FloatBarrier
 
-A solução de \textit{factory pattern} desenvolvida utiliza-se de uma classe
-\textsf{virtual} denominada \textit{CollectorBase}. Optou-se por uma classe
-desse tipo, ao invés de uma \textit{virtual} pura (\textit{interface}), pois
+A solução de \textit{Factory pattern} desenvolvida utiliza-se de uma classe
+\lstinline|virtual| denominada \lstinline|CollectorBase|. Optou-se por uma classe
+desse tipo, ao invés de uma \lstinline|virtual| pura (\textit{interface}), pois
 imaginou-se em já deixar implementadas determinadas funções-membro auxiliares,
 preparadas para serem usadas pelo usuário. Essas funções-membro, embora já implementadas,
 são passíveis de sobreescrita, o que dá a possibilidade do desenvolvedor
@@ -233,14 +233,14 @@ decidir criar as sua própria forma de coletar determinados elementos ou utiliza
 de uma já disponível.
 
 A única função-membro obrigatória de implementação para as classes derivadas da
-\textit{CollectorBase} é a \lstinline|collect_data(char *, ...)|. Além disso, já
+\lstinline|CollectorBase| é a \lstinline|collect_data(char *, ...)|. Além disso, já
 há uma outra classe de coleta preparada para linguagens que se utilizem do padrão
-de projeto MVC: a \textit{CollectorMVC}. Ela também estende a \textit{CollectorBase},
+de projeto MVC: a \lstinline|CollectorMVC|. Ela também estende a \lstinline|CollectorBase|,
 mas traz outras funções-membro auxiliares.
 
-A classe \textit{CollectorFactory} é reponsável por esconder a lógica de instanciação
-da família \textit{Collector}. Por meio da \lstinline|get_collector()| um objeto
-\textit{CollectorFactory} retorna uma instância do \textit{Collector} solicitado na
+A classe \lstinline|CollectorFactory| é reponsável por esconder a lógica de instanciação
+da família \textsf{Collector}. Por meio da \lstinline|get_collector()| um objeto
+\lstinline|CollectorFactory| retorna uma instância do \textsf{Collector} solicitado na
 classe cliente.
 
 \section{A Utilização do \Scarefault} \label{sec-util-scarefault}
@@ -262,11 +262,10 @@ virtual de forma a garantir a instalação das dependências necessárias do
 \Scarefault. Para levantar esse ambiente, é necessário que o usuário instale as
 versões mais recentes das seguintes ferramentas: 
 
-%%Especificar as versões
 \begin{description}
-\item[Git:] ferramenta de controle de versão;
-\item[VirtualBox:] ferramenta de virtualização de máquinas virtuais;
-\item[Vagrant:] ferramenta de criação e configuração de ambientes virtuais de desenvolvimento.
+\item[Git:] ferramenta de controle de versão. Versão 1.9.1;
+\item[VirtualBox:] ferramenta de virtualização de máquinas virtuais. Versão 5.0.22;
+\item[Vagrant:] ferramenta de criação e configuração de ambientes virtuais de desenvolvimento. Versão 1.8.4.
 \end{description} 
 
 Com essas ferramentas instaladas, o usuário deve efetuar o clone do projeto
@@ -298,13 +297,11 @@ O \scarefault por si só não é uma aplicação. Ele precisa ter determinados p
 estendidos para que possa ser executado. Essencialmente, o \scarefault permite a
 acoplagem de novas linguagens. Para isso, há alguns pontos de extensão para que
 isso ocorra. São eles: criação do agente de coleta de dados e do agente de
-construção de casos de teste. No entanto, para que se faça uso do \scarefault, é
+construção de casos de teste. No entanto, para que se faça uso do \Scarefault, é
 necessária a adição de um \parser para a nova linguagem.
 
-%Colocar versão do flex e bison 
-
 \subsubsubsection{Adição de um \parser para a nova linguagem}
-O \parser é desenvolvido utilizando-se o \textsf{Flexc++} e o \textsf{Bisonc++}. Para
+O \parser é desenvolvido utilizando-se o \textsf{Flexc++}, versão 1.08, e o \textsf{Bisonc++}, na versão 4.05. Para
 uso dessas ferramentas, recomenda-se a utilização da documentação oficial, disponível
 em \url{https://fbb-git.github.io/flexcpp/} e \url{https://fbb-git.github.io/bisoncpp/},
 respectivamente. O Apêndice B é um guia básico para o uso dessas ferramentas.
@@ -317,7 +314,7 @@ objetivo de gerar a comunicação entre as ferramentas são descritas no Capítu
 Resultados.  
 
 O Código \ref{changes-parser-scarefault} apresenta as alterações exigidas para
-o bom funcionamento do \scarefault, efetuadas no arquivo \lstinline|Parser.h|. 
+o bom funcionamento do \Scarefault, efetuadas no arquivo \lstinline|Parser.h|. 
 
 \begin{lstlisting}[language=C++, label=changes-parser-scarefault, caption=Alterações no arquivo \lstinline|Parser.h| para uso do scarefault]
 class Parser: public ParserBase
@@ -393,7 +390,7 @@ target.close(); (*@\label{line:parser-use-close}@*)
 
 No Código \ref{parser-in-use}, a linha \ref{line:parser-use-open} instancia um
 objeto \lstinline|std::ifstream| para abrir o arquivo passado como argumento para
-a aplicação, representado como \lstinline|argv[ SOURCE_FILE_NAME ]|. O arquivo foi
+a aplicação, representado como \kode{argv[SOURCE_FILE_NAME].} O arquivo foi
 aberto apenas para leitura. A linha \ref{line:parser-use-istream} converte o
 objeto \lstinline|target| para o tipo \lstinline|std::istream| que pode ser tratado
 pelo \textit{parser}. A linha \ref{line:parser-use-decl} instancia um objeto do
@@ -623,9 +620,9 @@ com o \grails o diagrama de classes passa a ser o exposto na Figura
 \FloatBarrier
 
 Na Figura \ref{testfile-grails-class-diagram}, destaca-se em vermelho
-o ponto de extensão: a classe \lstinline|testfileBuilder|. Essa classe é responsável
+o ponto de extensão: a classe \textsf{TestfileBuilder}. Essa classe é responsável
 pela construção do objeto \lstinline|testfile|, pertencente à classe
-\lstinline|testfileProduct|. Essa classe possui três \textit{hotspots}, as funções
+\lstinline|TestfileProduct|. Essa classe possui três \textit{hotspots} para adaptação, as funções
 \lstinline|void build_dependencies()|, \lstinline|void build_class()| e
 \lstinline|void build_validtestcase()|. Qualquer classe derivada a partir dessa classe é
 obrigada a implementar sua própria versão dessas funções. Isso permite a extensão
@@ -712,7 +709,7 @@ traz um diagrama de sequência que reflete esse funcionamento.
 \end{landscape}
 
 O diagrama na Figura \ref{generate-testfile-sequence-diagram} mostra a instanciação
-de um objeto do tipo \lstinline|TesterDirector|. Para o exemplo, foi selecionado
+de um objeto do tipo \textsf{TesterDirector} Para o exemplo, foi selecionado
 o caso em que a representação para o \lstinline|testfile| é de uma
 \textit{domain}. Assim sendo, é passado como argumento para o construtor do
 \lstinline|testerDirector| uma nova instância de \lstinline|TesterDomainBuilder|,
@@ -856,4 +853,4 @@ arquivo, chamado de \lstinline|domainTests.groovy| no mesmo diretório
 do \lstinline|domain.groovy|.
 
 \section{Resumo do Capítulo}
-  Este capítulo detalho o produto final desse trabalho: o \scarefault. Abordou-se incialmente uma visão geral, seguindo da análise da arquitetura e, por fim, a utilização do \textit{framework}.
+  Este capítulo detalho o produto final desse trabalho: o \Scarefault. Abordou-se incialmente uma visão geral, seguindo da análise da arquitetura e, por fim, a utilização do \textit{framework}.
