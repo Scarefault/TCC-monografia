@@ -348,10 +348,10 @@ class Feedback {
 
 É importante ressaltar que nesse trabalho não foi possível a geração de valores
 para todos os tipos de restrições. Foi focado as retrições que limitavam o
-argumento por meio de intervalos de valores. Outros tipos de restrições não foram
-cobertas dentro desse trabalho. Outro fator limitante desse projeto, para esse
-trabalho de conclusão de curso, é que os valores gerados são para testes de
-valores válidos. Valores inválidos ainda não foram cobertos.
+argumento por meio de intervalos de valores. Para versão preliminar, com base
+nas intenções desse trabalho de conclusão de curso, tem-se que os valores
+gerados são para testes de valores válidos. Tratar valores inválidos e demais
+restrições serão considerados como trabalhos futuros.
 
 Com o arquivo de teste gerado foram executados os testes e verificado o resultado
 de sua execução. Isso é apresentado na Figura \ref{result-test-controller-feedback}.
@@ -390,28 +390,21 @@ classes pode-se derivar outras com o objetivo de gerar testes para arquivos
 de código fonte de uma determinada linguagem.
 \item O uso de \textit{design pattern}, como o \textit{Builder Pattern} e o
 \textit{Factory Pattern}, apontam a capacidade de extensão do \framework. Por
-meio deles é possível criar \textit{hotspot} e \textit{frozenspots}. Pelos
-\textit{hotspots} o desenvolvedor pode extender ou adaptar o \scarefault à
+meio deles é possível criar \textit{hotspots} e \textit{frozenspots}. Pelos
+\textit{hotspots} o desenvolvedor pode estender ou adaptar o \scarefault à
 suas necessidades, desde que respeite as necessidades do \framework. Isso
 é bem evidenciado no uso do \textit{Builder Pattern}. Ele abre espaço para
 que o desenvolvedor adapte a construção de \lstinline|testfiles| à linguagem
-incluída, mas mantém rígido o processo de construção.
+incluída, mas mantem rígido o processo de construção.
 \end{itemize}
 
 Tendo isso em vista, pode-se concluir que o \Scarefault, em seu estado atual,
 atende a esse objetivo específico.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\section{Resumo do Capítulo}
+O capítulo apresentou os resultados alcançados com a finalização do trabalho.
+Esses resultados estão vinculados aos objetivos específicos, o que
+permite melhor avaliar e validar esses objetivos. A identificação da linguagem
+alvo, geração de testes para CRUD e permitir a extensibilidade do \framework
+e adição de novas linguagens de programação foram os objetivos específicos
+validados através deste capítulo.
