@@ -10,7 +10,7 @@ facilitar a geração de testes unitários para diversas linguagens de programa�
 A questão que buscou-se responder foi: \textit{há como propiciar ao desenvolvedor
 um suporte que forneça a geração de testes unitários, de forma
 semiautomatizada, e que permita adaptações, com o intuito de ajustar-se ao
-código-fonte?}. Para resolver esse questionamento foi planeado um 
+código-fonte?} Para resolver esse questionamento, foi planeado um 
 sistema extensível capaz de gerar testes unitários com uma intervenção breve
 do desenvolvedor. No decorrer do projeto fez-se uso do planejamento inicial
 para cumprir com as tarefas propostas, como consta o Capítulo 3. No decorrer
@@ -22,17 +22,17 @@ foi alinhado com análises breves do que deveria ser alterado na produção do
 conversas entre os dois autores, que identificaram pontos de melhoria no decorrer
 do trabalho. A finalização do esforços no desenvolvimento do \framework culminaram
 nos resultados expostos no Capítulo 5. Por meio da análise dos resultados
-atingidos para cada objetivo específico é possível concluir que o projeto, de
+atingidos para cada objetivo específico, é possível concluir que o projeto, de
 modo geral, obteve sucesso.
 
 %% Sobre o Curso
 O desenvolvimento desse projeto permitiu aplicar diversos conceitos e conhecimentos
 adquiridos durante o curso de Engenharia de Software. Entre eles, destacam-se a
 Arquitetura de Software, Requisitos de Software, Gerência e Configuração de Software
-e Testes de Software. No que diz respeito aos conceitos relativos à Arqtuitetura de
-Software estão presentes o uso de padrões de projeto (\textit{design patterns}), e
+e Testes de Software. No que diz respeito aos conceitos relativos à Arquitetura de
+Software, estão presentes o uso de padrões de projeto (\textit{design patterns}), e
 conceitos de orientação a objetos, como herança e polimorfismo. O entendimento desses
-conceitos permitiu o avanço e desenvolvimento da arquitetura do \scarefault a ponto de
+conceitos permitiu o avanço e o desenvolvimento da arquitetura do \Scarefault, a ponto de
 produzi-lo para que tivesse extensibilidade suficiente para que pudesse ser classificado
 como \textit{framework}.
 
@@ -54,16 +54,16 @@ desenvolvimento do \framework voltado para geração de testes. Os autores decid
 por usar ferramentas que já forneceriam meios de interpretar a linguagem alvo para,
 assim, não terem que produzir esse interpretador. No entanto, o uso dessas
 dependências prova-se inviável no futuro, pois engessa o \framework no que diz
-respeito a interpretação de linguagens. Exige uma burocracia que deve ser evitada
+respeito a interpretação de linguagens. Exige um esforço significativo, o qual deve ser evitada
 para que o \scarefault possa evoluir mais. Assim, é visto com bons olhos o
 desenvolvimento de um interpretador próprio que seja flexível e extensível, como
 parte do \textit{framework}.
-\item[Desenvolver \textit{hotspots} para geração de testes inválidos:] atualmente
+\item[Desenvolver \textit{hotspots} para geração de testes inválidos:] atualmente,
 o \scarefault cobre testes com valores válidos. É interessante que haja também a
-possibilidade de gerar testes para valores inválidos também.
+possibilidade de gerar testes para valores inválidos.
 \item[Produzir outras estratégias para geração de testes:] o \scarefault gera
 testes de caixa preta. Para isso, utiliza-se da estratégia de valores limites. A
 adição da possiblidade do uso de outras técnicas de derivação de testes caixa preta
-seria bem vinda. Além disso, seria bom que houve a possibilidade da geração
+seria bem vinda. Além disso, seria bom que houvesse a possibilidade da geração
 de testes de caixa branca.
 \end{description}

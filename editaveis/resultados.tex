@@ -1,11 +1,11 @@
 \chapter[Resultados]{Resultados}
 Este capítulo apresenta os resultados obtidos. Eles serão apresentados, sendo
 correlacionando aos objetivos específicos, indicados na Seção \ref{objspec}.
-Para cada objetivo, foi gerado uma seção neste capítulo.
+Para cada objetivo, foi gerada uma seção neste capítulo.
 
 \section{Identificação de Regras Gramaticais da Linguagem Alvo Inicial}
 A linguagem escolhida como alvo inicial do \textit{framework} desenvolvido
-neste trabalho foi a linguagem que orienta à programação na plataforma \textsf{Grails}. \textit{Grails} é um \textit{webframework} para plataforma Java
+neste trabalho foi a linguagem que orienta à programação na plataforma \textsf{Grails}. \textit{Grails} é um \textit{web framework} para plataforma Java
 \cite{grails2015}. Para melhor entender a sintaxe da linguagem de programação
 alvo, partiu-se da documentação oficial do \textsf{Groovy}, com o intuito de
 aprofundar o conhecimento sobre as regras gramaticais do alvo inicial do
@@ -82,17 +82,17 @@ importante ressaltar que há dois tipos de \textit{mini scanners}: os exclusivos
 e o inclusivos. Um \textit{mini scanner} inclusivo permite a inclusão de novos
 padrões ao identificador a partir do momento em que este é chamado. Já o
 \textit{exclusivo} cessa as atividades das regras definidas pelo \textit{scanner}
-e faz valer apenas as definidas por ele. Para este trabalho foram definidos apenas
+e faz valer apenas as definidas por ele. Para este trabalho, foram definidos apenas
 \textit{mini scanners} exclusivos. Além disso, \textit{mini scanners} possuem
 duas funções a mais: a \textit{StartCondition\_\_::[nome do mini scanner]}, que
 inicia o \textit{mini scanner}, e a \textit{StartCondition\_\_::INITIAL} que
 finaliza seu uso. Quando o \textit{scanner} encontra no texto em análise o
-padrão que dá início a um \textit{mini scanner}, ele para o seu processo e
+padrão que dá início a um \textit{mini scanner}, ele interrompe o seu processo e
 inicia o do \textit{mini scanner}. Assim, apenas as regras do \miniscanner passam a ser
 válidas. No momento que o \textit{miniscanner} encontra o padrão de finalização
-ele retoma o processo do \textit{scanner}.
+ele retorna processo do \textit{scanner}.
 
-Em conjunto com o \textsf{Flexc++} foi utilizado o \textsf{Bisonc++}. Como já
+Em conjunto com o \textsf{Flexc++}, foi utilizado o \textsf{Bisonc++}. Como já
 apresentada, a primeira ferramenta identifica padrões léxicos, enquanto que a
 segunda ferramenta é responsável pela definição das regras sintáticas da
 gramática.
@@ -132,7 +132,7 @@ class_definition: (*@\label{fragbisoncpp14}@*)
 Como dito anteriormente, na primeira parte do arquivo, foram utilizadas algumas
 diretivas do \bisoncpp que forneceram opções úteis para o desenvolvimento do
 \parser e, consequentemente, da identificação das regras gramaticais. Das
-diretivas apresentas, entre as linhas \ref{fragbisoncpp1} e
+diretivas apresentadas, entre as linhas \ref{fragbisoncpp1} e
 \ref{fragbisoncpp8}, as que merecem menção são a da linha
 \ref{fragbisoncpp1}, que indica o \scanner que foi utilizado;
 a \ref{fragbisoncpp2}, que indica de onde serão lidas as palavras identificadas
@@ -278,7 +278,7 @@ esse objetivo.
 Utilizou-se os resultados do primeiro objetivo específico como insumo
 para o segundo objetivo específico. Dessa forma, tendo uma gramática e
 um \parser disponíveis para o \grails foram feitas as adaptações necessárias
-no \framework para que podessem ser gerados testes nesse contexto.
+no \framework para que fosse possível gerar testes nesse contexto.
 Assim, foi possível fazer a geração de testes unitários que cobrissem
 métodos relacionados ao CRUD. Os métodos de \lstinline|controller| foram
 escolhidos para essa demonstração, pois evidenciam melhor os métodos
@@ -292,7 +292,7 @@ o CRUD dentro da aplicação. Foi desenvolvida uma aplicação simples em
 A entidade alvo para esse teste do \framework foi a \lstinline|Feedback|.
 A \lstinline|FeedbackController| possui os mesmos métodos citados anteriormente.
 Assim, foi executada a linha de comando:
-\lstinline|./scarefault generate FeedbackController.groovy controller|. Com isso
+\lstinline|./scarefault generate FeedbackController.groovy controller|. Com isso,
 foram gerados os testes unitários. O Código \ref{test-controller-feedback}
 mostra um fragmento importante do arquivo de teste gerado.
 \begin{lstlisting}[language=java, label=test-controller-feedback, caption=Fragmento do arquivo de teste gerado para a \lstinline|FeedbackController|]
@@ -311,12 +311,118 @@ class FeedbackControllerTests {
   params["title"] = "w2Z1AWVpZ8F3" (*@\label{line:testfeedback-param1}@*)
   params["feedback"] = "aodijmweidjMN3TxXcXIdrAxxgp1ZsVROrBm6K8JR3UsM0stcSFINRHL87O" (*@\label{line:testfeedback-param2}@*)
   }
-[...]  
+ 
+void testIndex() {
+    controller.index()
+    assert "/feedback/list" == response.redirectedUrl
+  }
+
+  void testList() {
+    def model = controller.list()
+
+    assert model.feedbackInstanceList.size() == 0
+    assert model.feedbackInstanceTotal == 0
+  }
+
+  void testCreate() {
+    def model = controller.create()
+
+    assert model.feedbackInstance != null
+  }
+
+  void testSave() {
+    controller.save()
+
+    assert model.feedbackInstance != null
+    assert view == '/feedback/create'
+
+    response.reset()
+
+    populateValidParams(params)
+    controller.save()
+
+    assert response.redirectedUrl == '/feedback/show/1'
+    assert controller.flash.message != null
+    assert Feedback.count() == 1
+  }
+
+  void testShow() {
+    controller.show()
+    assert flash.message != null
+    assert response.redirectedUrl == '/feedback/list'
+
+    populateValidParams(params)
+    def feedback = new Feedback(params)
+
+    assert feedback.save() != null
+
+    params.id = feedback.id
+
+    def model = controller.show()
+
+    assert model.feedbackInstance == feedback
+  }
+
+  void testEdit() {
+    controller.edit()
+
+    assert flash.message != null
+    assert response.redirectedUrl == '/feedback/list'
+
+    populateValidParams(params)
+    def feedback = new Feedback(params)
+
+    assert feedback.save() != null
+
+    params.id = feedback.id
+
+    def model = controller.edit()
+
+    assert model.feedbackInstance == feedback
+  }
+
+  void testUpdate() {
+    controller.update()
+
+    assert flash.message != null
+    assert response.redirectedUrl == '/feedback/list'
+
+    response.reset()
+
+    populateValidParams(params)
+    def feedback = new Feedback(params)
+
+    assert feedback.save() != null
+
+  }
+
+  void testDelete() {
+    controller.delete()
+    assert flash.message != null
+    assert response.redirectedUrl == '/feedback/list'
+
+    response.reset()
+
+    populateValidParams(params)
+    def feedback = new Feedback(params)
+
+    assert feedback.save() != null
+    assert Feedback.count() == 1
+
+    params.id = feedback.id
+
+    controller.delete()
+
+    assert feedback.count() == 0
+    assert feedback.get(feedback.id) == null
+    assert response.redirectedUrl == '/feedback/list'
+  }
+}
 \end{lstlisting}
 
-Nas linhas \ref{line:testfeedback-param1} e \ref{line:testfeedback-param2}
-popula-se os parâmetros que o objeto do tipo \lstinline|Feedback| 
-irá receber durante o processo de testes. Observa-se que os argumentos 
+Nas linhas \ref{line:testfeedback-param1} e \ref{line:testfeedback-param2},
+os parâmtros são populados. Esses parâmetros serão recebidos pelo
+objeto do tipo \lstinline|Feedback|, durante o processo de testes. Observa-se que os argumentos 
 passados para os parâmetros são inteiramente \textbf{randômicos}.
 Esses valores são produzidos pela classe auxiliar do \framework chamada
 de \lstinline|ValueGenerator|. Ela faz a análise das restrições do objeto,
@@ -347,13 +453,11 @@ class Feedback {
 \end{lstlisting}
 
 É importante ressaltar que nesse trabalho não foi possível a geração de valores
-para todos os tipos de restrições. Foi focado as retrições que limitavam o
-argumento por meio de intervalos de valores. Para versão preliminar, com base
-nas intenções desse trabalho de conclusão de curso, tem-se que os valores
+para todos os tipos de restrições. Mas, para uma visão preliminar, as contribuições foram focadas nas restrições que limitavam o argumento por meio de intervalos de valores. Para versão preliminar, com base nas intenções desse trabalho de conclusão de curso, tem-se que os valores
 gerados são para testes de valores válidos. Tratar valores inválidos e demais
 restrições serão considerados como trabalhos futuros.
 
-Com o arquivo de teste gerado foram executados os testes e verificado o resultado
+Com o arquivo de teste gerado foram executados os testes, be, como verificado o resultado
 de sua execução. Isso é apresentado na Figura \ref{result-test-controller-feedback}.
 
 \begin{figure}[h]
@@ -364,7 +468,7 @@ de sua execução. Isso é apresentado na Figura \ref{result-test-controller-fee
 \end{figure}
 \FloatBarrier
 
-\section{Inclusão de outras linguagens para geração de testes unitários e extensibilidade do \framework}
+\section{Inclusão de Outras Linguagens para Geração de Testes Unitários e Extensibilidade do \textit{Framework}}
 O terceiro objetivo específico deste trabalho é \textsf{Permitir inclusão de
 outras linguagens para geração de testes unitários}. Esta seção demonstra que
 o \scarefault atende esse objetivo.
@@ -374,24 +478,23 @@ fazer adaptações por meio de extensões de seu código. O \scarefault provê
 essas janelas de extensibilidade, como já demonstrado no decorrer do
 Capítulo 4. Esse capítulo evidencia as partes extensíveis e os pontos de
 adaptação do \framework. Para a inclusão de novas linguagens de programação
-para a geração de testes unitários foi demonstrado também, no decorrer do
-Capítulo 4, utilizando como exemplo o \grails como incluir uma nova linguagem
-no \scarefault.
+para a geração de testes unitários, foi demonstrado também, no decorrer do
+Capítulo 4, utilizando como exemplo o \grails para inclusão de uma nova linguagem.
 
 Uma recapitulação breve para resumir como o \scarefault atende a esse objetivo:
 \begin{itemize}
 \item Ao definir a gramática e um \parser para uma linguagem de programação,
 utilizando-se do \flexcpp e do \textsf{Bisonc++}, pode-se utilizar os coletores
-de dados e os contrutores de arquivos de teste do \scarefault, com as devidas
+de dados e os contrutores de arquivos de teste do \Scarefault, com as devidas
 adaptações, para que haja a inclusão da nova linguagem.
 \item O \framework possui diferentes pontos de extensão, como a classe
 \lstinline|CollectorBase| e a \lstinline|TestfileBuilder|. A partir dessas
-classes pode-se derivar outras com o objetivo de gerar testes para arquivos
+classes, pode-se derivar outras com o objetivo de gerar testes para arquivos
 de código fonte de uma determinada linguagem.
 \item O uso de \textit{design pattern}, como o \textit{Builder Pattern} e o
 \textit{Factory Pattern}, apontam a capacidade de extensão do \framework. Por
-meio deles é possível criar \textit{hotspots} e \textit{frozenspots}. Pelos
-\textit{hotspots} o desenvolvedor pode estender ou adaptar o \scarefault à
+meio deles, é possível criar \textit{hotspots} e \textit{frozenspots}. Pelos
+\textit{hotspots}, o desenvolvedor pode estender ou adaptar o \scarefault às
 suas necessidades, desde que respeite as necessidades do \framework. Isso
 é bem evidenciado no uso do \textit{Builder Pattern}. Ele abre espaço para
 que o desenvolvedor adapte a construção de \lstinline|testfiles| à linguagem
